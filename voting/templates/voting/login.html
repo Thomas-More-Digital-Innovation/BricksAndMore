@@ -1,0 +1,8 @@
+<div>
+    <form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+        <button style="background-color:#F4EB16; color:blue" type="submit">Login</button>
+    </form>
+    Don't have an account? <a href="{% url 'voting:register' %}" target=""><strong>register here</strong></a>!
+</div>
