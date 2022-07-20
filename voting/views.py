@@ -19,6 +19,7 @@ def votingHomepage(request):
 
 def register(request):
     if request.method == "POST":
+        print("POST")
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
@@ -27,7 +28,7 @@ def register(request):
             login(request, user)
             # TODO: login and route to myvotes
             # return redirect("voting:votingHomepage")
-            return redirect("main:homepage")
+            return redirect("voting:myvotes")
 
         else:
             for msg in form.error_messages:
@@ -39,7 +40,6 @@ def register(request):
 
     # elif request.method == "GET":
     form = UserCreationForm
-
     return render(request=request,
                   template_name="voting/register.html",
                   context={"form": form}
@@ -71,3 +71,10 @@ def logout_request(request):
     logout(request)
     messages.info(request, "Logged out successfully!")  # TODO messages
     return redirect("website:homepage")
+
+
+def myVotes(request):
+    return render(request=request,
+                  template_name="voting/myvotes.html",
+                  #   context={"form": form}
+                  )
