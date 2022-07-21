@@ -47,6 +47,10 @@ def register(request):
 
 
 def login_request(request):
+    if request.user.is_authenticated:
+        return render(request=request, template_name="voting/myvotes.html")
+        messages.info(request, "You are logged in.")
+
     if request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)
         if form.is_valid():
@@ -78,3 +82,8 @@ def myVotes(request):
                   template_name="voting/myvotes.html",
                   #   context={"form": form}
                   )
+
+
+# def addCreation(request):
+#     return render(request=request,
+#                   template_name="voting/addCreation.html")
