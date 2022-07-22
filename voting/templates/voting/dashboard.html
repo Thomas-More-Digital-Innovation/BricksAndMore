@@ -1,0 +1,18 @@
+{% extends 'voting/header.html' %}
+
+{% block content %}
+{% include "voting/includes/status.html" %}
+<br>
+
+<h2> list of creations </h2>
+
+{% for creation in creations %}
+    <h3> {{ creation.name }} </h3>
+    <p> {{ creation.description }} </p>
+    <p> {{ creation.creator }} </p>
+    <br>
+{% endfor %}
+
+<a href="addcreation">add creation</a>
+
+{% endblock %}

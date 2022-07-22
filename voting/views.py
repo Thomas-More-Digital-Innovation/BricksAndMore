@@ -8,6 +8,9 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
+from .models import *
+from .forms import *
+
 # Create your views here.
 
 
@@ -49,8 +52,8 @@ def register(request):
 
 def login_request(request):
     if request.user.is_authenticated:
-        return render(request=request, template_name="voting/myvotes.html")
-        messages.info(request, "You are logged in.")
+        messages.info(request, "You are already logged in.")
+        return redirect('voting:myvotes')
 
     if request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)
@@ -89,8 +92,37 @@ def userIsStaff(user):
     return user.is_staff
 
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_staff)
+def dashboard(request):
+    return render(request=request,
+                  template_name="voting/dashboard.html",
+                  context={"creations": Creation.objects.all()})
+
+
+@ user_passes_test(lambda u: u.is_staff)
 def addCreation(request):
     # 404's if not superuser, change later to redirect to homepage maybe
+    if request.method == "POST":
+        print("_______POST________")
+        form = CreationForm(data=request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get('name')
+            description = form.cleaned_data.get('description')
+            creator = form.cleaned_data.get('creator')
+            # image = form.cleaned_data.get('image')
+            Creation.objects.create(
+                name=name, description=description, creator=creator)
+            messages.success(request, f"New creation added: {name}")
+            return redirect("voting:dashboard")
+        else:
+            for msg in form.error_messages:
+                messages.error(request, f"{msg}: {form.error_messages[msg]}")
+
+        return render(request=request,
+                      template_name="voting/addcreation.html",
+                      context={"form": form})
+
+    form = CreationForm()
     return render(request=request,
-                  template_name="voting/addcreation.html")
+                  template_name="voting/addcreation.html",
+                  context={"form": form})

@@ -12,5 +12,9 @@ urlpatterns = [
     path("logout/", views.logout_request, name="logout"),
     path("login/", views.login_request, name="login"),
     path("myvotes/", views.myVotes, name="myvotes"),
+
+    # dashboard urls
     path("addcreation/", views.addCreation, name="addcreation"),
+    path("dashboard/", views.dashboard, name="dashboard"),
+    path("dashboard/addcreation/", views.addCreation, name="addcreation"),
 ]

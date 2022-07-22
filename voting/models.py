@@ -12,7 +12,5 @@ class Creation(models.Model):
     def __str__(self):
         return self.name
 
-# Leftoff: create page to add creations to test model functionality, should later only be accessible by group staff or w/ever
-
 # TODO: VotingList
 # TODO: link VotingList to user
