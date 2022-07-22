@@ -1,3 +1,6 @@
+{% extends 'voting/header.html' %}
+
+{% block content %}
 {% include "voting/includes/status.html" %}
 <br>
 
@@ -9,3 +12,4 @@
     </form>
     Don't have an account? <a href="{% url 'voting:register' %}" target=""><strong>register here</strong></a>!
 </div>
+{% endblock %}

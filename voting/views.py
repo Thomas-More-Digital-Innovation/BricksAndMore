@@ -7,6 +7,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test
 # Create your views here.
 
 
@@ -60,7 +61,7 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}")
-                return redirect('/')
+                return redirect('voting:myvotes')
             else:
                 messages.error(request, "Invalid username or password.")
         else:
@@ -84,6 +85,12 @@ def myVotes(request):
                   )
 
 
-# def addCreation(request):
-#     return render(request=request,
-#                   template_name="voting/addCreation.html")
+def userIsStaff(user):
+    return user.is_staff
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def addCreation(request):
+    # 404's if not superuser, change later to redirect to homepage maybe
+    return render(request=request,
+                  template_name="voting/addcreation.html")
