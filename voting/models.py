@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -12,5 +12,14 @@ class Creation(models.Model):
     def __str__(self):
         return self.name
 
-# TODO: VotingList
-# TODO: link VotingList to user
+
+class VotingList(models.Model):
+    # add one-to-one relationship with user
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, primary_key=True)
+    # add many-to-many relationship with Creation
+    creation = models.ManyToManyField(Creation)
+    vote = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return self.creation.name

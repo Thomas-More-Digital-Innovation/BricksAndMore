@@ -7,7 +7,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, login_required
 from .models import *
 from .forms import *
 
@@ -81,6 +81,7 @@ def logout_request(request):
     return redirect("website:homepage")
 
 
+# @login_required # TODO add this
 def myVotes(request):
     return render(request=request,
                   template_name="voting/myvotes.html",
@@ -99,11 +100,10 @@ def dashboard(request):
                   context={"creations": Creation.objects.all()})
 
 
-@ user_passes_test(lambda u: u.is_staff)
+@user_passes_test(lambda u: u.is_staff)
 def addCreation(request):
     # 404's if not superuser, change later to redirect to homepage maybe
     if request.method == "POST":
-        print("_______POST________")
         form = CreationForm(data=request.POST)
         if form.is_valid():
             name = form.cleaned_data.get('name')
