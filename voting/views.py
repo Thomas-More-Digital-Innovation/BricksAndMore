@@ -81,26 +81,83 @@ def logout_request(request):
     return redirect("website:homepage")
 
 
-# @login_required # TODO add this
+@login_required  # TODO add this
 def myVotes(request):
+    if request.method == "POST":
+        print("POST")
+        form = VotingForm(data=request.POST)
+        print(f"formErrors: {form.errors}")
+        if form.is_valid():
+            vote = form.cleaned_data.get('vote')
+            creationId = form.cleaned_data.get('creationId')
+            creation = Creation.objects.get(id=creationId)
+            user = request.user
+            print(f"formstuff: {vote, creationId, user}")
+
+            # if user does not have a VotingList, create one and add the vote
+            if not VotingList.objects.filter(user=user, creation=Creation.objects.get(id=creationId)).exists():
+
+                print("no voting list")
+
+                newVotingList = VotingList(user=user,
+                                           vote=vote)
+                for member in creation.iterator():
+                    newVotingList.add(member)
+                # userVotingList = VotingList.objects.add(
+                #     user=user,
+                #     creation=Creation.objects.get(id=creationId),
+                #     vote=vote
+                # )
+                print(f"userVotingList: {newVotingList}")
+            # print("found votingList")
+            # except:  # userVotingList.DoesNotExist
+            #     print("creating votingList (to be implemented)")
+            # votingList = VotingList(user=user)
+            # votingList.save()
+            # print("saved votingList")
+
+            print("\nSUBMITTED:")
+            print(f"vote: {vote}, user: {user}, creationId: {creationId}\n")
+
+        else:
+            print("invalid form")
+            # creation = Creation.objects.get(id=crea)
+
+           # need: USER, CREATION, VOTE
+           # get the user's voting list if exist => update the vote
+           # else create a new voting list with the vote and the creation  and user as fk's
+
+           # get the user's voting list if exist
+           # if votingList where creation = submittedcreation exists:
+           # votingList.vote = vote
+           # else
+           # VotingList.objects.create(user=request.user, creation=submittedcreation, vote=vote)
+
+           # messages.success(request, f"New creation added: {name}")
+        return redirect("voting:myvotes")
+        # else:
+        #     for msg in form.error_messages:
+        #         messages.error(request, f"{msg}: {form.error_messages[msg]}")
+
+    form = VotingForm()
     return render(request=request,
                   template_name="voting/myvotes.html",
-                  #   context={"form": form}
-                  )
+                  context={"form": form, "creations": Creation.objects.all(), "votingList": VotingList.objects.all()})
 
 
 def userIsStaff(user):
     return user.is_staff
+    # TODO: does this even work? shouldn't the lambda below be u.userIsStaff()?
 
 
-@user_passes_test(lambda u: u.is_staff)
+@ user_passes_test(lambda u: u.is_staff)
 def dashboard(request):
     return render(request=request,
                   template_name="voting/dashboard.html",
                   context={"creations": Creation.objects.all()})
 
 
-@user_passes_test(lambda u: u.is_staff)
+@ user_passes_test(lambda u: u.is_staff)
 def addCreation(request):
     # 404's if not superuser, change later to redirect to homepage maybe
     if request.method == "POST":

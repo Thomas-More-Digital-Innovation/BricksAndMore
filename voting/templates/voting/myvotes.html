@@ -4,6 +4,96 @@
 {% include "voting/includes/status.html" %}
 <br>
 
-list of personal votes here
 
+<h2>My votes</h2>
+
+{% for creation in creations %}
+
+    <p>
+        creation: "<strong>{{ creation.name }}</strong>" with id: <strong>{{ creation.id }}</strong>
+    </p>
+
+<table>
+    <form method="post" novalidate>
+        {% csrf_token %}
+      
+        {{ form.non_field_errors }}
+      
+        {{ form.source.errors }}
+        {{ form.source }}
+      
+        <table border="1">
+      
+            <tr>
+              <th>{{ form.name.label_tag }}</th>
+              <td>
+                {{ form.name.errors }}
+                {{ form.name }}
+              </td>
+            </tr>
+      
+            <tr>
+              <th>{{ form.vote.label_tag }}</th>
+              <td>
+                {{ form.vote.errors }}
+                {{ form.vote }}
+              </td>
+            </tr>
+            <tr>
+                <th>creationID</th>
+                <td>
+                    <input type="hidden"
+                    name="creationId"
+                    id="id_name"
+                    value="{{ creation.id }}">
+                </td>
+            </tr>
+
+
+
+            {% comment %} <tr>
+              <th>{{ form.creationId.label_tag }}</th>
+              <td>
+                {{ form.creationId.errors }}
+                {{ form.creationId }}
+              </td>
+            </tr> {% endcomment %}
+      
+        </table>
+
+        <button type="submit">Submit</button>
+      </form>
+</table>
+
+
+
+    {% comment %} <form method="POST">
+		{% csrf_token %}
+        {{form.as_p}}
+        {{ form.creationId }}
+		<button class="btn" style="background-color:yellow; color:blue" type="submit">submit vote</button>
+	</form> {% endcomment %}
+
+
+    {% comment %} <p>
+        <form method="post" id="task-form">
+            {% csrf_token %}
+            <input type="number" placeholder="" name="task" id="task" required>
+
+            <div class="rate">
+                <input type="radio" id="star1" name="rate" value="1" />
+                <label for="star1" title="text">1</label>
+                <input type="radio" id="star2" name="rate" value="2" />
+                <label for="star2" title="text">2</label>
+                <input type="radio" id="star3" name="rate" value="3" />
+                <label for="star3" title="text">3</label>
+                <input type="radio" id="star4" name="rate" value="4" />
+                <label for="star4" title="text">4</label>
+                <input type="radio" id="star5" name="rate" value="5" />
+                <label for="star5" title="text">5</label>
+              <button type="submit">Save</button>
+        </form>
+    </p> {% endcomment %}
+
+{% endfor %}
 {% endblock %}
