@@ -100,24 +100,14 @@ def myVotes(request):
                 print("no voting list")
 
                 newVotingList = VotingList(user=user,
-                                           vote=vote)
-                for member in creation.iterator():
-                    newVotingList.add(member)
-                # userVotingList = VotingList.objects.add(
-                #     user=user,
-                #     creation=Creation.objects.get(id=creationId),
-                #     vote=vote
-                # )
-                print(f"userVotingList: {newVotingList}")
-            # print("found votingList")
-            # except:  # userVotingList.DoesNotExist
-            #     print("creating votingList (to be implemented)")
-            # votingList = VotingList(user=user)
-            # votingList.save()
-            # print("saved votingList")
+                                           vote=vote,
+                                           )
+                newVotingList.save()
+                newVotingList.creation.set([creation])
 
-            print("\nSUBMITTED:")
-            print(f"vote: {vote}, user: {user}, creationId: {creationId}\n")
+            # if user does have
+            # print("\nSUBMITTED:")
+            # print(f"vote: {vote}, user: {user}, creationId: {creationId}\n")
 
         else:
             print("invalid form")
