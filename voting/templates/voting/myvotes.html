@@ -21,7 +21,7 @@
       
         {{ form.source.errors }}
         {{ form.source }}
-      
+
         <table border="1">
       
             <tr>
@@ -32,19 +32,31 @@
               </td>
             </tr>
       
-            <tr>
+            {% comment %} <tr>
               <th>{{ form.vote.label_tag }}</th>
               <td>
                 {{ form.vote.errors }}
                 {{ form.vote }}
               </td>
-            </tr>
+            </tr> {% endcomment %}
+
+            <tr>
+              <th>Vote</th>
+              <td>
+                  <input type="number"
+                  name="vote"
+                  id="vote"
+                  placeholder = "{{ "FIXME" }}"
+              </td>
+          </tr>
+
+
             <tr>
                 <th>creationID</th>
                 <td>
                     <input type="hidden"
                     name="creationId"
-                    id="id_name"
+                    id="id_name" {% comment %} should this be here? {% endcomment %}
                     value="{{ creation.id }}">
                 </td>
             </tr>
@@ -64,7 +76,28 @@
         <button type="submit">Submit</button>
       </form>
 </table>
+{% endfor %}
+<br>
+<br>
+vote &emsp;&emsp;&emsp; user_id &emsp;&emsp;&emsp; id
+{% for item in votingList %}
+  <p>
+    {{item.vote}}&emsp;&emsp;&emsp;&emsp;
+    {{item.user_id}}&emsp;&emsp;&emsp;&emsp;&emsp;
+    {{item.id}}&emsp;&emsp;&emsp;
+  </p>  
+{% endfor %}
 
+<p>
+x
+{% for voting in creations %}
+  {{creation.votingList_set}}
+{% endfor %}
+
+</p>
+
+
+{% endblock %}
 
 
     {% comment %} <form method="POST">
@@ -94,6 +127,3 @@
               <button type="submit">Save</button>
         </form>
     </p> {% endcomment %}
-
-{% endfor %}
-{% endblock %}

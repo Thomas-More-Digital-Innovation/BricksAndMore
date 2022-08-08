@@ -14,7 +14,7 @@ urlpatterns = [
     path("myvotes/", views.myVotes, name="myvotes"),
 
     # dashboard urls
-    path("addcreation/", views.addCreation, name="addcreation"),
+    # path("addcreation/", views.addCreation, name="addcreation"),
     path("dashboard/", views.dashboard, name="dashboard"),
     path("dashboard/addcreation/", views.addCreation, name="addcreation"),
 ]

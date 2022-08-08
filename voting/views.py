@@ -88,6 +88,11 @@ def myVotes(request):
         form = VotingForm(data=request.POST)
         print(f"formErrors: {form.errors}")
         if form.is_valid():
+
+            from django.db import connection
+            all_tables = connection.introspection.table_names()
+            print(f"all_tables: {all_tables}")
+
             vote = form.cleaned_data.get('vote')
             creationId = form.cleaned_data.get('creationId')
             creation = Creation.objects.get(id=creationId)
@@ -105,25 +110,20 @@ def myVotes(request):
                 newVotingList.save()
                 newVotingList.creation.set([creation])
 
-            # if user does have
-            # print("\nSUBMITTED:")
-            # print(f"vote: {vote}, user: {user}, creationId: {creationId}\n")
+            # if user does have a VotingList, add the vote to the list
+            # TODO: change to else?
+
+            elif VotingList.objects.filter(user=user, creation=Creation.objects.get(id=creationId)).exists():
+                updateVotingList = VotingList.objects.get(
+                    user=user, creation=Creation.objects.get(id=creationId))
+                updateVotingList.vote = vote
+                updateVotingList.save()
+
+            print(f"ADDED / UPDATED VOTINGLIST WITH DATA: {updateVotingList}")
 
         else:
             print("invalid form")
-            # creation = Creation.objects.get(id=crea)
 
-           # need: USER, CREATION, VOTE
-           # get the user's voting list if exist => update the vote
-           # else create a new voting list with the vote and the creation  and user as fk's
-
-           # get the user's voting list if exist
-           # if votingList where creation = submittedcreation exists:
-           # votingList.vote = vote
-           # else
-           # VotingList.objects.create(user=request.user, creation=submittedcreation, vote=vote)
-
-           # messages.success(request, f"New creation added: {name}")
         return redirect("voting:myvotes")
         # else:
         #     for msg in form.error_messages:
@@ -132,7 +132,9 @@ def myVotes(request):
     form = VotingForm()
     return render(request=request,
                   template_name="voting/myvotes.html",
-                  context={"form": form, "creations": Creation.objects.all(), "votingList": VotingList.objects.all()})
+                  context={"form": form, "creations": Creation.objects.all(),
+                           "votingList": VotingList.objects.filter(user_id=request.user.id)
+                           })
 
 
 def userIsStaff(user):
@@ -149,7 +151,7 @@ def dashboard(request):
 
 @ user_passes_test(lambda u: u.is_staff)
 def addCreation(request):
-    # 404's if not superuser, change later to redirect to homepage maybe
+    # TODO: 404's if not superuser, change later to redirect to homepage maybe
     if request.method == "POST":
         form = CreationForm(data=request.POST)
         if form.is_valid():

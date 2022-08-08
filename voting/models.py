@@ -22,13 +22,9 @@ class VotingList(models.Model):
     # User, on_delete=models.CASCADE, primary_key=True)
 
     # add many-to-one relationship with user
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     # add many-to-many relationship with Creation
     creation = models.ManyToManyField(Creation)
 
     vote = models.IntegerField(blank=True, null=True)
-
-    def __str__(self):
-        return str(self.creation.name)
