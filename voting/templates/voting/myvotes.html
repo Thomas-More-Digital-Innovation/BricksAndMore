@@ -80,7 +80,7 @@
 <br>
 <br>
 vote &emsp;&emsp;&emsp; user_id &emsp;&emsp;&emsp; id
-{% for item in votingList %}
+{% for item in votingLists %}
   <p>
     {{item.vote}}&emsp;&emsp;&emsp;&emsp;
     {{item.user_id}}&emsp;&emsp;&emsp;&emsp;&emsp;
@@ -90,12 +90,51 @@ vote &emsp;&emsp;&emsp; user_id &emsp;&emsp;&emsp; id
 
 <p>
 x
+<br>
 {% for voting in creations %}
-  {{creation.votingList_set}}
+  {{creation.votingLists_set}}
+{% endfor %}
+
+<br>
+<h2>for list in VotingLists</h2>
+
+<h3 style="color:red">all creations</h3>
+
+<h3>votingList iteration</h3>
+{% for list in votingLists %}
+    user: {{ list.user.username }}<br/>
+    vote: {{ list.vote }}<br/>
+    creation: {{ list.creation.all }}<br/>
+    onecreation: {% for creation in list.creation.all %}{{ creation }}<br/>{% endfor %}
+        <br>
 {% endfor %}
 
 </p>
 
+<div>
+  <h2>for creation in creations</h2>
+
+{% for creation in creations %}
+<h3 style="text-decoration:underline">NEXT ITERATION</h3>
+  <p>
+    ID: {{creation.id}} &emsp; name: {{creation.name}}
+    {% for item in votingLists %}
+    <br>
+    EVERYTHING IN VOTINGLIST: {{ votingLists }}<br>
+    CREATION: {{creation}}<br>
+    ITEM.CREATION.ALL|FIRST: {{item.creation.all|first}}<br>
+
+    {% if creation == item.creation.all|first %}
+    <p style="color:hotpink">
+      SAME CREATION!! - 
+      VOTE FOR THIS CREATION: {{ item.vote }}
+    </p>  
+    {% endif %}
+    
+    {% endfor %}
+
+{% endfor %}
+</div>
 
 {% endblock %}
 

@@ -119,7 +119,8 @@ def myVotes(request):
                 updateVotingList.vote = vote
                 updateVotingList.save()
 
-            print(f"ADDED / UPDATED VOTINGLIST WITH DATA: {updateVotingList}")
+                print(
+                    f"ADDED / UPDATED VOTINGLIST WITH DATA: {updateVotingList}")
 
         else:
             print("invalid form")
@@ -133,7 +134,7 @@ def myVotes(request):
     return render(request=request,
                   template_name="voting/myvotes.html",
                   context={"form": form, "creations": Creation.objects.all(),
-                           "votingList": VotingList.objects.filter(user_id=request.user.id)
+                           "votingLists": VotingList.objects.filter(user_id=request.user.id)
                            })
 
 
