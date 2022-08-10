@@ -94,13 +94,13 @@ def myVotes(request):
             # print(f"all_tables: {all_tables}")
 
             vote = form.cleaned_data.get('vote')
-            # creationId = form.cleaned_data.get('creationId')
-            creation = form.cleaned_data.get('creation').first()
+            creationId = form.cleaned_data.get('creationId')
+            creation = Creation.objects.get(id=creationId)
             user = request.user
-            print(f"formStuff: {vote, creation, user}")
+            print(f"formStuff: {vote, creationId, user}")
 
             # if user does not have a VotingList, create one and add the vote
-            if not VotingList.objects.filter(user=user, creation=creation).exists():
+            if not VotingList.objects.filter(user=user, creation=Creation.objects.get(id=creationId)).exists():
 
                 print("no voting list")
 
@@ -113,27 +113,26 @@ def myVotes(request):
             # if user does have a VotingList, add the vote to the list
             # TODO: change to else?
 
-            elif VotingList.objects.filter(user=user, creation=creation).exists():
+            elif VotingList.objects.filter(user=user, creation=Creation.objects.get(id=creationId)).exists():
                 updateVotingList = VotingList.objects.get(
-                    user=user, creation=creation)
+                    user=user, creation=Creation.objects.get(id=creationId))
                 updateVotingList.vote = vote
                 updateVotingList.save()
 
         else:
             print("invalid form")
 
-            return redirect("voting:myvotes")
-            # else:
-            #     for msg in form.error_messages:
-            #         messages.error(request, f"{msg}: {form.error_messages[msg]}")
+        return redirect("voting:myvotes")
+        # else:
+        #     for msg in form.error_messages:
+        #         messages.error(request, f"{msg}: {form.error_messages[msg]}")
 
-    elif request.method == "GET":
-        form = VotingForm()
-        return render(request=request,
-                      template_name="voting/myvotes.html",
-                      context={"form": form, "creations": Creation.objects.all(),
-                               "votingLists": VotingList.objects.filter(user_id=request.user.id)
-                               })
+    form = VotingForm()
+    return render(request=request,
+                  template_name="voting/myvotes.html",
+                  context={"form": form, "creations": Creation.objects.all(),
+                           "votingLists": VotingList.objects.filter(user_id=request.user.id)
+                           })
 
 
 def userIsStaff(user):

@@ -17,6 +17,7 @@ class Creation(models.Model):
 
 
 class VotingList(models.Model):
+    CHOICES = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
     # add one-to-one relationship with user
     # user = models.OneToOneField(
     # User, on_delete=models.CASCADE, primary_key=True)

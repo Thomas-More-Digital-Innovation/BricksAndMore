@@ -2,10 +2,10 @@
 
 {% block content %}
 {% include "voting/includes/status.html" %}
-
-<hr>
 <br>
-<h1>Used as reference for manually rendering form</h1>
+<h2 style="color:aqua">Tryout for stars as voting</h2>
+
+
 {% for creation in creations %}
 
 <p>
@@ -42,15 +42,6 @@
   </form>
 </table>
 {% endfor %}
-<br>
-<hr>
-<h1>WORKS but no seperate voting per creation</h1>
-<form method = "post">
-  {% csrf_token %}
-  {{ form.as_p }}
-
-  <button type="submit">Submit</button>
-</form>
 <hr>
 <br>
 vote &emsp;&emsp;&emsp; user_id &emsp;&emsp;&emsp; id
@@ -62,46 +53,45 @@ vote &emsp;&emsp;&emsp; user_id &emsp;&emsp;&emsp; id
   </p>
 {% endfor %}
 
-{% endblock %}
+  <br>
+<h2>for list in VotingLists</h2>
 
+<h3 style="color:red">all creations</h3>
 
-<br><br><br><br>
-<hr>
-
-
-{% for creation in creations %}
-
-  <p>
-    creation: "<strong>{{ creation.name }}</strong>" with id: <strong>{{ creation.id }}</strong>
-  </p>
-
-  <table>
-    <form method="post" novalidate>
-      {% csrf_token %}
-
-      {{ form.non_field_errors }}
-
-      {{ form.source.errors }}
-      {{ form.source }}
-
-      <table border="1">
-        <tr>
-          <th>Vote</th>
-          <td>
-            {{ form.vote }}
-          </td>
-        </tr>
-
-        <tr>
-          <th>creationID</th>
-          <td>
-            <input type="hidden" name="creationId" id="id_name" {% comment %} should this be here? {% endcomment %}
-              value="{{ creation.id }}">
-          </td>
-        </tr>
-      </table>
-
-      <button type="submit">Submit</button>
-    </form>
-  </table>
+<h3>votingList iteration</h3>
+{% for list in votingLists %}
+user: {{ list.user.username }}<br />
+vote: {{ list.vote }}<br />
+creation: {{ list.creation.all }}<br />
+onecreation: {% for creation in list.creation.all %}{{ creation }}<br />{% endfor %}
+<br>
 {% endfor %}
+
+</p>
+
+<div>
+  <h2>for creation in creations</h2>
+
+  {% for creation in creations %}
+  <h3 style="text-decoration:underline">NEXT ITERATION</h3>
+  <p>
+    ID: {{creation.id}} &emsp; name: {{creation.name}}
+    {% for item in votingLists %}
+    <br>
+    EVERYTHING IN VOTINGLIST: {{ votingLists }}<br>
+    CREATION: {{creation}}<br>
+    ITEM.CREATION.ALL|FIRST: {{item.creation.all|first}}<br>
+
+    {% if creation == item.creation.all|first %}
+  <p style="color:hotpink">
+    SAME CREATION!! -
+    VOTE FOR THIS CREATION: {{ item.vote }}
+  </p>
+  {% endif %}
+
+  {% endfor %}
+
+  {% endfor %}
+</div>
+
+{% endblock %}
