@@ -1,5 +1,7 @@
 from logging import PlaceHolder
+from tkinter import HIDDEN
 from turtle import title
+from typing_extensions import Required
 from django import forms
 from .models import Creation, VotingList
 from django.forms import ModelForm
@@ -13,28 +15,26 @@ class CreationForm(forms.Form):
     # image = forms.ImageField()
 
 
-class VotingFormOLD(forms.Form):
+class VotingForm(forms.Form):
 
     # choices for the radiobuttons (stars/ legobricks) in the voting form, (value, name)
     CHOICES = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
 
+    # user enters vote
     vote = forms.ChoiceField(
-        choices=CHOICES, widget=forms.RadioSelect, initial='1')
+        choices=CHOICES, widget=forms.RadioSelect)
 
-    # vote = forms.IntegerField()
-
-    creationId = forms.CharField(widget=forms.HiddenInput(), required=True)
-
-
-# https://stackoverflow.com/questions/14660037/django-forms-pass-parameter-to-form
+    # place to keep track of the creation
+    creationId = forms.IntegerField(widget=forms.HiddenInput)
+    # creationId = forms.IntegerField()
 
 
-class VotingForm(ModelForm):
-    class Meta:
-        model = VotingList
-        fields = ['vote', 'creation']
-        widgets = {'vote': forms.RadioSelect(choices=VotingList.CHOICES)}
+# class VotingFormMODELVERSION(ModelForm):
+#     class Meta:
+#         model = VotingList
+#         fields = ['vote']
+#         widgets = {'vote': forms.RadioSelect(choices=VotingList.CHOICES)}
 
-    # def __init__(self, *args, **kwargs):
-    #     super(VotingForm, self).__init__(*args, **kwargs)
-    #     self.fields['vote'].choices = VotingList.CHOICES
+#     # def __init__(self, *args, **kwargs):
+#     #     super(VotingForm, self).__init__(*args, **kwargs)
+#     #     self.fields['vote'].choices = VotingList.CHOICES

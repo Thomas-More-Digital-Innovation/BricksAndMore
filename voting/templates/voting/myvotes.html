@@ -5,52 +5,109 @@
 
 <hr>
 <br>
-<h1>Used as reference for manually rendering form</h1>
-{% for creation in creations %}
+<h1> <a href="https://iamkate.com/code/star-rating-widget/"></a>  </h1>
 
-<p>
-  creation: "<strong>{{ creation.name }}</strong>" with id: <strong>{{ creation.id }}</strong>
-</p>
+{% load static %}
 
-<table>
-  <form method="post" novalidate>
+
+<style>
+  .rating {
+    display: flex;
+  }
+
+  .rating input {
+    position: absolute;
+    left: -100vw;
+  }
+
+  .rating label {
+    width: 48px;
+    height: 48px;
+    padding: 48px 0 0;
+    overflow: hidden;
+    background: url('{% static 'stars.svg' %}') no-repeat top left;
+  }
+
+  .rating:not(:hover) input:indeterminate+label,
+  .rating:not(:hover) input:checked~input+label,
+  .rating input:hover~input+label {
+    background-position: -48px 0;
+  }
+
+  .rating:not(:hover) input:focus-visible+label {
+    background-position: -96px 0;
+  }
+</style>
+
+<body>
+  <div class="rating">
+    <input id="rating1" type="radio" name="rating" value="1">
+    <label for="rating1">1</label>
+    <input id="rating2" type="radio" name="rating" value="2">
+    <label for="rating2">2</label>
+    <input id="rating3" type="radio" name="rating" value="3">
+    <label for="rating3">3</label>
+    <input id="rating4" type="radio" name="rating" value="4" >
+    <label for="rating4">4</label>
+    <input id="rating5" type="radio" name="rating" value="5">
+    <label for="rating5">5</label>
+  </div>
+  <h1>
+    playground
+  </h1>
+  {% for form, currentValue in formDict.items %}
+  <form action="post">
     {% csrf_token %}
-
-    {{ form.non_field_errors }}
-
-    {{ form.source.errors }}
-    {{ form.source }}
-
-    <table border="1">
-      <tr>
-        <th>Vote</th>
-        <td>
-          {{ form.vote }}
-        </td>
-      </tr>
-
-      <tr>
-        <th>creationID</th>
-        <td>
-          <input type="hidden" name="creationId" id="id_name" {% comment %} should this be here? {% endcomment %}
-            value="{{ creation.id }}">
-        </td>
-      </tr>
-    </table>
+    CurrentValue  {{ currentValue }}
+    <br>
+    {{ form }}
 
     <button type="submit">Submit</button>
   </form>
-</table>
 {% endfor %}
-<br>
-<hr>
-<h1>WORKS but no seperate voting per creation</h1>
-<form method = "post">
-  {% csrf_token %}
-  {{ form.as_p }}
 
-  <button type="submit">Submit</button>
-</form>
+
+<h1> attempt at manually rendered star form</h1>
+<h3>iterate over creations</h3>
+
+{% for form in formList %}
+<form method="post" novalidate>
+      {% csrf_token %}
+    
+      {{ form.non_field_errors }}
+    
+      {{ form.source.errors }}
+      {{ form.source }}
+    
+      <table border="1">
+    
+          <tr>
+            <th>{{ form.vote.label_tag }}</th>
+            <td>
+              {{ form.vote.errors }}
+              {{ form.vote }}
+            </td>
+          </tr>
+
+          <tr>
+          {% comment %} <tr style="display:none"> {% endcomment %}
+            <th>CreationId</th>
+            <td>
+              {{ form.creationId }}
+            </tr>
+
+          {% comment %} <tr>
+            <th>CreationId (hidden): </th>
+            <td>
+              {{ form.creationId.errors }}
+              {{ form.creationId.value }}
+            </tr> {% endcomment %}
+      </table>
+  
+    <button type="submit">Submit</button>
+  </form>
+{% endfor %}
+
 <hr>
 <br>
 vote &emsp;&emsp;&emsp; user_id &emsp;&emsp;&emsp; id
@@ -64,7 +121,7 @@ vote &emsp;&emsp;&emsp; user_id &emsp;&emsp;&emsp; id
 
 {% endblock %}
 
-
+everything after this point will be ignored
 <br><br><br><br>
 <hr>
 
