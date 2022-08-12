@@ -3,6 +3,7 @@
 - submit vote on change (get rid of submit buttons)
 ## Leftoff
 - fiddling with divs and ~ class="vote" ~ to get the stars css to work
+    -try to get the stars to work with django form. I've been trying to use the "#vote_id'selector, and it aligns the stars better now, but the hovering effects don't work yet. See the test project in recently opened (/code/webdev/test) for the current progress.
 ## Backlog
 - write documentation snippet for myvotes view - model - template interaction and how  the correct vote is associated to the right creation
 - create dashboard of all creations ordered by highest voted
