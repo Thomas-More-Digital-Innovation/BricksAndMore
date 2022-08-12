@@ -124,7 +124,7 @@ def myVotes(request):
     elif request.method == "GET":
         # make a dictionary of all creations and a form for them,
         # then add an attribute to fill in the current vote, if there is one, as an initial value
-        formList = []
+        formDict = {}
         for creation in Creation.objects.all():
             #  set formfield creation initial to creation
             # form = VotingForm(initial={'creationId': creation.id})
@@ -143,11 +143,12 @@ def myVotes(request):
                 form = VotingForm(
                     initial={'creationId': creation.id, 'vote': None})
             # add the form to the list of forms
-            formList.append(form)
+            formDict[creation] = form
+        print(f"formDict: {formDict}")
 
         return render(request=request,
                       template_name="voting/myvotes.html",
-                      context={"formList": formList,
+                      context={"formDict": formDict,
                                "creations": Creation.objects.all(),
                                "votingLists": VotingList.objects.filter(user_id=request.user.id)
                                })

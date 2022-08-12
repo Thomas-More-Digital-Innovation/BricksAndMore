@@ -1,11 +1,12 @@
 # ToDo
-
+- make radio buttons into stars
+- submit vote on change (get rid of submit buttons)
 ## Leftoff
-- iterate over "creation" form fields, render a form per creation, and submit vote with that given creation.
-    - figure out if you can even iterate over one specific form field.
-    - doing it this way would make it so that each creation can be displayed in a list along with the amount of stars, while still using model forms
+- fiddling with divs and ~ class="vote" ~ to get the stars css to work
 ## Backlog
 - write documentation snippet for myvotes view - model - template interaction and how  the correct vote is associated to the right creation
+- create dashboard of all creations ordered by highest voted
+- template cleanup (remove embedded and inline css where possible / make a css file (tailwind?))
 ### general
  -  logins
     - email + ticketnumber login? (is now just email and pass)
@@ -34,3 +35,6 @@ https://docs.djangoproject.com/en/4.0/topics/db/aggregation/
 - make page to add Creations (https://stackoverflow.com/questions/24823294/django-accessible-url-pattern-only-for-certain-group-of-users)
 - add placeholders of current vote for each creation in the forms (https://stackoverflow.com/questions/4270330/django-show-a-manytomanyfield-in-a-template) -> using m2m in template (goal is to show the current vote for each creation, need to make sure each vote is linked to the correct creation_id)
 - Changed Forms to ModelForms [TRIED & REVERTED]
+- iterate over "creation" form fields, render a form per creation, and submit vote with that given creation.
+    - figure out if you can even iterate over one specific form field.
+    - doing it this way would make it so that each creation can be displayed in a list along with the amount of stars, while still using model forms

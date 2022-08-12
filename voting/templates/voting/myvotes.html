@@ -11,16 +11,16 @@
 
 
 <style>
-  .rating {
+  .vote {
     display: flex;
   }
 
-  .rating input {
+  .vote input {
     position: absolute;
     left: -100vw;
   }
 
-  .rating label {
+  .vote label {
     width: 48px;
     height: 48px;
     padding: 48px 0 0;
@@ -28,49 +28,37 @@
     background: url('{% static 'stars.svg' %}') no-repeat top left;
   }
 
-  .rating:not(:hover) input:indeterminate+label,
-  .rating:not(:hover) input:checked~input+label,
-  .rating input:hover~input+label {
+  .vote:not(:hover) input:indeterminate+label,
+  .vote:not(:hover) input:checked~input+label,
+  .vote input:hover~input+label {
     background-position: -48px 0;
   }
 
-  .rating:not(:hover) input:focus-visible+label {
+  .vote:not(:hover) input:focus-visible+label {
     background-position: -96px 0;
   }
 </style>
 
 <body>
-  <div class="rating">
-    <input id="rating1" type="radio" name="rating" value="1">
+  <div class="vote">
+    <input id="rating1" type="radio" name="vote" value="1">
     <label for="rating1">1</label>
-    <input id="rating2" type="radio" name="rating" value="2">
+    <input id="rating2" type="radio" name="vote" value="2">
     <label for="rating2">2</label>
-    <input id="rating3" type="radio" name="rating" value="3">
+    <input id="rating3" type="radio" name="vote" value="3">
     <label for="rating3">3</label>
-    <input id="rating4" type="radio" name="rating" value="4" >
+    <input id="rating4" type="radio" name="vote" value="4" >
     <label for="rating4">4</label>
-    <input id="rating5" type="radio" name="rating" value="5">
+    <input id="rating5" type="radio" name="vote" value="5">
     <label for="rating5">5</label>
   </div>
-  <h1>
-    playground
-  </h1>
-  {% for form, currentValue in formDict.items %}
-  <form action="post">
-    {% csrf_token %}
-    CurrentValue  {{ currentValue }}
-    <br>
-    {{ form }}
 
-    <button type="submit">Submit</button>
-  </form>
-{% endfor %}
 
 
 <h1> attempt at manually rendered star form</h1>
-<h3>iterate over creations</h3>
 
-{% for form in formList %}
+
+{% for creation, form in formDict.items %}
 <form method="post" novalidate>
       {% csrf_token %}
     
@@ -79,30 +67,13 @@
       {{ form.source.errors }}
       {{ form.source }}
     
-      <table border="1">
-    
-          <tr>
-            <th>{{ form.vote.label_tag }}</th>
-            <td>
-              {{ form.vote.errors }}
-              {{ form.vote }}
-            </td>
-          </tr>
+      <h2>{{ creation.name }}</h2>
 
-          <tr>
-          {% comment %} <tr style="display:none"> {% endcomment %}
-            <th>CreationId</th>
-            <td>
-              {{ form.creationId }}
-            </tr>
+      <div class="vote">{{ form.vote }}</div>
 
-          {% comment %} <tr>
-            <th>CreationId (hidden): </th>
-            <td>
-              {{ form.creationId.errors }}
-              {{ form.creationId.value }}
-            </tr> {% endcomment %}
-      </table>
+      {% comment %} creationId won't show up in the form because it is a hidden inputfield {% endcomment %}
+      {{ form.creationId }}
+
   
     <button type="submit">Submit</button>
   </form>
@@ -121,44 +92,36 @@ vote &emsp;&emsp;&emsp; user_id &emsp;&emsp;&emsp; id
 
 {% endblock %}
 
+
+
+
+
 everything after this point will be ignored
 <br><br><br><br>
 <hr>
 
 
-{% for creation in creations %}
-
-  <p>
-    creation: "<strong>{{ creation.name }}</strong>" with id: <strong>{{ creation.id }}</strong>
-  </p>
-
-  <table>
-    <form method="post" novalidate>
+WORKING BACKUP
+{% for creation, form in formDict.items %}
+<form method="post" novalidate>
       {% csrf_token %}
-
+    
       {{ form.non_field_errors }}
-
+    
       {{ form.source.errors }}
       {{ form.source }}
-
+    
       <table border="1">
-        <tr>
-          <th>Vote</th>
-          <td>
-            {{ form.vote }}
-          </td>
-        </tr>
-
-        <tr>
-          <th>creationID</th>
-          <td>
-            <input type="hidden" name="creationId" id="id_name" {% comment %} should this be here? {% endcomment %}
-              value="{{ creation.id }}">
-          </td>
-        </tr>
+    
+          <tr>
+            <th>{{ creation.name }}</th>
+            <td>
+              {{ form.vote }}
+            </td>
+          </tr>
+          {% comment %} not rendering the hidden "creationID", cause it won't change anyway {% endcomment %}
       </table>
-
-      <button type="submit">Submit</button>
-    </form>
-  </table>
+  
+    <button type="submit">Submit</button>
+  </form>
 {% endfor %}
