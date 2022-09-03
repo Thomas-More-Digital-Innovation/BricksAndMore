@@ -5,56 +5,32 @@
 
 <hr>
 <br>
-<a href="https://iamkate.com/code/star-rating-widget/">star css link</a>  
-
-{% load static %}
 
 
-<style>
-  .vote {
-    display: flex;
-  }
 
-  .vote input {
-    color: red;
-    position: absolute;
-    left: -100vw;
-  }
+<h1>granular HTML rendering</h1>
 
-  .vote label {
-    width: 48px;
-    height: 48px;
-    padding: 48px 0 0;
-    overflow: hidden;
-    background: url('{% static 'stars.svg' %}') no-repeat top left;
-  }
+{% for creation, form in formDict.items %}
+<form method="post" novalidate>
+      {% csrf_token %}
 
-  .vote:not(:hover) input:indeterminate+label,
-  .vote:not(:hover) input:checked~input+label,
-  .vote input:hover~input+label {
-    background-position: -48px 0;
-  }
+      <h2>{{ creation.name }}</h2>
+      <div class="voteform">
+        
+        {% for radio in form.vote %}
+        {{ radio.tag }}
+        <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+        
+        {% endfor %}
+      </div>
 
-  .vote:not(:hover) input:focus-visible+label {
-    background-position: -96px 0;
-  }
-</style>
+      {% comment %} creationId won't show up in the form because it is a hidden inputfield {% endcomment %}
+      {{ form.creationId }}
 
-<body>
-  <div class="vote">
-    <input id="rating1" type="radio" name="vote" value="1">
-    <label for="rating1">1</label>
-    <input id="rating2" type="radio" name="vote" value="2">
-    <label for="rating2">2</label>
-    <input id="rating3" type="radio" name="vote" value="3">
-    <label for="rating3">3</label>
-    <input id="rating4" type="radio" name="vote" value="4" >
-    <label for="rating4">4</label>
-    <input id="rating5" type="radio" name="vote" value="5">
-    <label for="rating5">5</label>
-  </div>
-
-
+  
+    <button type="submit">Submit</button>
+  </form>
+{% endfor %}
 
 <h1> attempt at manually rendered star form</h1>
 
