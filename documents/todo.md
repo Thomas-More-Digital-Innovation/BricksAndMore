@@ -2,8 +2,8 @@
 - make radio buttons into stars
 - submit vote on change (get rid of submit buttons)
 ## Leftoff
-- fiddling with divs and ~ class="vote" ~ to get the stars css to work
-    -try to get the stars to work with django form. I've been trying to use the "#vote_id'selector, and it aligns the stars better now, but the hovering effects don't work yet. See the test project in recently opened (/code/webdev/test) for the current progress.
+- Css for the star forms works but the HMTL forms use the same vote_id's across forms which makes it so that only the forst form chagnes when voting (since all 'for' points to the same 'id'. Fix this by making the vote_id's unique.)
+https://docs.djangoproject.com/en/4.1/ref/forms/widgets/#:~:text=%3D%22%7B%7B-,radio.id_for_label,-%7D%7D%22%3E
 ## Backlog
 - write documentation snippet for myvotes view - model - template interaction and how  the correct vote is associated to the right creation
 - create dashboard of all creations ordered by highest voted
@@ -39,3 +39,5 @@ https://docs.djangoproject.com/en/4.0/topics/db/aggregation/
 - iterate over "creation" form fields, render a form per creation, and submit vote with that given creation.
     - figure out if you can even iterate over one specific form field.
     - doing it this way would make it so that each creation can be displayed in a list along with the amount of stars, while still using model forms
+- fiddling with divs and ~ class="vote" ~ to get the stars css to work
+    -try to get the stars to work with django form. I've been trying to use the "#vote_id'selector, and it aligns the stars better now, but the hovering effects don't work yet. See the test project in recently opened (/code/webdev/test) for the current progress.
