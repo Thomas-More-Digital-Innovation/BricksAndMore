@@ -144,7 +144,7 @@ def myVotes(request):
                     initial={'creationId': creation.id, 'vote': None})
             # add the form to the list of forms
             formDict[creation] = form
-        print(f"formDict: {formDict}")
+        # print(f"formDict: {formDict}")
 
         return render(request=request,
                       template_name="voting/myvotes.html",

@@ -11,16 +11,26 @@
 <h1>granular HTML rendering</h1>
 
 {% for creation, form in formDict.items %}
+{% comment %} 
+<div>
+  <h3>attributes:</h3>
+  <p>name: {{creation.name}}</p>
+  <p>creation.id: {{creation.id}}</p>
+</div>
+{% endcomment %}
+
+
+
 <form method="post" novalidate>
       {% csrf_token %}
 
       <h2>{{ creation.name }}</h2>
       <div class="voteform">
         
+        {% comment %} The form is rendered manually because multiple forms are displayed on one page. This way all the forms can get unique id's {% endcomment %}
         {% for radio in form.vote %}
-        {{ radio.tag }}
-        <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
-        
+          <input name="creation_{{creation.id}}" type="radio" id="creation_{{creation.id}}_{{radio.id_for_label}}" value={{ radio.choice_value }}>
+          <label for="creation_{{creation.id}}_{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
         {% endfor %}
       </div>
 
@@ -32,29 +42,6 @@
   </form>
 {% endfor %}
 
-<h1> attempt at manually rendered star form</h1>
-
-
-{% for creation, form in formDict.items %}
-<form method="post" novalidate>
-      {% csrf_token %}
-    
-      {{ form.non_field_errors }}
-    
-      {{ form.source.errors }}
-      {{ form.source }}
-    
-      <h2>{{ creation.name }}</h2>
-
-      <div class="vote">{{ form.vote }}</div>
-
-      {% comment %} creationId won't show up in the form because it is a hidden inputfield {% endcomment %}
-      {{ form.creationId }}
-
-  
-    <button type="submit">Submit</button>
-  </form>
-{% endfor %}
 
 <hr>
 <br>

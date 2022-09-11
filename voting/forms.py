@@ -21,8 +21,12 @@ class VotingForm(forms.Form):
     CHOICES = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
 
     # user enters vote
-    vote = forms.ChoiceField(
-        choices=CHOICES, widget=forms.RadioSelect)
+    # vote = forms.ChoiceField(
+    #     choices=CHOICES, widget=forms.RadioSelect)
+
+    # user enters vote
+    vote = forms.ChoiceField(choices=CHOICES,
+                             widget=forms.RadioSelect(attrs={'onchange': 'actionform.submit();'}))
 
     # place to keep track of the creation
     creationId = forms.IntegerField(widget=forms.HiddenInput)
