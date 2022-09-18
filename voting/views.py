@@ -86,23 +86,28 @@ def myVotes(request):
         print("POST")
         form = VotingForm(data=request.POST)
         print(f"formErrors: {form.errors}")
+        voteValue = request.POST.get('vote')
+        print(
+            f"voteValue: {voteValue}, creationID: {request.POST.get('creationId')}")
         if form.is_valid():
-            vote = form.cleaned_data.get('vote')
-            creationId = form.cleaned_data.get('creationId')
             user = request.user
-            print(f"________FORMSTUFF______: {vote, creationId, user}")
+            creationId = form.cleaned_data.get('creationId')
+            vote = form.cleaned_data.get('vote')
+            # vote = form.cleaned_data.get('creation_' + str(creationId))
+            # print(f"________ACTUAL_FORMSTUFF______: {form.cleaned_data}")
+            # print(f"________FORMSTUFF______: {vote, creationId, user}")
 
             # if user does not have a VotingList, create one and add the vote
             if not VotingList.objects.filter(user=user, creation=Creation.objects.get(id=creationId)).exists():
                 # if not VotingList.objects.filter(user=user, creation=creation).exists():
-
-                print("no voting list")
+                votedCreation = Creation.objects.get(id=creationId)
+                # print(f"___votedCreation: {votedCreation}")
 
                 newVotingList = VotingList(user=user,
                                            vote=vote,
                                            )
                 newVotingList.save()
-                newVotingList.creation.set([creation])
+                newVotingList.creation.set([votedCreation])
 
             # if user does have a VotingList, add the vote to the list
             # TODO: change to else?

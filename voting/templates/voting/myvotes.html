@@ -26,10 +26,16 @@
 
       <h2>{{ creation.name }}</h2>
       <div class="voteform">
-        
+        {% for radio1 in form.vote %}
+        {% endfor %}
         {% comment %} The form is rendered manually because multiple forms are displayed on one page. This way all the forms can get unique id's {% endcomment %}
         {% for radio in form.vote %}
-          <input name="creation_{{creation.id}}" type="radio" id="creation_{{creation.id}}_{{radio.id_for_label}}" value={{ radio.choice_value }}>
+        
+          {% comment %} <input name="creation_{{creation.id}}" {% endcomment %}
+          <input name="vote"
+          type="radio" 
+          id="creation_{{creation.id}}_{{radio.id_for_label}}" 
+          value="{{ forloop.counter }}">
           <label for="creation_{{creation.id}}_{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
         {% endfor %}
       </div>
@@ -53,6 +59,32 @@ vote &emsp;&emsp;&emsp; user_id &emsp;&emsp;&emsp; id
     {{item.user_id}}&emsp;&emsp;&emsp;&emsp;&emsp;
     {{item.id}}&emsp;&emsp;&emsp;
   </p>
+{% endfor %}
+
+<h1> automatically rendered form to test submissions</h1>
+
+{% for creation, form in formDict.items %}
+<form method="post" novalidate>
+      {% csrf_token %}
+    
+      {{ form.non_field_errors }}
+    
+      {{ form.source.errors }}
+      {{ form.source }}
+    
+      <table border="1">
+    
+          <tr>
+            <th>{{ creation.name }}</th>
+            <td>
+              {{ form.vote }}
+            </td>
+          </tr>
+          {% comment %} not rendering the hidden "creationID", cause it won't change anyway {% endcomment %}
+      </table>
+  
+    <button type="submit">Submit</button>
+  </form>
 {% endfor %}
 
 {% endblock %}

@@ -2,12 +2,13 @@
 - make radio buttons into stars
 - submit vote on change (get rid of submit buttons)
 ## Leftoff
-- vote form submission always errors on 'this field is required'
+- vote returns None, https://stackoverflow.com/questions/46518908/django-forms-submit-radio-button-value-shows-up-as-none
 
 ## Backlog
 - write documentation snippet for myvotes view - model - template interaction and how  the correct vote is associated to the right creation
 - create dashboard of all creations ordered by highest voted
 - template cleanup (remove embedded and inline css where possible / make a css file (tailwind?))
+- logging (https://docs.djangoproject.com/en/4.1/topics/logging/)
 ### general
  -  logins
     - email + ticketnumber login? (is now just email and pass)

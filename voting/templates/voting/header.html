@@ -4,6 +4,13 @@
 </head>
 
 <body>
+  <div>
+    <h2>Errors</h2>
+    <ul>
+      {% for error in errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+  </div>
 
     {% comment %} {% include "main/includes/navbar.html" %} {% endcomment %}
     {% include "voting/includes/messages.html" %}

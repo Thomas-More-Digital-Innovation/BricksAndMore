@@ -12,8 +12,7 @@ from: https://iamkate.com/code/star-rating-widget/
 }
 
 .voteform input {
-    position: absolute;
-    left: -100vw;
+    display: none;
 }
 
 .voteform label {

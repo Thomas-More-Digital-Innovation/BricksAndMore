@@ -1,4 +1,5 @@
 from logging import PlaceHolder
+from pickle import FALSE
 from tkinter import HIDDEN
 from turtle import title
 from typing_extensions import Required
@@ -21,12 +22,12 @@ class VotingForm(forms.Form):
     CHOICES = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
 
     # user enters vote
-    # vote = forms.ChoiceField(
-    #     choices=CHOICES, widget=forms.RadioSelect)
+    vote = forms.ChoiceField(
+        choices=CHOICES, widget=forms.RadioSelect, required=False)
 
     # user enters vote
-    vote = forms.ChoiceField(choices=CHOICES,
-                             widget=forms.RadioSelect(attrs={'onchange': 'actionform.submit();'}))
+    # vote = forms.ChoiceField(choices=CHOICES,
+    #                          widget=forms.RadioSelect(attrs={'onchange': 'actionform.submit();'}), required=FALSE)
 
     # place to keep track of the creation
     creationId = forms.IntegerField(widget=forms.HiddenInput)
