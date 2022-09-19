@@ -5,6 +5,44 @@
 
 <hr>
 <br>
+<h1>granular HTML rendering using list</h1>
+
+{% for formListItems in formList %}
+
+<form method="post" novalidate>
+      {% csrf_token %}
+      <h2>{{ formListItems.creation.name }}</h2>
+      <div class="voteform">
+        {% for radio1 in formListItems.form.vote %}
+        {% endfor %}
+        {% comment %} The form is rendered manually because multiple forms are displayed on one page. This way all the forms can get unique id's {% endcomment %}
+        {% for radio in formListItems.form.vote %}
+        
+          {% comment %} <input name="creation_{{creation.id}}" {% endcomment %}
+          <input name="vote"
+          type="radio" 
+          id="creation_{{formListItems.creation.id}}_{{radio.id_for_label}}" 
+          forloopCounter="{{ forloop.counter }}"
+          formListItemsVote="{{ formListItems.vote }}"
+          value="{{ forloop.counter }}"
+          {% if forloop.counter == formListItems.vote %}
+          checked
+          {% endif %}
+          >
+          <label for="creation_{{formListItems.creation.id}}_{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+          {% endfor %}
+        </div>
+        {{ formListItems.form.creationId }}
+
+      {% comment %} creationId won't show up in the form because it is a hidden inputfield {% endcomment %}
+
+  
+    <button type="submit">Submit</button>
+  </form>
+{% endfor %}
+
+
+
 
 
 
@@ -23,7 +61,6 @@
 
 <form method="post" novalidate>
       {% csrf_token %}
-
       <h2>{{ creation.name }}</h2>
       <div class="voteform">
         {% for radio1 in form.vote %}
@@ -63,21 +100,21 @@ vote &emsp;&emsp;&emsp; user_id &emsp;&emsp;&emsp; id
 
 <h1> automatically rendered form to test submissions</h1>
 
-{% for creation, form in formDict.items %}
+{% for formListItems in formList %}
 <form method="post" novalidate>
       {% csrf_token %}
     
-      {{ form.non_field_errors }}
+      {{ formListItems.form.non_field_errors }}
     
-      {{ form.source.errors }}
-      {{ form.source }}
+      {{ formListItems.form.source.errors }}
+      {{ formListItems.form.source }}
     
       <table border="1">
     
           <tr>
-            <th>{{ creation.name }}</th>
+            <th>{{ formListItems.creation.name }}</th>
             <td>
-              {{ form.vote }}
+              {{ formListItems.form.vote }}
             </td>
           </tr>
           {% comment %} not rendering the hidden "creationID", cause it won't change anyway {% endcomment %}

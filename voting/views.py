@@ -129,39 +129,47 @@ def myVotes(request):
     elif request.method == "GET":
         # make a dictionary of all creations and a form for them,
         # then add an attribute to fill in the current vote, if there is one, as an initial value
-        formDict = {}
+        formList = []
         for creation in Creation.objects.all():
-            #  set formfield creation initial to creation
-            # form = VotingForm(initial={'creationId': creation.id})
-            form = VotingForm(initial={'creationId': creation.id})
+            # formListItems contains each individual creation, form and vote if there is one
+            formListItems = {}
 
+            # add the creation to the formListItems dictionary
+            formListItems['creation'] = creation
+
+            # add the form to the formListItems dictionary (initial values could be added here but since we render the form manually, this won't work)
+            formListItems['form'] = VotingForm()
             # if there is a vote in the corresponding VotingList
             if VotingList.objects.filter(user=request.user, creation=Creation.objects.get(id=creation.id)).exists():
                 # get the vote
                 currentVote = VotingList.objects.filter(
                     user=request.user, creation=Creation.objects.get(id=creation.id)).get().vote
-                # add the current vote to the form
+                # add the current vote to the formListItems
+                formListItems['vote'] = currentVote
                 form = VotingForm(
-                    initial={'creationId': creation.id, 'vote': currentVote})
+                    # initial={'vote': currentVote, 'creationId': creation.id} # initial values won't work with manually rendered forms
+                )
             # if no vote is found
             else:
+                # formListItems['vote'] = None # not needed ?
                 form = VotingForm(
-                    initial={'creationId': creation.id, 'vote': None})
+                    # initial={'vote': currentVote, 'creationId': creation.id} # initial values won't work with manually rendered forms
+                )
             # add the form to the list of forms
-            formDict[creation] = form
-        # print(f"formDict: {formDict}")
+            formList.append(formListItems)
+        print(f"formList: {formList}")
 
         return render(request=request,
                       template_name="voting/myvotes.html",
-                      context={"formDict": formDict,
-                               "creations": Creation.objects.all(),
-                               "votingLists": VotingList.objects.filter(user_id=request.user.id)
-                               })
+                      context={
+                          "formList": formList,
+                          # "creations": Creation.objects.all(),
+                          "votingLists": VotingList.objects.filter(user_id=request.user.id)
+                      })
 
 
 def userIsStaff(user):
     return user.is_staff
-    # TODO: does this even work? shouldn't the lambda below be u.userIsStaff()?
 
 
 @ user_passes_test(lambda u: u.is_staff)

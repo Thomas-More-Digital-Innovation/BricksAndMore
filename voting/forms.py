@@ -25,21 +25,10 @@ class VotingForm(forms.Form):
     vote = forms.ChoiceField(
         choices=CHOICES, widget=forms.RadioSelect, required=False)
 
-    # user enters vote
+    # user enters vote (submits on change)
     # vote = forms.ChoiceField(choices=CHOICES,
     #                          widget=forms.RadioSelect(attrs={'onchange': 'actionform.submit();'}), required=FALSE)
 
     # place to keep track of the creation
     creationId = forms.IntegerField(widget=forms.HiddenInput)
     # creationId = forms.IntegerField()
-
-
-# class VotingFormMODELVERSION(ModelForm):
-#     class Meta:
-#         model = VotingList
-#         fields = ['vote']
-#         widgets = {'vote': forms.RadioSelect(choices=VotingList.CHOICES)}
-
-#     # def __init__(self, *args, **kwargs):
-#     #     super(VotingForm, self).__init__(*args, **kwargs)
-#     #     self.fields['vote'].choices = VotingList.CHOICES

@@ -1,15 +1,14 @@
-from email import message
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.contrib.auth.models import User
 from django import forms
-from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib import messages
-from django.contrib.auth.decorators import user_passes_test, login_required
-from .models import *
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+
 from .forms import *
+from .models import *
 
 # Create your views here.
 
@@ -87,33 +86,33 @@ def myVotes(request):
         print("POST")
         form = VotingForm(data=request.POST)
         print(f"formErrors: {form.errors}")
+        voteValue = request.POST.get('vote')
+        print(
+            f"voteValue: {voteValue}, creationID: {request.POST.get('creationId')}")
         if form.is_valid():
-
-            from django.db import connection
-            # all_tables = connection.introspection.table_names()
-            # print(f"all_tables: {all_tables}")
-
-            vote = form.cleaned_data.get('vote')
-            creationId = form.cleaned_data.get('creationId')
-            creation = Creation.objects.get(id=creationId)
             user = request.user
-            print(f"formStuff: {vote, creationId, user}")
+            creationId = form.cleaned_data.get('creationId')
+            vote = form.cleaned_data.get('vote')
+            # vote = form.cleaned_data.get('creation_' + str(creationId))
+            # print(f"________ACTUAL_FORMSTUFF______: {form.cleaned_data}")
+            # print(f"________FORMSTUFF______: {vote, creationId, user}")
 
             # if user does not have a VotingList, create one and add the vote
             if not VotingList.objects.filter(user=user, creation=Creation.objects.get(id=creationId)).exists():
-
-                print("no voting list")
+                # if not VotingList.objects.filter(user=user, creation=creation).exists():
+                votedCreation = Creation.objects.get(id=creationId)
+                # print(f"___votedCreation: {votedCreation}")
 
                 newVotingList = VotingList(user=user,
                                            vote=vote,
                                            )
                 newVotingList.save()
-                newVotingList.creation.set([creation])
+                newVotingList.creation.set([votedCreation])
 
             # if user does have a VotingList, add the vote to the list
             # TODO: change to else?
-
             elif VotingList.objects.filter(user=user, creation=Creation.objects.get(id=creationId)).exists():
+                # elif VotingList.objects.filter(user=user, creation=creation).exists():
                 updateVotingList = VotingList.objects.get(
                     user=user, creation=Creation.objects.get(id=creationId))
                 updateVotingList.vote = vote
@@ -127,17 +126,40 @@ def myVotes(request):
         #     for msg in form.error_messages:
         #         messages.error(request, f"{msg}: {form.error_messages[msg]}")
 
-    form = VotingForm()
-    return render(request=request,
-                  template_name="voting/myvotes.html",
-                  context={"form": form, "creations": Creation.objects.all(),
-                           "votingLists": VotingList.objects.filter(user_id=request.user.id)
-                           })
+    elif request.method == "GET":
+        # make a dictionary of all creations and a form for them,
+        # then add an attribute to fill in the current vote, if there is one, as an initial value
+        formDict = {}
+        for creation in Creation.objects.all():
+            # if there is a vote in the corresponding VotingList
+            if VotingList.objects.filter(user=request.user, creation=Creation.objects.get(id=creation.id)).exists():
+                # get the vote
+                currentVote = VotingList.objects.filter(
+                    user=request.user, creation=Creation.objects.get(id=creation.id)).get().vote
+                # add the current vote to the form
+                print(f"currentVote: {currentVote}")
+                form = VotingForm(
+                    # initial={'vote': currentVote, 'creationId': creation.id} # initial values won't work with manually rendered forms
+                )
+            # if no vote is found
+            else:
+                form = VotingForm(
+                    # initial={'vote': currentVote, 'creationId': creation.id} # initial values won't work with manually rendered forms
+                )
+            # add the form to the list of forms
+            formDict[creation] = form
+        print(f"formDict: {formDict}")
+
+        return render(request=request,
+                      template_name="voting/myvotes.html",
+                      context={"formDict": formDict,
+                               #    "creations": Creation.objects.all(),
+                               "votingLists": VotingList.objects.filter(user_id=request.user.id)
+                               })
 
 
 def userIsStaff(user):
     return user.is_staff
-    # TODO: does this even work? shouldn't the lambda below be u.userIsStaff()?
 
 
 @ user_passes_test(lambda u: u.is_staff)
