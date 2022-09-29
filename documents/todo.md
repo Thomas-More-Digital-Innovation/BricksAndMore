@@ -1,6 +1,7 @@
 # ToDo
 - make radio buttons into stars
 - submit vote on change (get rid of submit buttons)
+- fix creationId in forms
 ## Leftoff
 - vote returns None, https://stackoverflow.com/questions/46518908/django-forms-submit-radio-button-value-shows-up-as-none
 

@@ -87,8 +87,9 @@ def myVotes(request):
         form = VotingForm(data=request.POST)
         print(f"formErrors: {form.errors}")
         voteValue = request.POST.get('vote')
+        creationId = request.POST.get('creationId')
         print(
-            f"voteValue: {voteValue}, creationID: {request.POST.get('creationId')}")
+            f"voteValue: {voteValue}, creationID: {creationId}")
         if form.is_valid():
             user = request.user
             creationId = form.cleaned_data.get('creationId')
@@ -129,11 +130,12 @@ def myVotes(request):
     elif request.method == "GET":
         # make a dictionary of all creations and a form for them,
         # then add an attribute to fill in the current vote, if there is one, as an initial value
+
+        # formList contains all forms and needed values
         formList = []
         for creation in Creation.objects.all():
             # formListItems contains each individual creation, form and vote if there is one
             formListItems = {}
-
             # add the creation to the formListItems dictionary
             formListItems['creation'] = creation
 

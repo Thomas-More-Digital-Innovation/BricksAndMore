@@ -13,8 +13,6 @@
       {% csrf_token %}
       <h2>{{ formListItems.creation.name }}</h2>
       <div class="voteform">
-        {% for radio1 in formListItems.form.vote %}
-        {% endfor %}
         {% comment %} The form is rendered manually because multiple forms are displayed on one page. This way all the forms can get unique id's {% endcomment %}
         {% for radio in formListItems.form.vote %}
         
@@ -32,7 +30,9 @@
           <label for="creation_{{formListItems.creation.id}}_{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
           {% endfor %}
         </div>
-        {{ formListItems.form.creationId }}
+        <div><input type="hidden" name="creationId" value="{{ formListItems.creation.id }}"></div>
+        {{ formListItems.creation.id }}
+        
 
       {% comment %} creationId won't show up in the form because it is a hidden inputfield {% endcomment %}
 
@@ -97,65 +97,4 @@ vote &emsp;&emsp;&emsp; user_id &emsp;&emsp;&emsp; id
     {{item.id}}&emsp;&emsp;&emsp;
   </p>
 {% endfor %}
-
-<h1> automatically rendered form to test submissions</h1>
-
-{% for formListItems in formList %}
-<form method="post" novalidate>
-      {% csrf_token %}
-    
-      {{ formListItems.form.non_field_errors }}
-    
-      {{ formListItems.form.source.errors }}
-      {{ formListItems.form.source }}
-    
-      <table border="1">
-    
-          <tr>
-            <th>{{ formListItems.creation.name }}</th>
-            <td>
-              {{ formListItems.form.vote }}
-            </td>
-          </tr>
-          {% comment %} not rendering the hidden "creationID", cause it won't change anyway {% endcomment %}
-      </table>
-  
-    <button type="submit">Submit</button>
-  </form>
-{% endfor %}
-
 {% endblock %}
-
-
-
-
-
-everything after this point will be ignored
-<br><br><br><br>
-<hr>
-
-
-WORKING BACKUP
-{% for creation, form in formDict.items %}
-<form method="post" novalidate>
-      {% csrf_token %}
-    
-      {{ form.non_field_errors }}
-    
-      {{ form.source.errors }}
-      {{ form.source }}
-    
-      <table border="1">
-    
-          <tr>
-            <th>{{ creation.name }}</th>
-            <td>
-              {{ form.vote }}
-            </td>
-          </tr>
-          {% comment %} not rendering the hidden "creationID", cause it won't change anyway {% endcomment %}
-      </table>
-  
-    <button type="submit">Submit</button>
-  </form>
-{% endfor %}
