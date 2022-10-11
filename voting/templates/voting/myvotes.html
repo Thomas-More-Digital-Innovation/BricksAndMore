@@ -5,7 +5,73 @@
 
 <hr>
 <br>
-<h1>granular HTML rendering using list</h1>
+
+
+<h1>VotingPage</h1>
+{% comment %} iterate over all creations in the formList {% endcomment %}
+{% for formListItems in formList %}
+  <h2>({{formListItems.creation.id}}) {{ formListItems.creation.name }}</h2>
+  {% comment %} iterate over the carehoryforms dictionary (so all data for one creation: forms and vote per category) {% endcomment %}
+  {% for key, value in formListItems.categoryForms.items %}
+    <h3>{{key}}</h3>
+
+    <p>categoryVote: {{value.vote}}</p>
+
+  
+    <form method="post" novalidate>
+      {% csrf_token %}  
+
+          {% for radio in value.form.vote %}
+            <input name="vote"
+            type="radio" 
+            id="creation_{{formListItems.creation.id}}_{{radio.id_for_label}}"  
+            {% comment %} TODO: remove debugging attributes {% endcomment %}
+            forloopCounter="{{ forloop.counter }}"
+            currentVote="{{ value.vote }}"
+            value="{{ forloop.counter }}"
+            {% if forloop.counter == value.vote %}
+            checked>
+            {% endif %}
+            <label for="creation_{{formListItems.creation.id}}_{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+          
+            {% endfor %}
+
+          <div>
+            <input type="hidden" name="creationId" value="{{ formListItems.creation.id }}">
+          </div>
+          (creationID: {{ formListItems.creation.id }})
+          <div>
+            <input type="hidden" name="category" value="{{key}}">
+          </div>
+          <div class="voteform">
+    {% endfor %}
+{% endfor %}
+
+    
+
+    {% comment %} creationId won't show up in the form because it is a hidden inputfield {% endcomment %}
+
+
+    <button type="submit">Submit</button>
+  </form>
+
+
+
+<hr>
+<br>
+<h1>data straight from votinglist</h1>
+vote &emsp;&emsp;&emsp; user_id &emsp;&emsp;&emsp; id
+{% for item in votingLists %}
+  <p>
+    {{item.vote}}&emsp;&emsp;&emsp;&emsp;
+    {{item.user_id}}&emsp;&emsp;&emsp;&emsp;&emsp;
+    {{item.id}}&emsp;&emsp;&emsp;
+  </p>
+{% endfor %}
+{% endblock %}
+
+
+backup:
 
 {% for formListItems in formList %}
 
@@ -31,7 +97,7 @@
           {% endfor %}
         </div>
         <div><input type="hidden" name="creationId" value="{{ formListItems.creation.id }}"></div>
-        {{ formListItems.creation.id }}
+        (creationID: {{ formListItems.creation.id }})
         
 
       {% comment %} creationId won't show up in the form because it is a hidden inputfield {% endcomment %}
@@ -40,61 +106,3 @@
     <button type="submit">Submit</button>
   </form>
 {% endfor %}
-
-
-
-
-
-
-<h1>granular HTML rendering</h1>
-
-{% for creation, form in formDict.items %}
-{% comment %} 
-<div>
-  <h3>attributes:</h3>
-  <p>name: {{creation.name}}</p>
-  <p>creation.id: {{creation.id}}</p>
-</div>
-{% endcomment %}
-
-
-
-<form method="post" novalidate>
-      {% csrf_token %}
-      <h2>{{ creation.name }}</h2>
-      <div class="voteform">
-        {% for radio1 in form.vote %}
-        {% endfor %}
-        {% comment %} The form is rendered manually because multiple forms are displayed on one page. This way all the forms can get unique id's {% endcomment %}
-        {% for radio in form.vote %}
-        
-          {% comment %} <input name="creation_{{creation.id}}" {% endcomment %}
-          <input name="vote"
-          type="radio" 
-          id="creation_{{creation.id}}_{{radio.id_for_label}}" 
-          value="{{ forloop.counter }}">
-          <label for="creation_{{creation.id}}_{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
-        {% endfor %}
-      </div>
-
-      {% comment %} creationId won't show up in the form because it is a hidden inputfield {% endcomment %}
-      {{ form.creationId }}
-
-  
-    <button type="submit">Submit</button>
-  </form>
-{% endfor %}
-
-
-<hr>
-<br>
-<h1>data straight from votinglist</h1>
-vote &emsp;&emsp;&emsp; user_id &emsp;&emsp;&emsp; id
-{% for item in votingLists %}
-  <p>
-    {{item.vote}}&emsp;&emsp;&emsp;&emsp;
-    {{item.user_id}}&emsp;&emsp;&emsp;&emsp;&emsp;
-    {{item.id}}&emsp;&emsp;&emsp;
-  </p>
-{% endfor %}
-{% endblock %}

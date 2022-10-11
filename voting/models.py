@@ -1,3 +1,4 @@
+from unicodedata import category
 from django.db import models
 from django.contrib.auth.models import User
 from django.db import models
@@ -26,5 +27,8 @@ class VotingList(models.Model):
 
     # add many-to-many relationship with Creation
     creation = models.ManyToManyField(Creation)
+
+    CATEGORIES = ["creativity", "details", "impressiveness"]
+    category = models.CharField(max_length=20)
 
     vote = models.IntegerField(blank=True, null=True)

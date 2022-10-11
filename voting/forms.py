@@ -14,11 +14,11 @@ class CreationForm(forms.Form):
 class VotingForm(forms.Form):
 
     # choices for the radiobuttons (stars/ legobricks) in the voting form, (value, name)
-    CHOICES = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
+    # CHOICES = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')]
 
     # user enters vote
     vote = forms.ChoiceField(
-        choices=CHOICES, widget=forms.RadioSelect, required=False)
+        choices=VotingList.CHOICES, widget=forms.RadioSelect, required=False)
 
     # user enters vote (submits on change)
     # vote = forms.ChoiceField(choices=CHOICES,
@@ -26,4 +26,5 @@ class VotingForm(forms.Form):
 
     # place to keep track of the creation
     creationId = forms.IntegerField(widget=forms.HiddenInput)
+    category = forms.CharField(max_length=20, widget=forms.HiddenInput)
     # creationId = forms.IntegerField()
