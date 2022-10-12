@@ -21,29 +21,25 @@
     <form method="post" novalidate>
       {% csrf_token %}  
 
+      <div class="voteform">
           {% for radio in value.form.vote %}
             <input name="vote"
             type="radio" 
-            id="creation_{{formListItems.creation.id}}_{{radio.id_for_label}}"  
-            {% comment %} TODO: remove debugging attributes {% endcomment %}
-            forloopCounter="{{ forloop.counter }}"
-            currentVote="{{ value.vote }}"
+            id="crea_{{formListItems.creation.id}}_cat_{{key}}_{{radio.id_for_label}}"  
             value="{{ forloop.counter }}"
-            {% if forloop.counter == value.vote %}
-            checked>
-            {% endif %}
-            <label for="creation_{{formListItems.creation.id}}_{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
-          
+            {% if forloop.counter == value.vote %}checked{% endif %}>
+            <label for="crea_{{formListItems.creation.id}}_cat_{{key}}_{{radio.id_for_label}}">{{ radio.choice_label }}</label>
             {% endfor %}
-
-          <div>
-            <input type="hidden" name="creationId" value="{{ formListItems.creation.id }}">
+            <div>
+              <input type="hidden" name="creationId" value="{{ formListItems.creation.id }}">
+            </div>
+            (creationID: {{ formListItems.creation.id }})
+            <div>
+              <input type="hidden" name="category" value="{{key}}">
+            </div>
+            <button type="submit">Submit</button>
           </div>
-          (creationID: {{ formListItems.creation.id }})
-          <div>
-            <input type="hidden" name="category" value="{{key}}">
-          </div>
-          <div class="voteform">
+    </form> 
     {% endfor %}
 {% endfor %}
 
@@ -95,14 +91,13 @@ backup:
           >
           <label for="creation_{{formListItems.creation.id}}_{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
           {% endfor %}
+          <div><input type="hidden" name="creationId" value="{{ formListItems.creation.id }}"></div>
+          (creationID: {{ formListItems.creation.id }})
+          <button type="submit">Submit</button>
         </div>
-        <div><input type="hidden" name="creationId" value="{{ formListItems.creation.id }}"></div>
-        (creationID: {{ formListItems.creation.id }})
+        </div>
+      </form>
         
 
       {% comment %} creationId won't show up in the form because it is a hidden inputfield {% endcomment %}
-
-  
-    <button type="submit">Submit</button>
-  </form>
 {% endfor %}
