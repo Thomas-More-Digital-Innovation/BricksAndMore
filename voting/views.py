@@ -86,40 +86,35 @@ def myVotes(request):
         print("POST")
         form = VotingForm(data=request.POST)
         print(f"formErrors: {form.errors}")
-        voteValue = request.POST.get('vote')
-        creationId = request.POST.get('creationId')
-        print(
-            f"voteValue: {voteValue}, creationID: {creationId}")
         if form.is_valid():
             user = request.user
             creationId = form.cleaned_data.get('creationId')
-            # category = form.cleaned_data.get('category')
+            category = form.cleaned_data.get('category')
             vote = form.cleaned_data.get('vote')
-            # vote = form.cleaned_data.get('creation_' + str(creationId))
-            # print(f"________ACTUAL_FORMSTUFF______: {form.cleaned_data}")
-            # print(f"________FORMSTUFF______: {vote, creationId, user}")
+            print(
+                f"creationID: {creationId} category: {category}, voteValue: {vote}")
 
             # if user does not have a VotingList, create one and add the vote
-            if not VotingList.objects.filter(user=user, creation=Creation.objects.get(id=creationId)).exists():
+            if not VotingList.objects.filter(user=user, creation=Creation.objects.get(id=creationId), category=category).exists():
                 # if not VotingList.objects.filter(user=user, creation=creation).exists():
                 votedCreation = Creation.objects.get(id=creationId)
                 # print(f"___votedCreation: {votedCreation}")
 
                 newVotingList = VotingList(user=user,
                                            vote=vote,
+                                           category=category,
                                            )
                 newVotingList.save()
                 newVotingList.creation.set([votedCreation])
 
             # if user does have a VotingList, add the vote to the list
             # TODO: change to else?
-            elif VotingList.objects.filter(user=user, creation=Creation.objects.get(id=creationId)).exists():
+            elif VotingList.objects.filter(user=user, creation=Creation.objects.get(id=creationId), category=category).exists():
                 # elif VotingList.objects.filter(user=user, creation=creation).exists():
                 updateVotingList = VotingList.objects.get(
-                    user=user, creation=Creation.objects.get(id=creationId))
+                    user=user, creation=Creation.objects.get(id=creationId), category=category)
                 updateVotingList.vote = vote
                 updateVotingList.save()
-
         else:
             print("invalid form")
 
@@ -156,35 +151,7 @@ def myVotes(request):
                 categoryForm = {"form": VotingForm(), "vote": currentVote}
                 categoryForms[category] = categoryForm
             formListItems['categoryForms'] = categoryForms
-            #     print(
-            #         f"creation: {creation}, category: {category}, currentVote: {currentVote}")
-            print()
-            print(f"formList: {formList}")
-            print()
-
             formList.append(formListItems)
-
-        # # add the form to the formListItems dictionary (initial values could be added here but since we render the form manually, this won't work)
-        # formListItems['form'] = VotingForm()
-        # # if there is a vote in the corresponding VotingList
-        # if VotingList.objects.filter(user=request.user, creation=Creation.objects.get(id=creation.id)).exists():
-        #     # get the vote
-        #     currentVote = VotingList.objects.filter(
-        #         user=request.user, creation=Creation.objects.get(id=creation.id)).get().vote
-        #     # add the current vote to the formListItems
-        #     formListItems['vote'] = currentVote
-        #     form = VotingForm(
-        #         # initial={'vote': currentVote, 'creationId': creation.id} # initial values won't work with manually rendered forms
-        #     )
-        # # if no vote is found
-        # else:
-        #     # formListItems['vote'] = None # not needed ?
-        #     form = VotingForm(
-        #         # initial={'vote': currentVote, 'creationId': creation.id} # initial values won't work with manually rendered forms
-        #     )
-        # add the form to the list of forms
-        #     formList.append(formListItems)
-        # print(f"formList: {formList}")
 
         return render(request=request,
                       template_name="voting/myvotes.html",
