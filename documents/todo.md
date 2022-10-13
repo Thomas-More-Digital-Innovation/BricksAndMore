@@ -15,6 +15,14 @@
 - template cleanup (remove embedded and inline css where possible / make a css file (tailwind?))
 - logging (<https://docs.djangoproject.com/en/4.1/topics/logging/>)
 
+## Roadmap
+
+10-16 october: Aggregations and dashboard
+17-23 october: other development, logins (social auth), finishing up kanbanboard
+24-30 october: styling
+31 october - 6 november: deployment
+7-13 november: extra time
+
 ### general
 
 - logins
@@ -48,6 +56,7 @@
 # Useful links
 
 ## aggregation (for votes)
+
 <https://docs.djangoproject.com/en/4.0/topics/db/aggregation/>
 
 # Far Future Ideas

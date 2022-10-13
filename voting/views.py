@@ -168,6 +168,8 @@ def userIsStaff(user):
 
 @ user_passes_test(lambda u: u.is_staff)
 def dashboard(request):
+    # build a dictionary of the highest voted creations
+
     return render(request=request,
                   template_name="voting/dashboard.html",
                   context={"creations": Creation.objects.all()})
