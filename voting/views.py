@@ -178,16 +178,17 @@ def dashboard(request):
     # for i in range(len(avgPerCreation)):
     #     print(f"{avgPerCreation[i]}: {avgPerCreation[i].avg}")
 
-    highestCrea = VotingList.objects.filter(category__startswith=""
+    # dictionary of creation id and its avg vote per category
+    Creation.objects.values('id').annotate(avg=Avg("votinglist__vote"))
 
-    highestCrea=VotingList.objects.filter(
+    highestCrea = VotingList.objects.filter(
         category__startswith="crea").aggregate(avg=Avg("vote"))
     print(highestCrea)
 
-    highestUniq=VotingList.objects.filter(
+    highestUniq = VotingList.objects.filter(
         category__startswith="uniq").aggregate(avg=Avg("vote"))
 
-    highestImpr=VotingList.objects.filter(
+    highestImpr = VotingList.objects.filter(
         category__startswith="impr").aggregate(avg=Avg("vote"))
 
     return render(request=request,
@@ -205,11 +206,11 @@ def dashboard(request):
 def addCreation(request):
     # TODO: 404's if not superuser, change later to redirect to homepage maybe
     if request.method == "POST":
-        form=CreationForm(data=request.POST)
+        form = CreationForm(data=request.POST)
         if form.is_valid():
-            name=form.cleaned_data.get('name')
-            description=form.cleaned_data.get('description')
-            creator=form.cleaned_data.get('creator')
+            name = form.cleaned_data.get('name')
+            description = form.cleaned_data.get('description')
+            creator = form.cleaned_data.get('creator')
             # image = form.cleaned_data.get('image')
             Creation.objects.create(
                 name=name, description=description, creator=creator)
@@ -223,7 +224,7 @@ def addCreation(request):
                       template_name="voting/addcreation.html",
                       context={"form": form})
 
-    form=CreationForm()
+    form = CreationForm()
     return render(request=request,
                   template_name="voting/addcreation.html",
                   context={"form": form})
