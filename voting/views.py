@@ -1,3 +1,4 @@
+from audioop import avg
 from django import forms
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -6,6 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.db.models import Avg, Min, Max, Count, Sum
 
 from .forms import *
 from .models import *
@@ -170,20 +172,44 @@ def userIsStaff(user):
 def dashboard(request):
     # build a dictionary of the highest voted creations
 
+    # dictionary of creation its avg vote regardless of category
+    avgPerCreation = Creation.objects.annotate(
+        avg=Avg("votinglist__vote")).order_by("-avg")
+    # for i in range(len(avgPerCreation)):
+    #     print(f"{avgPerCreation[i]}: {avgPerCreation[i].avg}")
+
+    highestCrea = VotingList.objects.filter(category__startswith=""
+
+    highestCrea=VotingList.objects.filter(
+        category__startswith="crea").aggregate(avg=Avg("vote"))
+    print(highestCrea)
+
+    highestUniq=VotingList.objects.filter(
+        category__startswith="uniq").aggregate(avg=Avg("vote"))
+
+    highestImpr=VotingList.objects.filter(
+        category__startswith="impr").aggregate(avg=Avg("vote"))
+
     return render(request=request,
                   template_name="voting/dashboard.html",
-                  context={"creations": Creation.objects.all()})
+                  context={
+                      "avgPerCreation": avgPerCreation,
+                      "highestCrea": highestCrea,
+                      "highestUniq": highestUniq,
+                      "highestImpr": highestImpr,
+                      "creations": Creation.objects.all()
+                  })
 
 
 @ user_passes_test(lambda u: u.is_staff)
 def addCreation(request):
     # TODO: 404's if not superuser, change later to redirect to homepage maybe
     if request.method == "POST":
-        form = CreationForm(data=request.POST)
+        form=CreationForm(data=request.POST)
         if form.is_valid():
-            name = form.cleaned_data.get('name')
-            description = form.cleaned_data.get('description')
-            creator = form.cleaned_data.get('creator')
+            name=form.cleaned_data.get('name')
+            description=form.cleaned_data.get('description')
+            creator=form.cleaned_data.get('creator')
             # image = form.cleaned_data.get('image')
             Creation.objects.create(
                 name=name, description=description, creator=creator)
@@ -197,7 +223,7 @@ def addCreation(request):
                       template_name="voting/addcreation.html",
                       context={"form": form})
 
-    form = CreationForm()
+    form=CreationForm()
     return render(request=request,
                   template_name="voting/addcreation.html",
                   context={"form": form})
