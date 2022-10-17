@@ -18,10 +18,10 @@
 ## Roadmap
 
 10-16 october: Aggregations and dashboard
-17-23 october: other development, logins (social auth), finishing up kanbanboard
-24-30 october: styling
+17-23 october: other development, logins (social auth), finishing up kanbanboard, image upload
+24-30 october: styling (meeting?)
 31 october - 6 november: deployment
-7-13 november: extra time
+7-13 november: extra time, documentation
 
 ### general
 

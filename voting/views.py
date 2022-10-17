@@ -1,16 +1,13 @@
-from audioop import avg
-from django import forms
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth.models import User
-from django.http import HttpResponse
+
 from django.shortcuts import redirect, render
 from django.db.models import Avg, Min, Max, Count, Sum
 
-from .forms import *
-from .models import *
+from voting.forms import *
+from voting.models import *
 
 # Create your views here.
 
@@ -213,23 +210,27 @@ def dashboard(request):
 def addCreation(request):
     # TODO: 404's if not superuser, change later to redirect to homepage maybe
     if request.method == "POST":
-        form = CreationForm(data=request.POST)
+        form = CreationForm(request.POST, request.FILES)
         if form.is_valid():
-            name = form.cleaned_data.get('name')
-            description = form.cleaned_data.get('description')
-            creator = form.cleaned_data.get('creator')
+            # name = form.cleaned_data.get('name')
+            # description = form.cleaned_data.get('description')
+            # creator = form.cleaned_data.get('creator')
             # image = form.cleaned_data.get('image')
-            Creation.objects.create(
-                name=name, description=description, creator=creator)
-            messages.success(request, f"New creation added: {name}")
+            # Creation.objects.create(
+            #     name=name, description=description, creator=creator, image=image)
+            form.save()
+            messages.success(request, f"New creation added")
             return redirect("voting:dashboard")
         else:
-            for msg in form.error_messages:
-                messages.error(request, f"{msg}: {form.error_messages[msg]}")
+            for field, items in form.errors.items():
+                for item in items:
+                    messages.error(request, '{}: {}'.format(field, item))
+
+        img = Creation.objects.last()
 
         return render(request=request,
                       template_name="voting/addcreation.html",
-                      context={"form": form})
+                      context={"form": form, 'img': img})
 
     form = CreationForm()
     return render(request=request,

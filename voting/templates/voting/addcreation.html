@@ -6,10 +6,16 @@
 
 <h2>add new Lego creation</h2>
 
-<form method="POST">
+<form method="POST" method="post" accept-charset="utf-8" enctype="multipart/form-data">
     {% csrf_token %}
     {{form.as_p}}
         <button style="background-color:#F4EB16; color:blue" class="btn btn-outline-info" type="submit">ADD</button>
     </form>
+
+
+    {% comment %} {% if img %}
+    Image uploaded latest:
+    <img src="{{ img.image.url }}">
+    {% endif %} {% endcomment %}
 
 {% endblock %}

@@ -9,8 +9,10 @@ from bricks import settings
 class Creation(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
-    # image = models # TODO: https://www.geeksforgeeks.org/imagefield-django-models/ ?
     creator = models.CharField(max_length=200)
+    image = models.ImageField(
+        upload_to='voting/static/creations/', null=True, blank=True)
+    # image = models.ImageField(upload_to='images/')
 
     def __str__(self):
         return self.name
