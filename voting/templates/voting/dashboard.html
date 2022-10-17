@@ -119,6 +119,21 @@
 </table>
 
 <br>
+<h3>Vote amounts</h3>
+<table>
+  <tr>
+    <th>Creation</th>
+    <th>amount of votes</th>
+  </tr>
+  {% for item in amountOfVotes %}
+  <tr>
+      <td>{{ item }}</td>
+      <td>{{ item.amount }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<br>
+
 most voted <br>
 least voted <br>
 highest voted creator <br>

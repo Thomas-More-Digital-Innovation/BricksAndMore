@@ -190,6 +190,13 @@ def dashboard(request):
     highestImpr = Creation.objects.filter(votinglist__category__startswith="impr").annotate(
         avg=Avg("votinglist__vote")).order_by("-avg")
 
+    # amount of votes per creation
+    amountOfVotes = Creation.objects.annotate(
+        amount=Count("votinglist__vote")).order_by("-amount")
+
+    # for i in range(len(amountOfVotes)):
+    #     print(f"{amountOfVotes[i]}: {amountOfVotes[i].amount}")
+
     return render(request=request,
                   template_name="voting/dashboard.html",
                   context={
@@ -197,6 +204,7 @@ def dashboard(request):
                       "highestCrea": highestCrea,
                       "highestDeta": highestDeta,
                       "highestImpr": highestImpr,
+                      "amountOfVotes": amountOfVotes,
                       "creations": Creation.objects.all()
                   })
 
