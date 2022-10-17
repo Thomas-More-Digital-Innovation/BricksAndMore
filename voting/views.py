@@ -179,24 +179,23 @@ def dashboard(request):
     #     print(f"{avgPerCreation[i]}: {avgPerCreation[i].avg}")
 
     # dictionary of creation id and its avg vote per category
-    Creation.objects.values('id').annotate(avg=Avg("votinglist__vote"))
+    highestCrea = Creation.objects.filter(votinglist__category__startswith="crea").annotate(
+        avg=Avg("votinglist__vote")).order_by("-avg")
 
-    highestCrea = VotingList.objects.filter(
-        category__startswith="crea").aggregate(avg=Avg("vote"))
-    print(highestCrea)
+    # print(highestCrea)
 
-    highestUniq = VotingList.objects.filter(
-        category__startswith="uniq").aggregate(avg=Avg("vote"))
+    highestDeta = Creation.objects.filter(votinglist__category__startswith="deta").annotate(
+        avg=Avg("votinglist__vote")).order_by("-avg")
 
-    highestImpr = VotingList.objects.filter(
-        category__startswith="impr").aggregate(avg=Avg("vote"))
+    highestImpr = Creation.objects.filter(votinglist__category__startswith="impr").annotate(
+        avg=Avg("votinglist__vote")).order_by("-avg")
 
     return render(request=request,
                   template_name="voting/dashboard.html",
                   context={
                       "avgPerCreation": avgPerCreation,
                       "highestCrea": highestCrea,
-                      "highestUniq": highestUniq,
+                      "highestDeta": highestDeta,
                       "highestImpr": highestImpr,
                       "creations": Creation.objects.all()
                   })

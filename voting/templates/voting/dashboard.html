@@ -3,6 +3,7 @@
 {% block content %}
 {% include "voting/includes/status.html" %}
 <br>
+<a href="addcreation">add creation</a>
 <h1>Dashboard</h1>
 <h2>Stats!</h2>
 
@@ -32,8 +33,8 @@
     </tr>
     {% endfor %}
 </table>
-
-<h4> highest creativity</h4>
+<h3>CREATIVITY</h3>
+<h4> highest</h4>
 <table>
     <tr>
       <th>Creation</th>
@@ -47,21 +48,8 @@
     {% endfor %}
 </table>
 
-<table>
-    <tr>
-      <th>Creation</th>
-      <th>Average vote</th>
-    </tr>
-    {% for item in highestCrea %}
-    <tr>
-        <td>{{ item }}</td>
-        <td>{{ item.avg }}</td>
-    </tr>
-    {% endfor %}
-</table>
 
-{% comment %} 
-<h4> lowest creativity</h4>
+<h4> lowest</h4>
 <table>
     <tr>
       <th>Creation</th>
@@ -74,7 +62,8 @@
     </tr>
     {% endfor %}
 </table>
-<h4> highest impressiveness</h4>
+<h3>IMPRESSIVENESS</h3>
+<h4> highest</h4>
 <table>
     <tr>
       <th>Creation</th>
@@ -87,20 +76,22 @@
     </tr>
     {% endfor %}
 </table>
-<h4> lowest impressiveness</h4>
+
+<h4>lowest</h4>
 <table>
     <tr>
       <th>Creation</th>
       <th>Average vote</th>
     </tr>
-    {% for item in highestImpr %}
+    {% for item in highestImpr reversed %}
     <tr>
         <td>{{ item }}</td>
         <td>{{ item.avg }}</td>
     </tr>
     {% endfor %}
 </table>
-<h4> highest details</h4>
+<h3>DETAILS</h3>
+<h4>highest</h4>
 <table>
     <tr>
       <th>Creation</th>
@@ -113,13 +104,13 @@
     </tr>
     {% endfor %}
 </table>
-<h4> lowest details</h4>
+<h4>lowest</h4>
 <table>
     <tr>
       <th>Creation</th>
       <th>Average vote</th>
     </tr>
-    {% for item in highestDeta %}
+    {% for item in highestDeta reversed %}
     <tr>
         <td>{{ item }}</td>
         <td>{{ item.avg }}</td>
@@ -127,9 +118,10 @@
     {% endfor %}
 </table>
 
-
-most voted
-least voted
+<br>
+most voted <br>
+least voted <br>
+highest voted creator <br>
 
 <hr>
 <h2> list of creations </h2>
@@ -142,7 +134,4 @@ least voted
     <br>
 {% endfor %}
 
-<a href="addcreation">add creation</a>
-
-{% endcomment %}
 {% endblock %}
