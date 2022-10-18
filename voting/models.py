@@ -12,7 +12,7 @@ class Creation(models.Model):
     creator = models.CharField(max_length=200)
     image = models.ImageField(
         upload_to='creations/', null=True, blank=True)
-    # image = models.ImageField(upload_to='images/')
+    number = models.IntegerField(unique=True)
 
     def __str__(self):
         return self.name
@@ -26,7 +26,6 @@ class VotingList(models.Model):
 
     # add many-to-one relationship with user
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-
     # add many-to-many relationship with Creation
     creation = models.ManyToManyField(Creation)
 

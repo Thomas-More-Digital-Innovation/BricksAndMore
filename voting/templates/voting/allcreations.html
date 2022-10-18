@@ -1,0 +1,22 @@
+{% extends 'voting/header.html' %}
+
+{% block content %}
+{% include "voting/includes/status.html" %}
+<br>
+
+<h2>All creations</h2>
+    
+{% for creation in creations %}
+    <h3>{{creation.number}}. {{ creation.name }} </h3>
+    <img src="{{ creation.image.url }}" alt="..."  width="250" height="250">
+    <p> {{ creation.description }} </p>
+    <p> {{ creation.creator }} </p>
+    <br>
+    _______________________________
+{% endfor %}
+<br>
+most voted <br>
+least voted <br>
+highest voted creator <br>
+
+    {% endblock %}

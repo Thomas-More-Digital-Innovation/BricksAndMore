@@ -14,15 +14,17 @@ urlpatterns = [
     path("login/", views.login_request, name="login"),
     path("myvotes/", views.myVotes, name="myvotes"),
 
-    # dashboard urls
-    # path("addcreation/", views.addCreation, name="addcreation"),
     path("dashboard/", views.dashboard, name="dashboard"),
     path("dashboard/addcreation/", views.addCreation, name="addcreation"),
+    # path("dashboard/edit/<int:creation_id>/",
+    #      views.editCreation, name="editcreation"),
+    path("dashboard/stats/", views.stats, name="stats"),
+    path("dashboard/allcreations/", views.allCreations, name="allcreations"),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL,
+#                           document_root=settings.MEDIA_ROOT)

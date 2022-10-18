@@ -12,7 +12,7 @@
     <button style="background-color:#F4EB16; color:blue" class="btn btn-outline-info" type="submit">ADD</button>
 </form>
 
-<h2>image:</h2>
+<h2>latest added creation:</h2>
 {% if lastCreation %}
 name: {{lastCreation.name}} <br>
 url: {{lastCreation.image.url}} <br>
@@ -21,10 +21,6 @@ Image uploaded latest:
 <img src="{{ lastCreation.image.url }}" alt="..."  width="250" height="250">
 <br>
 <br>
-
-{% load static %}
-<img src="{% static 'voting/lego.jpg' %}" alt=""  width="250" height="250">
-    {% comment %} <img src="{{ img.image.url }}"> {% endcomment %}
 {% endif %} 
 
 {% endblock %}

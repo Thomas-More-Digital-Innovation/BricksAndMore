@@ -1,0 +1,135 @@
+{% extends 'voting/header.html' %}
+
+{% block content %}
+{% include "voting/includes/status.html" %}
+
+<h2>Stats!</h2>
+
+<h4>highest over all</h4>
+<table>
+    <tr>
+      <th>Creation</th>
+      <th>Average vote</th>
+    </tr>
+    {% for item in avgPerCreation %}
+    <tr>
+        <td>{{ item }}</td>
+        <td>{{ item.avg }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+<h4>lowest over all</h4>
+<table>
+    <tr>
+      <th>Creation</th>
+      <th>Average vote</th>
+    </tr>
+    {% for item in avgPerCreation reversed%}
+    <tr>
+        <td>{{ item }}</td>
+        <td>{{ item.avg }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<h3>CREATIVITY</h3>
+<h4> highest</h4>
+<table>
+    <tr>
+      <th>Creation</th>
+      <th>Average vote</th>
+    </tr>
+    {% for item in highestCrea %}
+    <tr>
+        <td>{{ item }}</td>
+        <td>{{ item.avg }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+<h4> lowest</h4>
+<table>
+    <tr>
+      <th>Creation</th>
+      <th>Average vote</th>
+    </tr>
+    {% for item in highestCrea reversed%}
+    <tr>
+        <td>{{ item }}</td>
+        <td>{{ item.avg }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<h3>IMPRESSIVENESS</h3>
+<h4> highest</h4>
+<table>
+    <tr>
+      <th>Creation</th>
+      <th>Average vote</th>
+    </tr>
+    {% for item in highestImpr %}
+    <tr>
+        <td>{{ item }}</td>
+        <td>{{ item.avg }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h4>lowest</h4>
+<table>
+    <tr>
+      <th>Creation</th>
+      <th>Average vote</th>
+    </tr>
+    {% for item in highestImpr reversed %}
+    <tr>
+        <td>{{ item }}</td>
+        <td>{{ item.avg }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<h3>DETAILS</h3>
+<h4>highest</h4>
+<table>
+    <tr>
+      <th>Creation</th>
+      <th>Average vote</th>
+    </tr>
+    {% for item in highestDeta %}
+    <tr>
+        <td>{{ item }}</td>
+        <td>{{ item.avg }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<h4>lowest</h4>
+<table>
+    <tr>
+      <th>Creation</th>
+      <th>Average vote</th>
+    </tr>
+    {% for item in highestDeta reversed %}
+    <tr>
+        <td>{{ item }}</td>
+        <td>{{ item.avg }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+<h3>Vote amounts</h3>
+<table>
+  <tr>
+    <th>Creation</th>
+    <th>amount of votes</th>
+  </tr>
+  {% for item in amountOfVotes %}
+  <tr>
+      <td>{{ item }}</td>
+      <td>{{ item.amount }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<br>
+
+{% endblock %}

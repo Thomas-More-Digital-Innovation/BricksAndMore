@@ -8,7 +8,7 @@ from django.forms import ModelForm
 class CreationForm(ModelForm):
     class Meta:
         model = Creation
-        fields = ['name', 'description', 'creator', 'image']
+        fields = ['number', 'name', 'description', 'creator', 'image']
 
 # class CreationForm(forms.Form):
 #     name = forms.CharField(max_length=200)
