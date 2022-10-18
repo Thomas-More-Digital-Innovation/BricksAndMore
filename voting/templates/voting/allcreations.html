@@ -7,7 +7,11 @@
 <h2>All creations</h2>
     
 {% for creation in creations %}
-    <h3>{{creation.number}}. {{ creation.name }} (<a href="{% url 'voting:edit' %}" >edit</a>)</h3> 
+    <h3>
+        {{creation.number}}. {{ creation.name }} 
+        (<a href="{% url 'voting:edit' creation.id %}">edit</a>)
+    </h3> 
+
     <img src="{{ creation.image.url }}" alt="..."  width="250" height="250">
     <p> {{ creation.description }} </p>
     <p> {{ creation.creator }} </p>

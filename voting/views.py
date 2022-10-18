@@ -2,9 +2,10 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-
+from django.urls import reverse_lazy
 from django.shortcuts import redirect, render
 from django.db.models import Avg, Min, Max, Count, Sum
+from django.views.generic import UpdateView
 
 from voting.forms import *
 from voting.models import *
@@ -246,7 +247,30 @@ def allCreations(request):
     return render(request=request, template_name="voting/allcreations.html", context={"creations": Creation.objects.all()})
 
 
-@ user_passes_test(lambda u: u.is_staff)
-def edit(request):
-    print("CHECK")
-    return render(request=request, template_name="voting/edit.html", context={})
+# @ user_passes_test(lambda u: u.is_staff)
+# def edit(request, creation_id):
+#     creation = Creation.objects.get(id=creation_id)
+
+#     if request.method == "POST":
+#         form = CreationForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, f"Creation updated added")
+#             return redirect("voting:allcreations")
+#         else:
+#             for field, items in form.errors.items():
+#                 for item in items:
+#                     messages.error(request, '{}: {}'.format(field, item))
+
+#         return render(request=request,
+#                       template_name="voting:allcreations.html",
+#                       context={"form": form})
+
+#     form = CreationForm()
+
+#     return render(request=request, template_name="voting/edit.html", context={"form": form, "creation": creation})
+class CreationUpdateView(UpdateView):
+    model = Creation
+    form_class = CreationForm
+    template_name = 'voting/edit.html'
+    success_url = reverse_lazy('voting:allcreations')
