@@ -9,13 +9,22 @@
 <form method="POST" method="post" accept-charset="utf-8" enctype="multipart/form-data">
     {% csrf_token %}
     {{form.as_p}}
-        <button style="background-color:#F4EB16; color:blue" class="btn btn-outline-info" type="submit">ADD</button>
-    </form>
+    <button style="background-color:#F4EB16; color:blue" class="btn btn-outline-info" type="submit">ADD</button>
+</form>
 
+<h2>image:</h2>
+{% if lastCreation %}
+name: {{lastCreation.name}} <br>
+url: {{lastCreation.image.url}} <br>
+Image uploaded latest:
+<br>
+<img src="{{ lastCreation.image.url }}" alt="...">
+<br>
+<br>
 
-    {% comment %} {% if img %}
-    Image uploaded latest:
-    <img src="{{ img.image.url }}">
-    {% endif %} {% endcomment %}
+{% load static %}
+<img src="{% static 'voting/lego.jpg' %}" alt="" height='200'>
+    {% comment %} <img src="{{ img.image.url }}"> {% endcomment %}
+{% endif %} 
 
 {% endblock %}

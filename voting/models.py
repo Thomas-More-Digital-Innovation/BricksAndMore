@@ -11,7 +11,7 @@ class Creation(models.Model):
     description = models.CharField(max_length=200)
     creator = models.CharField(max_length=200)
     image = models.ImageField(
-        upload_to='voting/static/creations/', null=True, blank=True)
+        upload_to='creations/', null=True, blank=True)
     # image = models.ImageField(upload_to='images/')
 
     def __str__(self):

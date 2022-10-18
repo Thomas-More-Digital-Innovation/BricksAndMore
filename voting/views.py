@@ -226,13 +226,14 @@ def addCreation(request):
                 for item in items:
                     messages.error(request, '{}: {}'.format(field, item))
 
-        img = Creation.objects.last()
-
         return render(request=request,
                       template_name="voting/addcreation.html",
-                      context={"form": form, 'img': img})
+                      context={"form": form})
+    lastCreation = Creation.objects.last()
+    print(f"lastCreation: {lastCreation}")
+    print(lastCreation.image.url)
 
     form = CreationForm()
     return render(request=request,
                   template_name="voting/addcreation.html",
-                  context={"form": form})
+                  context={"form": form, 'lastCreation': lastCreation})
