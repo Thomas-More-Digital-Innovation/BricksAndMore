@@ -164,48 +164,18 @@ def myVotes(request):
 def userIsStaff(user):
     return user.is_staff
 
-# DASHBOARD
+#############
+# DASHBOARD #
+#############
 
 
 @ user_passes_test(lambda u: u.is_staff)
 def dashboard(request):
-    # build a dictionary of the highest voted creations
-
-    # dictionary of creation its avg vote regardless of category
-    avgPerCreation = Creation.objects.annotate(
-        avg=Avg("votinglist__vote")).order_by("-avg")
-    # for i in range(len(avgPerCreation)):
-    #     print(f"{avgPerCreation[i]}: {avgPerCreation[i].avg}")
-
-    # dictionary of creation id and its avg vote per category
-    highestCrea = Creation.objects.filter(votinglist__category__startswith="crea").annotate(
-        avg=Avg("votinglist__vote")).order_by("-avg")
-
-    # print(highestCrea)
-
-    highestDeta = Creation.objects.filter(votinglist__category__startswith="deta").annotate(
-        avg=Avg("votinglist__vote")).order_by("-avg")
-
-    highestImpr = Creation.objects.filter(votinglist__category__startswith="impr").annotate(
-        avg=Avg("votinglist__vote")).order_by("-avg")
-
-    # amount of votes per creation
-    amountOfVotes = Creation.objects.annotate(
-        amount=Count("votinglist__vote")).order_by("-amount")
-
-    # for i in range(len(amountOfVotes)):
-    #     print(f"{amountOfVotes[i]}: {amountOfVotes[i].amount}")
 
     return render(request=request,
                   template_name="voting/dashboard.html",
-                  context={
-                      "avgPerCreation": avgPerCreation,
-                      "highestCrea": highestCrea,
-                      "highestDeta": highestDeta,
-                      "highestImpr": highestImpr,
-                      "amountOfVotes": amountOfVotes,
-                      "creations": Creation.objects.all()
-                  })
+                  context={"creations": Creation.objects.all()
+                           })
 
 
 @ user_passes_test(lambda u: u.is_staff)
@@ -214,12 +184,6 @@ def addCreation(request):
     if request.method == "POST":
         form = CreationForm(request.POST, request.FILES)
         if form.is_valid():
-            # name = form.cleaned_data.get('name')
-            # description = form.cleaned_data.get('description')
-            # creator = form.cleaned_data.get('creator')
-            # image = form.cleaned_data.get('image')
-            # Creation.objects.create(
-            #     name=name, description=description, creator=creator, image=image)
             form.save()
             messages.success(request, f"New creation added")
             return redirect("voting:dashboard")
@@ -280,3 +244,9 @@ def stats(request):
 @ user_passes_test(lambda u: u.is_staff)
 def allCreations(request):
     return render(request=request, template_name="voting/allcreations.html", context={"creations": Creation.objects.all()})
+
+
+@ user_passes_test(lambda u: u.is_staff)
+def edit(request):
+    print("CHECK")
+    return render(request=request, template_name="voting/edit.html", context={})

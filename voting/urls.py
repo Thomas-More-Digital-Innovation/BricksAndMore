@@ -18,6 +18,8 @@ urlpatterns = [
     path("dashboard/addcreation/", views.addCreation, name="addcreation"),
     # path("dashboard/edit/<int:creation_id>/",
     #      views.editCreation, name="editcreation"),
+    path("dashboard/edit/",
+         views.edit, name="edit"),
     path("dashboard/stats/", views.stats, name="stats"),
     path("dashboard/allcreations/", views.allCreations, name="allcreations"),
 ]

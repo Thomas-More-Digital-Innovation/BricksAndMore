@@ -3,9 +3,9 @@
 {% block content %}
 {% include "voting/includes/status.html" %}
 <br>
-<a href="addcreation">add creation</a>
+<a href="{% url 'voting:addcreation' %}" >add creation</a>
 <h1>Dashboard</h1>
-<a href="stats">stats</a>
-<a href="allcreations">All creations</a>
+<a href="{% url 'voting:stats' %}" >stats</a>
+<a href="{% url 'voting:allcreations' %}" >All creations</a>
 
 {% endblock %}
