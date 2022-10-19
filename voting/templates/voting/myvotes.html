@@ -3,18 +3,28 @@
 {% block content %}
 {% include "voting/includes/status.html" %}
 
+{% load static %}
+<script src="{% static 'js/myVotes.js' %}" defer></script>   
+
 <hr>
 <br>
 
 
 <h1>VotingPage</h1>
+
+<form id="search">
+  <label>go to number:<input id="number" name="number"></label>
+  <input type="submit" value="Submit">
+</form>
+
 {% comment %} iterate over all creations in the formList {% endcomment %}
 {% for formListItems in formList %}
-  <h2>({{formListItems.creation.id}}) {{ formListItems.creation.name }}</h2>
+  <h2>({{formListItems.creation.id}}) {{ formListItems.creation.name }} | number: {{formListItems.creation.number}}</h2>
+  
   <img src="{{ formListItems.creation.image.url }}" alt="..."  width="250" height="250">
   {% comment %} iterate over the carehoryforms dictionary (so all data for one creation: forms and vote per category) {% endcomment %}
   {% for key, value in formListItems.categoryForms.items %}
-    <h3>{{key}}</h3>
+    <h3 id="creation_{{formListItems.creation.number}}">{{key}}</h3>
  
     <form method="post" novalidate>
       {% csrf_token %}  

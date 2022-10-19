@@ -5,6 +5,7 @@ edit creation with id: {{creation.id}}
     {{form.as_p}}
     <button style="background-color:#F4EB16; color:blue" class="btn btn-outline-info" type="submit">ADD</button>
 </form>
-
+<br>
+( <a href="{% url 'voting:delete' creation.id %}">delete</a> )
 <hr>
 

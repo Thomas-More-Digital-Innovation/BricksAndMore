@@ -5,7 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, render
 from django.db.models import Avg, Min, Max, Count, Sum
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, DeleteView
 
 from voting.forms import *
 from voting.models import *
@@ -38,7 +38,7 @@ def register(request):
                 messages.error(request, f"{msg}: {form.error_messages[msg]}")
 
             return render(request=request,
-                          template_name="register",
+                          template_name="voting/register.html",
                           context={"form": form})
 
     # elif request.method == "GET":
@@ -180,31 +180,6 @@ def dashboard(request):
 
 
 @ user_passes_test(lambda u: u.is_staff)
-def addCreation(request):
-    # TODO: 404's if not superuser, change later to redirect to homepage maybe
-    if request.method == "POST":
-        form = CreationForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f"New creation added")
-            return redirect("voting:dashboard")
-        else:
-            for field, items in form.errors.items():
-                for item in items:
-                    messages.error(request, '{}: {}'.format(field, item))
-
-        return render(request=request,
-                      template_name="voting/addcreation.html",
-                      context={"form": form})
-    lastCreation = Creation.objects.last()
-
-    form = CreationForm()
-    return render(request=request,
-                  template_name="voting/addcreation.html",
-                  context={"form": form, 'lastCreation': lastCreation})
-
-
-@ user_passes_test(lambda u: u.is_staff)
 def stats(request):
     # build a dictionary of the highest voted creations
 
@@ -244,7 +219,7 @@ def stats(request):
 
 @ user_passes_test(lambda u: u.is_staff)
 def allCreations(request):
-    return render(request=request, template_name="voting/allcreations.html", context={"creations": Creation.objects.all()})
+    return render(request=request, template_name="voting/allcreations.html", context={"creations": Creation.objects.all().order_by("number")})
 
 
 # @ user_passes_test(lambda u: u.is_staff)
@@ -269,8 +244,41 @@ def allCreations(request):
 #     form = CreationForm()
 
 #     return render(request=request, template_name="voting/edit.html", context={"form": form, "creation": creation})
+
+# TODO: change to class based view
+@ user_passes_test(lambda u: u.is_staff)
+def addCreation(request):
+    # TODO: 404's if not superuser, change later to redirect to homepage maybe
+    if request.method == "POST":
+        form = CreationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"New creation added")
+            return redirect("voting:dashboard")
+        else:
+            for field, items in form.errors.items():
+                for item in items:
+                    messages.error(request, '{}: {}'.format(field, item))
+
+        return render(request=request,
+                      template_name="voting/addcreation.html",
+                      context={"form": form})
+    lastCreation = Creation.objects.last()
+
+    form = CreationForm()
+    return render(request=request,
+                  template_name="voting/addcreation.html",
+                  context={"form": form, 'lastCreation': lastCreation})
+
+
 class CreationUpdateView(UpdateView):
     model = Creation
     form_class = CreationForm
     template_name = 'voting/edit.html'
     success_url = reverse_lazy('voting:allcreations')
+
+
+class CreationDeleteView(DeleteView):
+    model = Creation
+    success_url = reverse_lazy('voting:allcreations')
+    # template_name = reverse_lazy("voting:creation_delete_check.html")

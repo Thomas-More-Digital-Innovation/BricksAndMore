@@ -18,6 +18,8 @@ urlpatterns = [
     path("dashboard/addcreation/", views.addCreation, name="addcreation"),
     path('edit/<int:pk>/',
          views.CreationUpdateView.as_view(), name='edit'),
+    path('delete/<int:pk>/',
+         views.CreationDeleteView.as_view(), name='delete'),
     path("dashboard/stats/", views.stats, name="stats"),
     path("dashboard/allcreations/", views.allCreations, name="allcreations"),
 ]
