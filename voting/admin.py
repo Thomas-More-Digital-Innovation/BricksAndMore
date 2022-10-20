@@ -9,6 +9,7 @@ class CreationAdmin(admin.ModelAdmin):
         ('Name', {'fields': ['name']}),
         ('Description', {'fields': ['description']}),
         ('Creator', {'fields': ['creator']}),
+        ('Image', {'fields': ['image']}),
     ]
 
 

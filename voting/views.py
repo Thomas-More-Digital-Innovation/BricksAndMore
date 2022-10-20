@@ -205,6 +205,12 @@ def stats(request):
     amountOfVotes = Creation.objects.annotate(
         amount=Count("votinglist__vote")).order_by("-amount")
 
+    # user with most votes
+    mostVotes = User.objects.annotate(amount=Count(
+        "votinglist__creation__id", distinct=True)).order_by("-amount")
+
+    print(f'mostVotes: {mostVotes[0].amount}')
+
     # for i in range(len(amountOfVotes)):
     #     print(f"{amountOfVotes[i]}: {amountOfVotes[i].amount}")
 
