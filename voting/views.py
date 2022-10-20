@@ -1,3 +1,4 @@
+from pickle import FALSE
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -185,25 +186,56 @@ def stats(request):
     # build a dictionary of the highest voted creations
     # The dictionary will be cut off using slicing. It could be done easier by using negative indexing [-setting.STAT_AMOUNT:], but Django does not support this.
 
-    def MaxAmount(querySet):
+    def subSetOfQuery(querySet, lowToHigh=False):
+
+        #
+
+        #
+
+        def subSetOfQuery(querySet, lowToHigh=False):
+    STAT_AMOUNT = 30
+
+    # Returns a top n of a given query and wether or not it should be reversed.
+    # splice is the lowest of either the amount defined in the settings or the amount of objects in the queryset. Prevents negative indexing.
+    splice = min(STAT_AMOUNT, len(querySet))
+    print("______splice: ", splice)
+    if lowToHigh:
+        print("lth")
+        print("original: ", querySet)
+        print(len(querySet), abs(len(querySet)-splice - 1), -1)
+        return querySet[len(querySet):abs(len(querySet)-splice - 1):-1]
+    return querySet[:splice]
+
+
+queryset = [i for i in reversed(range(10))]
+print(f"normal: {subSetOfQuery(queryset, False)}")
+print(f"reversed: {subSetOfQuery(queryset, True)}")
+
+#
+
+#
+
+        # Returns a top n of a given query and wether or not it should be reversed.
         # splice is the lowest of either the amount defined in the settings or the amount of objects in the queryset. Prevents negative indexing.
         splice = min(settings.STAT_AMOUNT, len(querySet))
-        print(splice)
-        return querySet[splice:]
+        print("______splice: ", splice)
+        if lowToHigh:
+            print("lth")
+            print("original: ", querySet)
+            return querySet[len(querySet)-splice:]
+        return querySet[:splice]
 
     # dictionary of creation its avg vote regardless of category
     avgPerCreation = Creation.objects.annotate(
         avg=Avg("votinglist__vote")).order_by("-avg")
 
     # highest
-    avgPerCreationHighest = MaxAmount(avgPerCreation)
+    avgPerCreationHighest = subSetOfQuery(avgPerCreation)
     print("avgPerCreationHighest: ", avgPerCreationHighest)
 
     # avgPerCreationHighest = avgPerCreation[len(
     #     avgPerCreation)-settings.STAT_AMOUNT:]
     # lowest
-    avgPerCreationLowest = avgPerCreation[len(
-        avgPerCreation)-settings.STAT_AMOUNT:]
 
     print(f"avgPerCreation : {avgPerCreation}")
     print(f"avgPerCreationHighest: {avgPerCreationHighest}")
