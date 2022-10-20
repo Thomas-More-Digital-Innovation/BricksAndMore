@@ -220,6 +220,7 @@ def stats(request):
         "highestDeta": highestDeta,
         "highestImpr": highestImpr,
         "amountOfVotes": amountOfVotes,
+        "mostVotes": mostVotes,
         "creations": Creation.objects.all()})
 
 
