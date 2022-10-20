@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import redirect, render
 from django.db.models import Avg, Min, Max, Count, Sum
 from django.views.generic import UpdateView, DeleteView
+from django.conf import settings
 
 from voting.forms import *
 from voting.models import *
@@ -182,12 +183,30 @@ def dashboard(request):
 @ user_passes_test(lambda u: u.is_staff)
 def stats(request):
     # build a dictionary of the highest voted creations
+    # The dictionary will be cut off using slicing. It could be done easier by using negative indexing [-setting.STAT_AMOUNT:], but Django does not support this.
+
+    def MaxAmount(querySet):
+        # splice is the lowest of either the amount defined in the settings or the amount of objects in the queryset. Prevents negative indexing.
+        splice = min(settings.STAT_AMOUNT, len(querySet))
+        print(splice)
+        return querySet[splice:]
 
     # dictionary of creation its avg vote regardless of category
     avgPerCreation = Creation.objects.annotate(
         avg=Avg("votinglist__vote")).order_by("-avg")
-    # for i in range(len(avgPerCreation)):
-    #     print(f"{avgPerCreation[i]}: {avgPerCreation[i].avg}")
+
+    # highest
+    avgPerCreationHighest = MaxAmount(avgPerCreation)
+    print("avgPerCreationHighest: ", avgPerCreationHighest)
+
+    # avgPerCreationHighest = avgPerCreation[len(
+    #     avgPerCreation)-settings.STAT_AMOUNT:]
+    # lowest
+    avgPerCreationLowest = avgPerCreation[len(
+        avgPerCreation)-settings.STAT_AMOUNT:]
+
+    print(f"avgPerCreation : {avgPerCreation}")
+    print(f"avgPerCreationHighest: {avgPerCreationHighest}")
 
     # dictionary of creation id and its avg vote per category
     highestCrea = Creation.objects.filter(votinglist__category__startswith="crea").annotate(
@@ -215,7 +234,7 @@ def stats(request):
     #     print(f"{amountOfVotes[i]}: {amountOfVotes[i].amount}")
 
     return render(request=request, template_name="voting/stats.html", context={
-        "avgPerCreation": avgPerCreation,
+        "avgPerCreationHighest": avgPerCreationHighest,
         "highestCrea": highestCrea,
         "highestDeta": highestDeta,
         "highestImpr": highestImpr,

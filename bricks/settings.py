@@ -134,3 +134,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = 'voting/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# VOTING SETTINGS
+# These settings are used to configure the voting app
+
+# The amount of entries shown on the stats page per creation (eg. 3 = top 3)
+STAT_AMOUNT = 5
