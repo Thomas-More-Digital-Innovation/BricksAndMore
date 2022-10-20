@@ -3,7 +3,7 @@
 {% block content %}
 {% include "voting/includes/status.html" %}
 <br>
-<a href="{% url 'voting:addcreation' %}" >add creation</a>
+
 <h2>All creations</h2>
     
 {% for creation in creations %}
@@ -18,9 +18,4 @@
     <br>
     _______________________________
 {% endfor %}
-<br>
-most voted <br>
-least voted <br>
-highest voted creator <br>
-
     {% endblock %}

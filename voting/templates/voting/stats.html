@@ -132,4 +132,25 @@
 </table>
 <br>
 
+<h3>Most voting visitors</h3>
+<table>
+  <tr>
+    <th>User</th>
+    <th>amount of creations voted on</th>
+  </tr>
+  {% for item in amountOfVotes %}
+  <tr>
+      <td>{{ item }}</td>
+      <td>{{ item.amount }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<br>
+most voted <br>
+least voted <br>
+highest voted creator <br>
+
+highest voting person <br>
+
 {% endblock %}
