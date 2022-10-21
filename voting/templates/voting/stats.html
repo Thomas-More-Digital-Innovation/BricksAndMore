@@ -54,7 +54,7 @@
       <th>Creation</th>
       <th>Average vote</th>
     </tr>
-    {% for item in highestCrea reversed%}
+    {% for item in lowestCrea %}
     <tr>
         <td>{{ item }}</td>
         <td>{{ item.avg }}</td>
@@ -82,7 +82,7 @@
       <th>Creation</th>
       <th>Average vote</th>
     </tr>
-    {% for item in highestImpr reversed %}
+    {% for item in lowestImpr %}
     <tr>
         <td>{{ item }}</td>
         <td>{{ item.avg }}</td>
