@@ -26,7 +26,7 @@
   {% for key, value in formListItems.categoryForms.items %}
     <h3 id="creation_{{formListItems.creation.number}}">{{key}}</h3>
  
-    <form method="post" novalidate>
+    <form method="post" novalidate oninput="submit()">
       {% csrf_token %}  
 
       <div class="voteform">
@@ -50,4 +50,7 @@
     </form> 
     {% endfor %}
 {% endfor %}
+<div id="end">
+  end
+</div>
 {% endblock %}

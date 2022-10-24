@@ -1,3 +1,4 @@
+from ast import Attribute
 from django import forms
 from .models import Creation, VotingList
 from django.forms import ModelForm
@@ -12,7 +13,6 @@ class CreationForm(ModelForm):
         widgets = {
             'image': forms.FileInput(attrs={'accept': 'image/*', 'capture': 'camera'})
         }
-
 # class CreationForm(forms.Form):
 #     name = forms.CharField(max_length=200)
 #     description = forms.CharField(max_length=200)

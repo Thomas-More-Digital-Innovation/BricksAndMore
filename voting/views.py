@@ -272,31 +272,9 @@ def stats(request):
 def allCreations(request):
     return render(request=request, template_name="voting/allcreations.html", context={"creations": Creation.objects.all().order_by("number")})
 
-
-# @ user_passes_test(lambda u: u.is_staff)
-# def edit(request, creation_id):
-#     creation = Creation.objects.get(id=creation_id)
-
-#     if request.method == "POST":
-#         form = CreationForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, f"Creation updated added")
-#             return redirect("voting:allcreations")
-#         else:
-#             for field, items in form.errors.items():
-#                 for item in items:
-#                     messages.error(request, '{}: {}'.format(field, item))
-
-#         return render(request=request,
-#                       template_name="voting:allcreations.html",
-#                       context={"form": form})
-
-#     form = CreationForm()
-
-#     return render(request=request, template_name="voting/edit.html", context={"form": form, "creation": creation})
-
 # TODO: change to class based view
+
+
 @ user_passes_test(lambda u: u.is_staff)
 def addCreation(request):
     # TODO: 404's if not superuser, change later to redirect to homepage maybe
