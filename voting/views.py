@@ -164,6 +164,8 @@ def myVotes(request):
                           "votingLists": VotingList.objects.filter(user_id=request.user.id)
                       })
 
+        #   https://stackoverflow.com/questions/11165267/django-redirect-with-anchor-parameters
+
 
 def userIsStaff(user):
     return user.is_staff
