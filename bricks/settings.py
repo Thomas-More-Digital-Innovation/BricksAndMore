@@ -10,6 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from django.utils.translation import gettext_lazy as _
+from django.urls import reverse_lazy
+from django.templatetags.static import static
 import os
 from pathlib import Path
 
@@ -33,6 +36,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "unfold",  # before django.contrib.admin
+    "unfold.contrib.filters",  # optional
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -145,3 +150,40 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # The amount of entries shown on the stats page per creation (eg. 3 = top 3)
 STAT_AMOUNT = 5
+
+# Django unfold settings
+
+
+UNFOLD = {
+    "COLORS": {
+        "primary": {
+            "50": "#FAF5FF",
+            "100": "#F3E8FF",
+            "200": "#E9D5FF",
+            "300": "#D8B4FE",
+            "400": "#C084FC",
+            "500": "#A855F7",
+            "600": "#9333EA",
+            "700": "#7E22CE",
+            "800": "#6B21A8",
+            "900": "#581C87",
+        },
+    },
+}
+
+
+def dashboard_callback(request, context):
+    """
+    Callback to prepare custom variables for index template which is used as dashboard
+    template. It can be overridden in application by creating custom admin/index.html.
+    """
+    context.update(
+        {
+            "sample": "example",  # this will be injected into templates/admin/index.html
+        }
+    )
+    return context
+
+
+def badge_callback(request):
+    return 3
