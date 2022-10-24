@@ -1,0 +1,10 @@
+{% extends 'voting/header.html' %}
+
+{% block content %}
+{% include "voting/includes/status.html" %}
+
+Die pagina konden we niet vinden :(
+<br>
+<a href="{% url 'voting:login' %}">terug</a>
+
+{% endblock content %}
