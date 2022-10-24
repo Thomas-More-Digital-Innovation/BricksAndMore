@@ -24,3 +24,4 @@ urlpatterns = [
     path('voting/', include('voting.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# to import static in deployment
