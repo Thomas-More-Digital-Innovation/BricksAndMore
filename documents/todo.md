@@ -1,8 +1,6 @@
 # ToDo
 
-- make radio buttons into stars
 - submit vote on change (get rid of submit buttons)
-- fix creationId in forms
 
 ## Leftoff
 
@@ -49,17 +47,17 @@
 - (export to csv)
 - most recent vote
 
-## Maybe
+### Maybe
 
 - make an sql file to (create and) populate the database with dummy data (and admin account)
 
-# Useful links
+## Useful links
 
-## aggregation (for votes)
+### aggregation (for votes)
 
 <https://docs.djangoproject.com/en/4.0/topics/db/aggregation/>
 
-# Far Future Ideas
+## Far Future Ideas
 
 - form for feedback -> results get shown in admin dashboard
 - live feed on staff dashboard that displays 'abc just voted x stars on creation xyz'
@@ -67,6 +65,8 @@
 
 ## DONE
 
+- make radio buttons into stars
+- fix creationId in forms
 - voting models
 - make page to add Creations (<https://stackoverflow.com/questions/24823294/django-accessible-url-pattern-only-for-certain-group-of-users>)
 - add placeholders of current vote for each creation in the forms (<https://stackoverflow.com/questions/4270330/django-show-a-manytomanyfield-in-a-template>) -> using m2m in template (goal is to show the current vote for each creation, need to make sure each vote is linked to the correct creation_id)

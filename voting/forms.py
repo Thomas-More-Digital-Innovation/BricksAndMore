@@ -9,6 +9,9 @@ class CreationForm(ModelForm):
     class Meta:
         model = Creation
         fields = ['number', 'name', 'description', 'creator', 'image']
+        widgets = {
+            'image': forms.FileInput(attrs={'accept': 'image/*', 'capture': 'camera'})
+        }
 
 # class CreationForm(forms.Form):
 #     name = forms.CharField(max_length=200)
