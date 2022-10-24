@@ -1,4 +1,5 @@
 from pickle import FALSE
+from re import A
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -239,15 +240,17 @@ def stats(request):
     # amount of votes per creation
     amountOfVotes = Creation.objects.annotate(
         amount=Count("votinglist__vote")).order_by("-amount")
+    amountOfVotes = subSetOfQuery(amountOfVotes)
 
     # user with most votes
     mostVotes = User.objects.annotate(amount=Count(
         "votinglist__creation__id", distinct=True)).order_by("-amount")
+    mostVotes = subSetOfQuery(mostVotes)
 
-    print(f'mostVotes: {mostVotes[0].amount}')
-
-    # for i in range(len(amountOfVotes)):
-    #     print(f"{amountOfVotes[i]}: {amountOfVotes[i].amount}")
+    # Creation with most users voted on it
+    mostUsers = Creation.objects.annotate(amount=Count(
+        "votinglist__user__id", distinct=True)).order_by("-amount")
+    mostUsers = subSetOfQuery(mostUsers)
 
     return render(request=request, template_name="voting/stats.html", context={
         "avgPerCreationHighest": avgPerCreationHighest,
@@ -259,6 +262,7 @@ def stats(request):
         "highestDeta": highestDeta,
         "lowestDeta": lowestDeta,
         "amountOfVotes": amountOfVotes,
+        "mostUsers": mostUsers,
         "mostVotes": mostVotes,
         "creations": Creation.objects.all()})
 

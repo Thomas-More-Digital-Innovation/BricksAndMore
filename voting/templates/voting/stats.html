@@ -118,7 +118,8 @@
 </table>
 
 <br>
-<h3>Most vote amounts</h3>
+<h3>Most vote amounts in all categories</h3>
+(so each category can have three possible votes per user)
 <table>
   <tr>
     <th>Creation</th>
@@ -133,13 +134,30 @@
 </table>
 <br>
 
-<h3>Least vote amounts</h3>
+<h3>Least vote amounts in all categories</h3>
+(so each category can have three possible votes per user)
 <table>
   <tr>
     <th>Creation</th>
     <th>amount of votes</th>
   </tr>
   {% for item in amountOfVotes reversed %}
+  <tr>
+      <td>{{ item }}</td>
+      <td>{{ item.amount }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<br>
+
+<h3>most users voted</h3>
+(how many users voted for each creation)
+<table>
+  <tr>
+    <th>Creation</th>
+    <th>amount of votes</th>
+  </tr>
+  {% for item in mostUsers %}
   <tr>
       <td>{{ item }}</td>
       <td>{{ item.amount }}</td>
@@ -166,8 +184,5 @@
 </table>
 
 <br>
-most voted <br>
-least voted <br>
-highest voted creator <br>
 
 {% endblock %}
