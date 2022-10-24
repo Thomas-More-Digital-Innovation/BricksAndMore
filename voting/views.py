@@ -6,10 +6,10 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, render
-from django.db.models import Avg, Min, Max, Count, Sum
+from django.db.models import Avg, Min, Max, Count, Sum, FloatField, F
 from django.views.generic import UpdateView, DeleteView
 from django.conf import settings
-
+from django.db.models.functions import Coalesce
 from voting.forms import *
 from voting.models import *
 
@@ -192,15 +192,16 @@ def stats(request):
         return querySet[:splice]
 
     # dictionary of creation its avg vote regardless of category
+    # Coalesce is used to return 0 if there is no vote, it returns the first non-null value (so either the Avg() or 0 in  this case)
     # highest
-    avgPerCreationHighest = Creation.objects.annotate(
-        avg=Avg("votinglist__vote")).order_by("-avg")
-    avgPerCreationHighest = subSetOfQuery(avgPerCreationHighest)
+    highestAvgPerCreation = Creation.objects.annotate(
+        avg=Coalesce(Avg("votinglist__vote"), 0, output_field=FloatField())).order_by("-avg")
+    highestAvgPerCreation = subSetOfQuery(highestAvgPerCreation)
 
     # lowest
-    avgPerCreationLowest = Creation.objects.annotate(
-        avg=Avg("votinglist__vote")).order_by("avg")
-    avgPerCreationLowest = subSetOfQuery(avgPerCreationLowest)
+    lowestAvgPerCreation = Creation.objects.annotate(
+        avg=Coalesce(Avg("votinglist__vote"), 0, output_field=FloatField())).order_by("avg")
+    lowestAvgPerCreation = subSetOfQuery(lowestAvgPerCreation)
 
     # dictionary of creation id and its avg vote per category
     # Creativity
@@ -253,8 +254,8 @@ def stats(request):
     mostUsers = subSetOfQuery(mostUsers)
 
     return render(request=request, template_name="voting/stats.html", context={
-        "avgPerCreationHighest": avgPerCreationHighest,
-        "avgPerCreationLowest": avgPerCreationLowest,
+        "highestAvgPerCreation": highestAvgPerCreation,
+        "lowestAvgPerCreation": lowestAvgPerCreation,
         "highestCrea": highestCrea,
         "lowestCrea": lowestCrea,
         "highestImpr": highestImpr,
