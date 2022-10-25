@@ -5,7 +5,6 @@
 
 {% load static %}
 <script src="{% static 'js/myVotes.js' %}" defer></script>   
-
 <hr>
 <br>
 
@@ -26,10 +25,10 @@
   {% for key, value in formListItems.categoryForms.items %}
     <h3 id="creation_{{formListItems.creation.number}}">{{key}}</h3>
  
-    <form method="post" novalidate oninput="submit()">
+    <form method="post" novalidate oninput="submit()" id="voteformtagid">
       {% csrf_token %}  
 
-      <div class="voteform">
+      <div class="voteform" id="voteform">
           {% for radio in value.form.vote %}
             <input name="vote"
             type="radio" 
@@ -46,10 +45,14 @@
               <input type="hidden" name="category" value="{{key}}">
             </div>
           </div>
-          <button type="submit">Submit</button>
+          {% comment %} <button type="submit">Submit</button> {% endcomment %}
     </form> 
     {% endfor %}
 {% endfor %}
+
+
+
+
 <div id="end">
   end
 </div>

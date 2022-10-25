@@ -50,3 +50,8 @@ formlistItems = [
 ```python
 {'creation': creation, categoryForms: {creativity: {form: form(), vote}, uniqueness: {form: form(), vote: vote}, impressiveness: {form: form(), vote: vote}
 ```
+
+## Requirements.txt
+
+psycopg2-binary
+django-unfold

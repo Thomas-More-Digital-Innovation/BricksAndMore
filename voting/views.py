@@ -166,6 +166,8 @@ def myVotes(request):
 
         #   https://stackoverflow.com/questions/11165267/django-redirect-with-anchor-parameters
 
+        # https://stackoverflow.com/questions/58645505/how-to-render-a-field-request-without-refreshing-the-page/58645877#58645877
+
 
 def userIsStaff(user):
     return user.is_staff

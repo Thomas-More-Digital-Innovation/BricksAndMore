@@ -2,9 +2,9 @@ function getData(form) {
     // Get the data from the form
     var formData = new FormData(form);
     number = formData.get('number');
-    // console.log("number: " + number);
+    // console.log("number: " + number);alignToTop: true, 
     // scroll to the element with id 'creation_' + the creation number entered in the form
-    document.getElementById("creation_" + number).scrollIntoView();
+    document.getElementById("creation_" + number).scrollIntoView({ block: 'start', behavior: 'smooth' }); // block: center maybe better?
 
     // console.log(Object.fromEntries(formData)); //uncomment to log the form data
     return false;
