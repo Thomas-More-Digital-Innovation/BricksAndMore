@@ -1,3 +1,7 @@
+var script = document.createElement('script');
+script.src = 'https://code.jquery.com/jquery-3.6.0.min.js';
+
+
 function getData(form) {
     // Get the data from the form
     var formData = new FormData(form);
@@ -21,23 +25,22 @@ document.getElementById("search").addEventListener("submit", function (event) {
 
 // console.log(document.getElementsByTagName("label")[1]); {%  document.getElementsByTagName("label")[0].addEventListener("click", prevent);
 
-document.querySelectorAll('label').forEach(item => {
-    item.addEventListener('click', event => {
-        // console.log("clicked!");
-        // event.preventDefault();
-        // get value from clicked label
-        var label = event.target;
-        var input = document.getElementById(label);
-        // inputLabel = input.getAttribute("for");
-        var x = document.querySelectorAll('[for=label]')[0];
-        console.log("x: " + x);
-        console.log("label: ", label);
-        console.log("input: ", input);
+// document.querySelectorAll('label').forEach(item => {
+//     item.addEventListener('click', event => {
+//         // console.log("clicked!");
+//         // event.preventDefault();
 
-        var clickedValue = item.getAttribute("for");
+//         var csrfToken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+//         var label = event.target;
+//         var forAttribute = label.getAttribute('for');
+//         var input = document.getElementById(forAttribute);
+//         var value = input.value;
+//         console.log("label: ", label);
+//         console.log("input: ", input);
+//         console.log("value: ", value);
+//         console.log("csrfToken: ", csrfToken);
 
-        // clickedValue.toString();
-        //bit hacky but good for POC
-        console.log("vote value:", parseInt(clickedValue.slice(-1)) + 1);
-    })
-})
+        
+
+//     })
+// })

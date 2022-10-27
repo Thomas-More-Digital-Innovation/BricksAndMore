@@ -24,7 +24,7 @@
   <img src="{{ formListItems.creation.image.url }}" alt="..."  width="250" height="250">
   {% comment %} iterate over the carehoryforms dictionary (so all data for one creation: forms and vote per category) {% endcomment %}
   {% for key, value in formListItems.categoryForms.items %}
-    <h3 id="creation_{{formListItems.creation.number}}">{{key}}</h3>
+    <h3 id="creation_{{formListItems.creation.number}}" class="{{key}}">{{key}}</h3>
  
     <form method="post" novalidate #oninput="submit()" class="formtag">
       {% csrf_token %}  
@@ -52,7 +52,94 @@
 {% endfor %}
 
 
-<div id="end">
-  end
-</div>
+<script>
+
+  // star submission
+
+
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+function csrfSafeMethod(method) {
+  // these HTTP methods do not require CSRF protection
+  return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+$.ajaxSetup({
+  beforeSend: function(xhr, settings) {
+      csrftoken = getCookie('csrftoken');
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      }
+  }
+});
+
+
+// console.log(document.getElementsByTagName("label")[1]); {%  document.getElementsByTagName("label")[0].addEventListener("click", prevent);
+
+document.querySelectorAll('label').forEach(item => {
+  item.addEventListener('click', event => {
+      // console.log("clicked!");
+      // event.preventDefault();
+
+      // var csrfToken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+      var label = event.target;
+      var forAttribute = label.getAttribute('for');
+      var input = document.getElementById(forAttribute);
+      var value = input.value;
+      var category;
+      var creationId;
+      var csrftoken = getCookie('csrftoken');
+      var form = input.closest('form');
+      
+      console.log("form: ", form);
+      console.log("label: ", label);
+      console.log("input: ", input);
+      console.log("value: ", value);
+      console.log("csrfToken: ", csrftoken);
+      console.log("serializedForm: ", $(form).serialize());
+      
+
+      $.ajax({
+          type: "POST",
+          url: "{% url 'voting:myvotes' %}",
+          headers: {
+              "Content-Type": "application/json",
+              "HTTP_GROUP_NAME": "groups_name",
+          },
+          data: {
+            "csrfmiddlewaretoken": csrftoken,
+            "form": $(form).serialize(),
+            // "creationId" : 1,
+            // "vote": 1,
+          },
+          success: function (data) {
+              console.log("success");
+              //console.log(data);
+          },
+          failure: function (data) {
+              console.log("failure");
+              console.log(data);
+          },
+      });
+      console.log('function ran.')
+  });
+
+})
+
+</script>
 {% endblock %}

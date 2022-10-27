@@ -1,5 +1,3 @@
-from pickle import FALSE
-from re import A
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -83,10 +81,31 @@ def logout_request(request):
     return redirect("website:homepage")
 
 
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+# request.headers.get('x-requested-with') == 'XMLHttpRequest'
+
+
 @login_required  # TODO add this
 def myVotes(request):
     if request.method == "POST":
         print("POST")
+        # print(f"formErrors: {form.errors}")
+        # POSTcreationId = request.POST.get('creationId', '')
+
+        # print(f"POSTcreationId: {POSTcreationId}")
+
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            print("_______AJAX")
+            # get the form data
+            category = request.POST.get('category')
+            vote = request.POST.get('vote')
+            print(f"category: {category}")
+            # POSTcategory = request.POST.get('category', 'none found')
+
+            # print(f"POSTcategory: {POSTcategory}")
+
         form = VotingForm(data=request.POST)
         print(f"formErrors: {form.errors}")
         if form.is_valid():
