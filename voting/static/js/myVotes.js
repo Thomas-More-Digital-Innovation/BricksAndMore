@@ -15,3 +15,29 @@ document.getElementById("search").addEventListener("submit", function (event) {
     event.preventDefault();
     getData(event.target);
 });
+
+
+// star submission
+
+// console.log(document.getElementsByTagName("label")[1]); {%  document.getElementsByTagName("label")[0].addEventListener("click", prevent);
+
+document.querySelectorAll('label').forEach(item => {
+    item.addEventListener('click', event => {
+        // console.log("clicked!");
+        // event.preventDefault();
+        // get value from clicked label
+        var label = event.target;
+        var input = document.getElementById(label);
+        // inputLabel = input.getAttribute("for");
+        var x = document.querySelectorAll('[for=label]')[0];
+        console.log("x: " + x);
+        console.log("label: ", label);
+        console.log("input: ", input);
+
+        var clickedValue = item.getAttribute("for");
+
+        // clickedValue.toString();
+        //bit hacky but good for POC
+        console.log("vote value:", parseInt(clickedValue.slice(-1)) + 1);
+    })
+})
