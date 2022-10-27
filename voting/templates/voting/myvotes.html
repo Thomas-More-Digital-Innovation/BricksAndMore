@@ -4,7 +4,8 @@
 {% include "voting/includes/status.html" %}
 
 {% load static %}
-<script src="{% static 'js/myVotes.js' %}" defer></script>   
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="{% static 'js/myVotes.js' %}" defer></script>
 <hr>
 <br>
 
@@ -25,7 +26,7 @@
   {% for key, value in formListItems.categoryForms.items %}
     <h3 id="creation_{{formListItems.creation.number}}">{{key}}</h3>
  
-    <form method="post" novalidate oninput="submit()" id="voteformtagid">
+    <form method="post" novalidate oninput="submit()" class="formtag">
       {% csrf_token %}  
 
       <div class="voteform" id="voteform">
@@ -49,6 +50,16 @@
     </form> 
     {% endfor %}
 {% endfor %}
+
+<script>
+  var forms = $(".formtag");
+  console.log(forms);
+  forms.submit(function (e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+    
+    console.log("check")
+  });</script>
 
 
 
