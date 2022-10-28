@@ -1,3 +1,5 @@
+import json
+from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -89,6 +91,23 @@ def is_ajax(request):
 
 @login_required  # TODO add this
 def myVotes(request):
+
+    response_data = {}
+    if request.method == "POST":
+        # print("check")
+        # print(request.body)  # this prints, need to fix this into values
+        # print(f"decode: {request.body.decode('utf-8')}")
+        submission = json.loads(request.body.decode('utf-8'))
+        print(f"submission: {submission}")
+        print(f"submission['vote']: {submission['vote']}")
+        print(f"submission['creationId']: {submission['creationId']}")
+        print(f"submission['category']: {submission['category']}")
+
+        # response_data['category'] = category
+        # response_data['value'] = value
+        print("response_data: ", response_data)
+        return JsonResponse(response_data)
+
     if request.method == "POST":
         print("POST")
         # print(f"formErrors: {form.errors}")

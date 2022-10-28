@@ -33,6 +33,7 @@
           {% for radio in value.form.vote %}
             <input name="vote"
             type="radio" 
+            creationId = "{{formListItems.creation.id}}"
             id="crea_{{formListItems.creation.id}}_cat_{{key}}_{{radio.id_for_label}}"  
             value="{{ forloop.counter }}"
             {% if forloop.counter == value.vote %}checked{% endif %}>
@@ -101,45 +102,48 @@ document.querySelectorAll('label').forEach(item => {
       var forAttribute = label.getAttribute('for');
       var input = document.getElementById(forAttribute);
       var value = input.value;
-      var category;
-      var creationId;
+      var category = "creativity";
+      var creationId = input.getAttribute('creationId');
       var csrftoken = getCookie('csrftoken');
       var form = input.closest('form');
+
+      // var finalData = {"vote": value,"category": category,"creationId": creationId,};
       
       console.log("form: ", form);
       console.log("label: ", label);
       console.log("input: ", input);
       console.log("value: ", value);
+      console.log("category: ", category);
+      console.log("creationId: ", creationId);
       console.log("csrfToken: ", csrftoken);
       console.log("serializedForm: ", $(form).serialize());
+
+
       
 
       $.ajax({
-          type: "POST",
-          url: "{% url 'voting:myvotes' %}",
-          headers: {
-              "Content-Type": "application/json",
-              "HTTP_GROUP_NAME": "groups_name",
-          },
-          data: {
-            "csrfmiddlewaretoken": csrftoken,
-            "form": $(form).serialize(),
-            // "creationId" : 1,
-            // "vote": 1,
-          },
-          success: function (data) {
-              console.log("success");
-              //console.log(data);
-          },
-          failure: function (data) {
-              console.log("failure");
-              console.log(data);
-          },
-      });
-      console.log('function ran.')
-  });
-
-})
-
+        type: 'post',
+        url: '{% url 'voting:myvotes' %}',
+        headers: {
+          "Content-Type": "application/json",
+          "HTTP_GROUP_NAME": "groups_name",
+        },
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({
+          "vote": value,
+          "category": category,
+          "creationId": creationId,
+         // "csrfmiddlewaretoken": csrftoken,
+        }),
+        success: function (data) {
+          console.log("success, data below");
+          console.log(data)
+        },
+        error: function(error) {
+           console.log(error)
+          }
+        });
+      })});
 </script>
 {% endblock %}
