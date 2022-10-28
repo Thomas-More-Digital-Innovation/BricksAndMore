@@ -93,7 +93,7 @@ def is_ajax(request):
 def myVotes(request):
     if request.method == "POST" and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         # add ajax check
-        # add crud flow from below
+        # add crud flow from below.
 
         submission = json.loads(request.body.decode('utf-8'))
         print(f"submission: {submission}")
