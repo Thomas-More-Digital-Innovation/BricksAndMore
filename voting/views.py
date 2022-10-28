@@ -91,75 +91,89 @@ def is_ajax(request):
 
 @login_required  # TODO add this
 def myVotes(request):
+    if request.method == "POST" and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        # add ajax check
+        # add crud flow from below
 
-    response_data = {}
-    if request.method == "POST":
-        # print("check")
-        # print(request.body)  # this prints, need to fix this into values
-        # print(f"decode: {request.body.decode('utf-8')}")
         submission = json.loads(request.body.decode('utf-8'))
         print(f"submission: {submission}")
         print(f"submission['vote']: {submission['vote']}")
         print(f"submission['creationId']: {submission['creationId']}")
         print(f"submission['category']: {submission['category']}")
 
-        # response_data['category'] = category
-        # response_data['value'] = value
-        print("response_data: ", response_data)
-        return JsonResponse(response_data)
+        user = request.user
+        creationId = submission['creationId']
+        category = submission['category']
+        vote = submission['vote']
+        print(
+            f"creationID: {creationId} category: {category}, voteValue: {vote}, user: {user}")
 
-    if request.method == "POST":
-        print("POST")
-        # print(f"formErrors: {form.errors}")
-        # POSTcreationId = request.POST.get('creationId', '')
+        # if user does not have a VotingList, create one and add the vote
+        if not VotingList.objects.filter(user=user, creation=Creation.objects.get(id=creationId), category=category).exists():
+            print("Does not exist")
+            # if not VotingList.objects.filter(user=user, creation=creation).exists():
+            votedCreation = Creation.objects.get(id=creationId)
+            print(f"___votedCreation: {votedCreation}")
 
-        # print(f"POSTcreationId: {POSTcreationId}")
+            newVotingList = VotingList(user=user,
+                                       vote=vote,
+                                       category=category,
+                                       )
+            print(f"___newVotingList: {newVotingList}")
+            newVotingList.save()
+            print(f'{"saved":_^15}')
+            newVotingList.creation.set([votedCreation])
 
-        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            print("_______AJAX")
-            # get the form data
-            category = request.POST.get('category')
-            vote = request.POST.get('vote')
-            print(f"category: {category}")
-            # POSTcategory = request.POST.get('category', 'none found')
+        # if user does have a VotingList, add the vote to the list
+        # TODO: change to else?
+        elif VotingList.objects.filter(user=user, creation=Creation.objects.get(id=creationId), category=category).exists():
+            # elif VotingList.objects.filter(user=user, creation=creation).exists():
+            updateVotingList = VotingList.objects.get(
+                user=user, creation=Creation.objects.get(id=creationId), category=category)
+            updateVotingList.vote = vote
+            updateVotingList.save()
+            print(f'{"updated":_^15}')
 
-            # print(f"POSTcategory: {POSTcategory}")
+        print("submission: ", submission)
+        return JsonResponse(submission)
 
-        form = VotingForm(data=request.POST)
-        print(f"formErrors: {form.errors}")
-        if form.is_valid():
-            user = request.user
-            creationId = form.cleaned_data.get('creationId')
-            category = form.cleaned_data.get('category')
-            vote = form.cleaned_data.get('vote')
-            print(
-                f"creationID: {creationId} category: {category}, voteValue: {vote}")
+    # if request.method == "POST":
 
-            # if user does not have a VotingList, create one and add the vote
-            if not VotingList.objects.filter(user=user, creation=Creation.objects.get(id=creationId), category=category).exists():
-                # if not VotingList.objects.filter(user=user, creation=creation).exists():
-                votedCreation = Creation.objects.get(id=creationId)
-                # print(f"___votedCreation: {votedCreation}")
+    #     form = VotingForm(data=request.POST)
+    #     print(f"formErrors: {form.errors}")
+    #     if form.is_valid():
+    #         user = request.user
+    #         creationId = form.cleaned_data.get('creationId')
+    #         category = form.cleaned_data.get('category')
+    #         vote = form.cleaned_data.get('vote')
+    #         print(
+    #             f"creationID: {creationId} category: {category}, voteValue: {vote}")
 
-                newVotingList = VotingList(user=user,
-                                           vote=vote,
-                                           category=category,
-                                           )
-                newVotingList.save()
-                newVotingList.creation.set([votedCreation])
+    #         # if user does not have a VotingList, create one and add the vote
+    #         if not VotingList.objects.filter(user=user, creation=Creation.objects.get(id=creationId), category=category).exists():
+    #             # if not VotingList.objects.filter(user=user, creation=creation).exists():
+    #             votedCreation = Creation.objects.get(id=creationId)
+    #             # print(f"___votedCreation: {votedCreation}")
 
-            # if user does have a VotingList, add the vote to the list
-            # TODO: change to else?
-            elif VotingList.objects.filter(user=user, creation=Creation.objects.get(id=creationId), category=category).exists():
-                # elif VotingList.objects.filter(user=user, creation=creation).exists():
-                updateVotingList = VotingList.objects.get(
-                    user=user, creation=Creation.objects.get(id=creationId), category=category)
-                updateVotingList.vote = vote
-                updateVotingList.save()
-        else:
-            print("invalid form")
+    #             newVotingList = VotingList(user=user,
+    #                                        vote=vote,
+    #                                        category=category,
+    #                                        )
+    #             newVotingList.save()
+    #             newVotingList.creation.set([votedCreation])
 
-        return redirect("voting:myvotes")
+    #         # if user does have a VotingList, add the vote to the list
+    #         # TODO: change to else?
+    #         elif VotingList.objects.filter(user=user, creation=Creation.objects.get(id=creationId), category=category).exists():
+    #             # elif VotingList.objects.filter(user=user, creation=creation).exists():
+    #             updateVotingList = VotingList.objects.get(
+    #                 user=user, creation=Creation.objects.get(id=creationId), category=category)
+    #             updateVotingList.vote = vote
+    #             updateVotingList.save()
+    #     else:
+    #         print("invalid form")
+
+        # return redirect("voting:myvotes")
         # else:
         #     for msg in form.error_messages:
         #         messages.error(request, f"{msg}: {form.error_messages[msg]}")
@@ -319,13 +333,12 @@ def allCreations(request):
 
 @ user_passes_test(lambda u: u.is_staff)
 def addCreation(request):
-    # TODO: 404's if not superuser, change later to redirect to homepage maybe
     if request.method == "POST":
         form = CreationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, f"New creation added")
-            return redirect("voting:dashboard")
+            return redirect("voting:allcreations")
         else:
             for field, items in form.errors.items():
                 for item in items:

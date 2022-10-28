@@ -33,6 +33,7 @@
           {% for radio in value.form.vote %}
             <input name="vote"
             type="radio" 
+            category = "{{key}}"
             creationId = "{{formListItems.creation.id}}"
             id="crea_{{formListItems.creation.id}}_cat_{{key}}_{{radio.id_for_label}}"  
             value="{{ forloop.counter }}"
@@ -102,21 +103,17 @@ document.querySelectorAll('label').forEach(item => {
       var forAttribute = label.getAttribute('for');
       var input = document.getElementById(forAttribute);
       var value = input.value;
-      var category = "creativity";
+      var category = input.getAttribute('category');
       var creationId = input.getAttribute('creationId');
-      var csrftoken = getCookie('csrftoken');
-      var form = input.closest('form');
-
-      // var finalData = {"vote": value,"category": category,"creationId": creationId,};
+      var csrftoken = getCookie('csrftoken');      
       
-      console.log("form: ", form);
       console.log("label: ", label);
       console.log("input: ", input);
       console.log("value: ", value);
       console.log("category: ", category);
       console.log("creationId: ", creationId);
       console.log("csrfToken: ", csrftoken);
-      console.log("serializedForm: ", $(form).serialize());
+      
 
 
       
