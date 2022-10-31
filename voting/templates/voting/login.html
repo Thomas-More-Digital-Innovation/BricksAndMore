@@ -1,6 +1,7 @@
 {% extends 'voting/header.html' %}
 
 {% block content %}
+{% load socialaccount %}
 {% include "voting/includes/status.html" %}
 <br>
 
@@ -12,4 +13,8 @@
     </form>
     Don't have an account? <a href="{% url 'voting:register' %}" target=""><strong>register here</strong></a>!
 </div>
+<div>
+    <a href="{% provider_login_url 'google' %}">Login With Google</a>
+</div>
+
 {% endblock %}
