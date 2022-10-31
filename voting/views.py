@@ -137,7 +137,7 @@ def myVotes(request):
 
         # formList contains all forms and needed values
         formList = []
-        for creation in Creation.objects.all():
+        for creation in Creation.objects.all().order_by("number"):
             # formListItems contains each individual creation, form and vote if there is one
             # {'creation': creation, 'forms': {creativity: form(), uniqueness: form(), impressiveness: form()}, 'vote': currentvote}
             formListItems = {}
