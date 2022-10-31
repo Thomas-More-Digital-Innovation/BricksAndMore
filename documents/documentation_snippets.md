@@ -55,3 +55,19 @@ formlistItems = [
 
 psycopg2-binary
 django-unfold
+
+## Make Tailwind update the css on changes
+
+<https://tailwindcss.com/blog/standalone-cli>
+
+## Windows
+
+ ```ps1
+./tailwindcss.exe -i voting/static/voting/css/input.css  -o voting/static/voting/css/output.css --watch
+ ```
+
+## Linux
+
+ ```shell
+./tailwindcss-linux -i voting/static/voting/css/input.css -o voting/static/voting/css/output.css --watch
+ ```
