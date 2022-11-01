@@ -20,65 +20,72 @@
 
 {% comment %} iterate over all creations in the formList {% endcomment %}
 {% for formListItems in formList %}
-<div class="border-solid border-2 rounded-xl border-cyan-300 my-3 py-5 grid grid-cols-2 grid-flow-row-dense mx-5">
+<div class="border-solid border-2 rounded-xl border-black my-3 py-5 mx-5 ">
 
-  {% comment %} CREATION IMAGE {% endcomment %}
-    <div class="col-span-1">
-      <img src="{{ formListItems.creation.image.url }}" alt="..."  sdsdwidth="250" sdsheight="250" class="m-auto max-h-96 max-w-5xl">
-    </div>
-    
-    <div class="col-span-1 #bg-pink-400 grid grid-cols-1">
-      {% comment %} CREATION DESCRIPTION {% endcomment %}
-      <div class="font-bold #bg-blue-600">
-        <div class="text-4xl py-5">{{ formListItems.creation.name }}</div>
-      <div>{{ formListItems.creation.description }}</div>
-    </div>
-
-      {% comment %} CREATION NUMBER {% endcomment %}
-        <div class="font-bold text-8xl #bg-green-500 flex items-center justify-center">
-          {{formListItems.creation.number}}
+  <div class="#bg-amber-600 grid grid-cols-2 grid-flow-row-dense">
+    {% comment %} CREATION IMAGE {% endcomment %}
+      <div class="col-span-1">
+        <img src="{{ formListItems.creation.image.url }}" alt="..."  sdsdwidth="250" sdsheight="250" class="m-auto max-h-96 max-w-7xl">
       </div>
-    </div>
-
+    
+      <div class="col-span-1 #bg-pink-400 grid grid-cols-1">
+        {% comment %} CREATION DESCRIPTION AND NAME {% endcomment %}
+        <div class="font-bold #bg-blue-600">
+          <div class="text-6xl py-5">{{ formListItems.creation.name }}</div>
+        <div>{{ formListItems.creation.description }}</div>
+      </div>
+        {% comment %} CREATION NUMBER {% endcomment %}
+          <div class="font-bold text-8xl #bg-green-500 flex items-center justify-center">
+            {{formListItems.creation.number}}
+        </div>
+      </div>
+  </div>
+{% comment %} HORIZONTAL RULER {% endcomment %}
     <div class="col-span-full ">
       <hr class="mx-12 my-5 h-px bg-slate-600 border-0 ">
     </div>
- 
 
     {% comment %} iterate over the carehoryforms dictionary (so all data for one creation: forms and vote per category) {% endcomment %}
-  {% for key, value in formListItems.categoryForms.items %}
-  {% comment %} CATEGORIES {% endcomment %}
-  <div class="flex items-center justify-end">
-    <h3 id="creation_{{formListItems.creation.number}}" class="{{key}} text-5xl">{{key}}</h3>
-  </div>
-<div class="#bg-cyan-400 flex justify-center">
-  <form method="post" novalidate #oninput="submit()" class="formtag ">
-    {% csrf_token %}  
+  <div class="#bg-emerald-400 grid grid-flow-row grid-cols-2 gap-y-3">
+    {% for key, value in formListItems.categoryForms.items %}
+    {% comment %} CATEGORIES {% endcomment %}
+      {% comment %} CATEGORY NAME {% endcomment %}
+      <div class="#bg-red-700 col-span-1 flex justify-end pr-6">
+        <h3 id="creation_{{formListItems.creation.number}}" class="{{key}} text-5xl">{{key}}</h3>
+      </div>
+      {% comment %} STARS {% endcomment %}
+      <div class="">
+      <form method="post" novalidate #oninput="submit()" class="formtag ">
+        {% csrf_token %}
     
-    <div class="voteform" id="voteform">
-      {% for radio in value.form.vote %}
-      <input name="vote"
-      type="radio" 
-      category = "{{key}}"
-      creationId = "{{formListItems.creation.id}}"
-      id="crea_{{formListItems.creation.id}}_cat_{{key}}_{{radio.id_for_label}}"  
-      value="{{ forloop.counter }}"
-      {% if forloop.counter == value.vote %}checked{% endif %}>
-      <label for="crea_{{formListItems.creation.id}}_cat_{{key}}_{{radio.id_for_label}}">{{ radio.choice_label }}</label>
-      {% endfor %}
-      <div>
-        <input type="hidden" name="creationId" value="{{ formListItems.creation.id }}">
+        <div id="voteform" class="voteform flex justify-between" >
+          {% for radio in value.form.vote %}
+          <input
+          name="vote"
+          type="radio"
+          category = "{{key}}"
+          creationId = "{{formListItems.creation.id}}"
+          id="crea_{{formListItems.creation.id}}_cat_{{key}}_{{radio.id_for_label}}"
+          value="{{ forloop.counter }}"
+          {% if forloop.counter == value.vote %}checked{% endif %}>
+          <label class="scale-200" for="crea_{{formListItems.creation.id}}_cat_{{key}}_{{radio.id_for_label}}">{{ radio.choice_label }}</label>
+          {% endfor %}
+          <div>
+            <input type="hidden" name="creationId" value="{{ formListItems.creation.id }}">
+          </div>
+          <div>
+            <input type="hidden" name="category" value="{{key}}">
+          </div>
+        </div>
+        {% comment %} <button type="submit">Submit</button> {% endcomment %}
+      </form>
       </div>
-      <div>
-        <input type="hidden" name="category" value="{{key}}">
-      </div>
-    </div>
-    {% comment %} <button type="submit">Submit</button> {% endcomment %}
-  </form> 
-</div>
-  {% endfor %}
-      </div>
-        {% endfor %}
+    
+    {% endfor %}
+        </div>
+        </div>
+          {% endfor %}
+  </div>
 
 
 <script>

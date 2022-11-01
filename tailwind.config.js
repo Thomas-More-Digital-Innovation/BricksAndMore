@@ -7,13 +7,10 @@ module.exports = {
   theme:
   {
     extend: {
-      colors: {
-        backgroundcolor: "#EBD7C1",
-      },
-      dropShadow: {
-        'accentgreen': '0 35px 35px rgb(140, 255, 152, 0.25)',
-      },
-    },
+      scale: {
+        '200': '2.00',
+      }
+    }
   },
   plugins: [],
 }

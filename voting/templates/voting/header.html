@@ -4,6 +4,7 @@
 </head>
 
 <body>
+  {% include "voting/includes/nav.html" %}
   <div>
     <h2>Errors</h2>
     <ul>
@@ -17,7 +18,7 @@
 
   <div class="">
     <br>
-    {% include "voting/includes/nav.html" %}
+
     {% block content %}
     {% endblock %}
   </div>
