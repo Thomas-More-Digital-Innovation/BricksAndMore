@@ -6,7 +6,7 @@
 
 Only social auth is suported. This is done because of time constraints but also because users may use the webapp more if they can just sign in with one button and start voting straight away, instead of having to go through a register process.
 
-Social auth is done using the Django all-auth package. Google, Twitter and Facebook are supported.
+Social auth is done using the Django all-auth package. Google, Twitter (under development) and instagram (under development) are supported.
 Google's auth configuration can be found at console.cloud.google.com
 
 ### Voting forms

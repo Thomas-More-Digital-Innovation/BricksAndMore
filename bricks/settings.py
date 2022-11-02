@@ -219,11 +219,16 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {
             'access_type': 'online',
         }
-    }
+    },
+    'twitter': {}
 }
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-gclientid = "990839223009-hkhfs4t9mhvugt65i43mq2j3ubfv4brr.apps.googleusercontent.com"
-gclientsecret = "990839223009-hkhfs4t9mhvugt65i43mq2j3ubfv4brr.apps.googleusercontent.com"
+
+TWITTERCLIENTIDONE = "yOKKtczGJLhd7sOL5EyEwEyw0"
+TWITTERSECRETKEYONE = "cQVp4gQcNuWPy2ghsz6LNeJdGJvTrnhpEKBEvHOTgaIGXtQSZS"
+
+TWITTERCLIENTIDTWO = "SXctQ3dNTDBBYnE2UC04cEtPSEY6MTpjaQ"
+TWITTERSECRETKEYONE = "9QVd-Fosgkv_omV2wWOxD2u_LvZ7RL2xfCBftUMiU7hcc63ffD"
