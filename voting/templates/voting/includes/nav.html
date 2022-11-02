@@ -1,16 +1,20 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'voting/css/output.css' %}">
 
-<div class=" bg-green-300 grid grid-flow-col-dense grid-cols-3">
-    <nav>
-        <div class="col-span-2">
-            <a href="{% url 'voting:login' %}">To login / myvotes</a>
-        </div>
-<div  class="col-span-1">
-    <a href="{% url 'voting:dashboard' %}">Dashboard</a>
-</div>
-        <div  class="col-span-1">
-            <a href="{% url 'voting:logout' %}">Logout</a>
-        </div>
-    </nav>
-</div>
+<nav class="px-4 bg-bamBlue flex content-between justify-between text-slate-300 font-semibold sticky top-0 z-50">
+    <div class="my-auto">
+        <a href="{% url 'voting:login' %}">To login / myvotes</a>
+    </div>
+    {% comment %} if staff show dashboard link, else show logo {% endcomment %}
+    {% if request.user.is_staff %}
+    <div  class="my-auto">
+        <a href="{% url 'voting:dashboard' %}">Dashboard</a>
+    </div>
+    {% else %}
+    <div class="my-auto">
+        <img src="{% static 'voting/logo.png' %}" alt="logo" class="w-12 h-12">
+    </div>
+    {% endif %}
+    <div  class="my-auto">
+        <a href="{% url 'voting:logout' %}">Logout</a>
+    </div>

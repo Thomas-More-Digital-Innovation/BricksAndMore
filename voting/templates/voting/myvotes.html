@@ -1,23 +1,17 @@
 {% extends 'voting/header.html' %}
 
 {% block content %}
+
+
 {% include "voting/includes/status.html" %}
+{% include "voting/includes/navwithsearch.html" %}
 
 {% load static %}
 <link rel="stylesheet" href="{% static 'voting/css/stars.css' %}">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="{% static 'js/myVotes.js' %}" defer></script>
 <hr>
-<br>
 
-<div class="bg-red-500">
-  <h1>VotingPage</h1>
-</div>
-
-<form id="search">
-  <label>go to number:<input id="number" name="number"></label>
-  <input type="submit" value="Submit">
-</form>
 
 {% comment %} iterate over all creations in the formList {% endcomment %}
 {% for formListItems in formList %}

@@ -1,4 +1,10 @@
-#
+# Voting
+
+project description
+
+- made as a learning experince MVC / Django
+- could be streamlined better, code is a bit messy
+- tight deadline
 
 ## Project structure
 
@@ -78,3 +84,8 @@ django-unfold
  ```shell
 ./tailwindcss-linux -i voting/static/voting/css/input.css -o voting/static/voting/css/output.css --watch
  ```
+
+## Future plans
+
+- the nav and 'navWithSearch' should be merged into one, cleaner component
+- the way creations and their votes get sent to the view is a bit cluttered and might be done more effeciently
