@@ -7,6 +7,12 @@ module.exports = {
   theme:
   {
     extend: {
+      colors: {
+        bamBlue: '#151535',
+        bamRed: '#d61523',
+        bamDarkText: '#242424',
+        bamText: '#807b77',
+      },
       scale: {
         '200': '2.00',
       }

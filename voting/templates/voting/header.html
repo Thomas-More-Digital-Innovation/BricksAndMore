@@ -4,7 +4,26 @@
 </head>
 
 <body>
-  {% include "voting/includes/nav.html" %}
+<div>
+  <nav class="px-4 bg-bamBlue flex content-between justify-between text-slate-300 font-semibold">
+      <div class="">
+          <a href="{% url 'voting:login' %}">To login / myvotes</a>
+      </div>
+      {% comment %} if staff show dashboard link, else show logo {% endcomment %}
+      {% if request.user.is_staff %}
+      <div  class="">
+          <a href="{% url 'voting:dashboard' %}">Dashboard</a>
+      </div>
+      {% else %}
+      <div class="">
+          <img src="{% static 'voting/logo.png' %}" alt="logo" class="w-12 h-12">
+      </div>
+      {% endif %}
+      <div  class="">
+          <a href="{% url 'voting:logout' %}">Logout</a>
+      </div>
+  </nav>
+</div>
   <div>
     <h2>Errors</h2>
     <ul>
@@ -16,7 +35,7 @@
     {% comment %} {% include "main/includes/navbar.html" %} {% endcomment %}
     {% include "voting/includes/messages.html" %}
 
-  <div class="">
+  <div>
     <br>
 
     {% block content %}

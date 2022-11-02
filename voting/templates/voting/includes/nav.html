@@ -1,12 +1,16 @@
-<div class="bg-slate-400">
+{% load static %}
+<link rel="stylesheet" href="{% static 'voting/css/output.css' %}">
+
+<div class=" bg-green-300 grid grid-flow-col-dense grid-cols-3">
     <nav>
-        <a href="{% url 'voting:login' %}">To login / myvotes</a>
-    
-        <br>
-        <a href="{% url 'voting:logout' %}">Logout</a>
-        <br>
-        <a href="{% url 'voting:dashboard' %}">Dashboard</a>
-        <br>
-        <a href="/">home</a>
+        <div class="col-span-2">
+            <a href="{% url 'voting:login' %}">To login / myvotes</a>
+        </div>
+<div  class="col-span-1">
+    <a href="{% url 'voting:dashboard' %}">Dashboard</a>
+</div>
+        <div  class="col-span-1">
+            <a href="{% url 'voting:logout' %}">Logout</a>
+        </div>
     </nav>
 </div>
