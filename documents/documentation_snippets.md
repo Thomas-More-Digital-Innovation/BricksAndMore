@@ -2,6 +2,13 @@
 
 ## Project structure
 
+### Login
+
+Only social auth is suported. This is done because of time constraints but also because users may use the webapp more if they can just sign in with one button and start voting straight away, instead of having to go through a register process.
+
+Social auth is done using the Django all-auth package. Google, Twitter and Facebook are supported.
+Google's auth configuration can be found at console.cloud.google.com
+
 ### Voting forms
 
 - The voting forms are rendered by iterating over the creations because all the creations should have a voting form, whether or not there is a votingList, and thus a vote for that specific creation
