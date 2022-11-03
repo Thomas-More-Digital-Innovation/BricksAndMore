@@ -1,18 +1,6 @@
 {% extends 'voting/header.html' %}
-
 {% block content %}
-
-
 {% include "voting/includes/navwithsearch.html" %}
-{% comment %} {% include "voting/includes/status.html" %} {% endcomment %}
-
-
-{% comment %} <div class="messages bg-blue-100 border border-blue-500 text-blue-700 rounded-md px-4 py-3 z-50 w-3/4 text-center fixed bottom-1 inset-x-0 mx-auto">
-  Test content
-  </ul>
-  </div> {% endcomment %}
-
-
 
 {% load static %}
 <link rel="stylesheet" href="{% static 'voting/css/stars.css' %}">
@@ -23,7 +11,7 @@
 
 {% comment %} iterate over all creations in the formList {% endcomment %}
 {% for formListItems in formList %}
-<div class="border-solid border-2 rounded-xl border-black my-3 py-5 mx-5 ">
+<div class="border-solid border-2 rounded-xl border-black my-3 py-5 mx-5 bg-slate-100">
 
   <div class="#bg-amber-600 grid grid-cols-2 grid-flow-row-dense">
     {% comment %} CREATION IMAGE {% endcomment %}
@@ -34,8 +22,8 @@
       <div class="col-span-1 #bg-pink-400 grid grid-cols-1">
         {% comment %} CREATION DESCRIPTION AND NAME {% endcomment %}
         <div class="font-bold #bg-blue-600">
-          <div class="text-6xl py-5">{{ formListItems.creation.name }}</div>
-        <div>{{ formListItems.creation.description }}</div>
+          <div class="text-6xl py-5 text-bamDarkText">{{ formListItems.creation.name }}</div>
+        <div class="text-bamText">{{ formListItems.creation.description }}</div>
       </div>
         {% comment %} CREATION NUMBER {% endcomment %}
           <div class="font-bold text-8xl #bg-green-500 flex items-center justify-center">
