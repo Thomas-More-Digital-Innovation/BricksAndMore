@@ -54,7 +54,7 @@ def register(request):
 
 def login_request(request):
     if request.user.is_authenticated:
-        messages.info(request, "You are already logged in.")
+        messages.info(request, "You are logged in.")
         return redirect('voting:myvotes')
 
     if request.method == 'POST':

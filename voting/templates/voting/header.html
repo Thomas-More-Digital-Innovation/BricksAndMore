@@ -1,29 +1,14 @@
 <head>
   {% load static %}
   <link rel="stylesheet" href="{% static 'voting/css/output.css' %}">
+  <script src="{% static 'js/messages.js' %}" defer></script>
 </head>
 
 <body>
-<div>
   {% comment %} ex nav {% endcomment %}
   {% comment %} {% include "voting/includes/nav.html" %} {% endcomment %}
-  </nav>
-    {% block content %}
-    {% endblock %}
-  </div>
-
-    
-</div>
-<div>
-  <h2>Errors</h2>
-  <ul>
-    {% for error in errors %}
-      <li>{{ error }}</li>
-    {% endfor %}
-</div>
-<div>
-  {% comment %} {% include "main/includes/navbar.html" %} {% endcomment %}
+  {% block content %}
+  {% endblock %}
   {% include "voting/includes/messages.html" %}
-</div>
 
 </body>

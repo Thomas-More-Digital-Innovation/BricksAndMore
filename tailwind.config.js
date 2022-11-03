@@ -3,6 +3,7 @@ module.exports = {
   content: [
     "./voting/templates/voting/*.html",
     "./voting/templates/voting/components/*.html",
+    "./voting/templates/voting/includes/*.html",
   ],
   theme:
   {
@@ -10,7 +11,7 @@ module.exports = {
       colors: {
         bamBlue: '#151535',
         bamRed: '#d61523',
-        bamDarkText: '#242424',
+        bamDarkText: '#343434',
         bamText: '#807b77',
       },
       scale: {
