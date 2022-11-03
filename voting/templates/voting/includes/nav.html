@@ -15,7 +15,9 @@
         <img src="{% static 'voting/logo.png' %}" alt="logo" class="object-contain">
     </div> {% endcomment %}
     {% endif %}
+    {% if user.is_authenticated %}
     <div  class="my-auto">
         <a href="{% url 'voting:logout' %}">Logout</a>
     </div>
+    {% endif %}
 </nav>
