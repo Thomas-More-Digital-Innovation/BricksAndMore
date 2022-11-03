@@ -1,15 +1,15 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'voting/css/output.css' %}">
-
-<nav class="px-12 mb-4 bg-bamBlue flex content-between justify-between text-bamDarkText font-semibold">
-    {% comment %} if staff show dashboard link, else show logo {% endcomment %}
+<div class="text-center bg-bamBlue text-slate-300 font-semibold py-2 text-5xl">
+    <nav class="px-12 mb-2 bg-bamBlue flex content-between justify-between text-bamDarkText font-semibold">
+        {% comment %} if staff show dashboard link, else show logo {% endcomment %}
     {% if request.user.is_staff %}
         <div  class="my-auto">
             <a href="{% url 'voting:dashboard' %}">Dashboard</a>
         </div>
-    {% else %}
-    <div class="my-auto">
-        <img src="{% static 'voting/logo.png' %}" alt="logo" class="object-contain w-auto h-12">
+        {% else %}
+        <div class="my-auto">
+        <img src="{% static 'voting/logo.png' %}" alt="logo" class="object-contain w-auto h-14">
     </div>
     {% comment %} <div class="my-auto bg-purple-600 h-3 container">
         <img src="{% static 'voting/logo.png' %}" alt="logo" class="object-contain">
@@ -21,3 +21,4 @@
     </div>
     {% endif %}
 </nav>
+</div>

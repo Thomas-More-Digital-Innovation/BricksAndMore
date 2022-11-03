@@ -1,7 +1,7 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'voting/css/output.css' %}">
 
-<div class="text-center bg-bamBlue text-slate-300 font-semibold py-2 text-5xl">
+<div>
     {% include "voting/includes/nav.html" %}
 </div>
 <div class="sticky top-0 z-50 text-5xl">
@@ -12,7 +12,7 @@
                 <label class="flex-auto">ga naar nr:</label>
                 <input class="flex-auto w-1" id="number" name="number">
                 <div class="flex-auto">
-                    <div class="border-solid border-2 border-slate-500-500 inline-block p-2 bg-slate-700">
+                    <div class="border-solid border-2 border-bamLogoYellow inline-block p-2 bg-slate-700">
                         <input type="submit" value="Zoek!">
                     </div>
                 </div>

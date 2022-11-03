@@ -13,6 +13,11 @@ module.exports = {
         bamRed: '#d61523',
         bamDarkText: '#343434',
         bamText: '#807b77',
+        bamLogoBlue: "0558a8",
+        bamLogoRed: "ec1c24",
+        bamLogoYellow: "e3d606",
+
+
       },
       scale: {
         '200': '2.00',
