@@ -1,7 +1,7 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'voting/css/output.css' %}">
 
-<nav class="px-12 mb-4 bg-bamBlue flex content-between justify-between text-bamDarkText font-semibold ">
+<nav class="px-12 mb-4 bg-bamBlue flex content-between justify-between text-bamDarkText font-semibold h-5">
     {% comment %} if staff show dashboard link, else show logo {% endcomment %}
     {% if request.user.is_staff %}
         <div  class="my-auto">
@@ -9,8 +9,11 @@
         </div>
     {% else %}
     <div class="my-auto">
-        <img src="{% static 'voting/logo.png' %}" alt="logo" class="w-12 h-12">
+        <img src="{% static 'voting/logo.png' %}" alt="logo" class="object-contain w-auto h-12">
     </div>
+    {% comment %} <div class="my-auto bg-purple-600 h-3 container">
+        <img src="{% static 'voting/logo.png' %}" alt="logo" class="object-contain">
+    </div> {% endcomment %}
     {% endif %}
     <div  class="my-auto">
         <a href="{% url 'voting:logout' %}">Logout</a>
