@@ -1,7 +1,7 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'voting/css/output.css' %}">
 
-<nav class="px-12 mb-4 bg-bamBlue flex content-between justify-between text-bamDarkText font-semibold h-5">
+<nav class="px-12 mb-4 bg-bamBlue flex content-between justify-between text-bamDarkText font-semibold">
     {% comment %} if staff show dashboard link, else show logo {% endcomment %}
     {% if request.user.is_staff %}
         <div  class="my-auto">

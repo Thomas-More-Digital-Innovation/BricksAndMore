@@ -3,9 +3,6 @@
 {% block content %}
 {% load socialaccount %}
 {% comment %} {% include "voting/includes/status.html" %} {% endcomment %}
-{% load socialaccount %}
-<br>
-
 {% include "voting/includes/nav.html" %}
 
 {% comment %} <div>
@@ -22,10 +19,18 @@
     <div>
     Log je in om te beginnen met stemmen!
 </div>
+<div>
+    Login met:
+</div>
 <br>
 <div>
-    <a href="{% provider_login_url 'google' %}">Login With Google</a>
+
+    <form action="{% provider_login_url 'google' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Google</button>
+      </form>
 </div>
+
 <div>
     <a href="{% provider_login_url 'twitter' %}">Login With Twitter</a>
 </div>
