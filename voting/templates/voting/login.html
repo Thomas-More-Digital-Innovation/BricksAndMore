@@ -23,17 +23,31 @@
     Login met:
 </div>
 <br>
+{% comment %} GOOGLE {% endcomment %}
 <div>
-
     <form action="{% provider_login_url 'google' %}" method="post">
         {% csrf_token %}
         <button type="submit">Google</button>
       </form>
 </div>
+{% comment %} TWITTER {% endcomment %}
+{% comment %} <div>
+    <form action="{% provider_login_url 'twitter' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Twitter</button>
+      </form>
+</div> {% endcomment %}
 
 <div>
-    <a href="{% provider_login_url 'twitter' %}">Login With Twitter</a>
+    {% providers_media_js %}
+    <a href="{% provider_login_url "facebook" method="js_sdk" %}">Facebook Connect</a>
 </div>
+
+
+{% comment %} 
+<div>
+    <a href="{% provider_login_url 'twitter' %}">Login With Twitter</a>
+</div> {% endcomment %}
 
 </div>
 {% comment %} <div>
