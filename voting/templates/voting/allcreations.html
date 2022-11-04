@@ -2,23 +2,42 @@
 
 {% block content %}
 {% include "voting/includes/status.html" %}
+{% include "voting/includes/nav.html" %}
+
 <br>
+<div class="flex flex-row place-content-between">
+    <div class="text-bamRed text-5xl font-bold px-5 self-center">
+        <h2>All creations</h2>
+    </div>
+    <div class="my-5">
+        <a href="{% url 'voting:addcreation' %}" class="text-white bg-blue-700 font-medium rounded-lg text-5xl px-5 py-2.5 mr-2 mb-2">Add creation</a>
+    </div>
+</div>
+    <div class="grid-flow-col grid-cols-2 mx-3 text-5xl">
+        {% for creation in creations %}
+        <div class="border border-solid border-black my-2 p-2">
+            <div class="flex justify-between">
 
-<a href="{% url 'voting:addcreation' %}">Add creation</a>
+                <h3 class=" text-bamDarkText font-bold my-5">
+                    {{creation.number}}. {{ creation.name }} 
+                </h3> 
+                
+                <a href="{% url 'voting:edit' creation.id %} " class="text-white bg-blue-700 font-medium rounded-lg text-5xl px-5 py-2.5 mr-2 mb-2">edit</a>
+            </div>
 
-
-<h2>All creations</h2>
-    
-{% for creation in creations %}
-    <h3>
-        {{creation.number}}. {{ creation.name }} 
-        (<a href="{% url 'voting:edit' creation.id %}">edit</a>)
-    </h3> 
-
-    <img src="{{ creation.image.url }}" alt="..."  width="250" height="250">
-    <p> {{ creation.description }} </p>
-    <p> {{ creation.creator }} </p>
-    <br>
-    _______________________________
-{% endfor %}
-    {% endblock %}
+            <div class="grid grid-flow-col grid-cols-2">
+                <div class="col-span-1">
+                    <img src="{{ creation.image.url }}" alt="..."  width="250" height="250">
+                </div>
+                <div class="col-span-1">
+                        <div class="my-2 text-bamText">Beschrijving:</div>
+                        <div class="my-2 text-bamDarkText font-bold">{{ creation.description }}</div>
+                        <div class="my-2 text-bamText">door:</div>
+                        <div class="my-2 text-bamDarkText font-bold">{{ creation.creator }}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
