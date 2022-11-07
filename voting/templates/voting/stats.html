@@ -12,7 +12,7 @@
   const names = [{% for item in highestAvgPerCreation %}"{{item.name}}",{%endfor%}];
 
   const values = [{% for item in highestAvgPerCreation %}{{item.avg }},{% endfor %}];
-createGraph(names, values, "pie-chart")
+createGraph(names, values, "gemiddeld aantal sterren","pie-chart")
 </script>
 
 

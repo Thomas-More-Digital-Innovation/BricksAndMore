@@ -1,5 +1,5 @@
 // create a graph using chart.js given the x and y axis values and the id for the canvas
-function createGraph(names, values, canvasId) {
+function createGraph(creationNames, values, label, canvasId) {
     var config = {
         type: 'bar',
         data: {
@@ -8,9 +8,9 @@ function createGraph(names, values, canvasId) {
                 backgroundColor: [
                     '#696969', '#808080', '#A9A9A9', '#C0C0C0', '#D3D3D3'
                 ],
-                label: 'Population'
+                label: label
             }],
-            labels: names,
+            labels: creationNames,
         },
         options: {
             responsive: true
