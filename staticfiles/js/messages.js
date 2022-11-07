@@ -1,8 +1,12 @@
 setTimeout(function () {
     messages = document.getElementById('messages');
-    messages.remove();
-}, 3000);
+    if (messages) {
+        messages.remove();
+    }
+}, 5000);
 setTimeout(function () {
     errors = document.getElementById('errors');
-    errors.remove();
-}, 3200);
+    if (errors) {
+        errors.remove();
+    }
+}, 5200);
