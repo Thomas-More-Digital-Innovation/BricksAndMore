@@ -1,3 +1,47 @@
+{% extends 'voting/header.html' %}
+
+{% block content %}
+{% include "voting/includes/status.html" %}
+
+{% comment %} part of this form is styled using attributes, see forms.py {% endcomment %}
+<div class="mx-9">
+    <h2 class="text-6xl text-bamDarkText font-bold my-8">Wijzig "{{creation.name}}"</h2>
+    <form method="POST" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.non_field_errors }}
+
+        {% for hidden_field in form.hidden_fields %}
+            {{ hidden_field.errors }}
+            {{ hidden_field }}
+        {% endfor %}
+        <div>
+            {% for field in form.visible_fields %}
+                <div class="block mb-2 text-7xl font-medium">
+                    {{ field.label_tag }}
+                </div>
+
+                <div>
+                    {{ field.errors }}
+                </div>
+
+                <div>
+                    {{ field }}
+                </div>
+
+                <div>
+                    {{ field.help_text }}
+                </div>
+                
+            {% endfor %}
+        </div>
+        <button type="submit" class="text-white bg-blue-700 font-medium rounded-lg text-5xl px-5 py-2.5 mr-2 my-8">Wijzigen</button>
+    </form>
+</div>    
+
+
+
+
 edit creation with id: {{creation.id}}
 
 <form method="POST" method="post" accept-charset="utf-8" enctype="multipart/form-data">
@@ -9,3 +53,4 @@ edit creation with id: {{creation.id}}
 ( <a href="{% url 'voting:delete' creation.id %}">delete</a> )
 <hr>
 
+{% endblock %}

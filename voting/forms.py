@@ -11,7 +11,19 @@ class CreationForm(ModelForm):
         model = Creation
         fields = ['number', 'name', 'description', 'creator', 'image']
         widgets = {
+            'number': forms.TextInput(attrs={'class': 'form-control', 'style': 'width: 50%; margin: 0 auto; margin-bottom: 10px; font-size: 3rem; font-weight: bold; color: #000; background-color: #fff;'}),
+            'name': forms.TextInput(attrs={'class': 'form-control', 'required': 'required', 'style': 'width: 50%; margin: 0 auto; margin-bottom: 10px; font-size: 3rem; font-weight: bold; color: #000; background-color: #fff;'}),
+            'description': forms.TextInput(attrs={'class': 'form-control', 'required': 'required', 'style': 'width: 50%; margin: 0 auto; margin-bottom: 10px; font-size: 3rem; font-weight: bold; color: #000; background-color: #fff;'}),
+            'creator': forms.TextInput(attrs={'class': 'form-control', 'required': 'required', 'style': 'width: 50%; margin: 0 auto; margin-bottom: 10px; font-size: 3rem; font-weight: bold; color: #000; background-color: #fff;'}),
             'image': forms.FileInput(attrs={'accept': 'image/*', 'capture': 'camera'})
+
+
+
+            # 'number': forms.NumberInput(widget=forms.IntegerField(attrs={'class': 'form-control'})),
+            # 'name': forms.TextInput(widget=forms.TextInput(attrs={'class': 'form-control'})),
+            # 'description': forms.TextInput(widget=forms.TextInput(attrs={'class': 'form-control'})),
+            # 'creator': forms.TextInput(widget=forms.TextInput(attrs={'class': 'form-control'})),
+            # 'image': forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control'})),
         }
 # class CreationForm(forms.Form):
 #     name = forms.CharField(max_length=200)

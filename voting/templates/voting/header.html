@@ -4,14 +4,16 @@
   <script src="{% static 'js/messages.js' %}" defer></script>
 </head>
 
-<body class="bg-slate-200 flex flex-col">
+<body class="bg-slate-200 flex flex-col  h-full">
   {% comment %} ex nav {% endcomment %}
-  {% comment %} {% include "voting/includes/nav.html" %} {% endcomment %}
-  <div class="flex-1">
+  {% include "voting/includes/nav.html" %}
+  <div class="flex-grow">
     {% block content %}
     {% endblock %}
   </div>
+  <div class="flex-grow-0">
     {% include "voting/includes/footer.html" %}
+  </div>
   {% include "voting/includes/messages.html" %}
 </body>
 
