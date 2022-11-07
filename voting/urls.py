@@ -2,6 +2,7 @@ from django.urls import path, include
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from allauth.account.views import LoginView, SignupView
 
 app_name = 'voting'  # here for namespacing of urls.
 
@@ -19,12 +20,12 @@ urlpatterns = [
 
     path("dashboard/", views.dashboard, name="dashboard"),
     path("dashboard/addcreation/", views.addCreation, name="addcreation"),
-    path('edit/<int:pk>/',
-         views.CreationUpdateView.as_view(), name='edit'),
-    path('delete/<int:pk>/',
-         views.CreationDeleteView.as_view(), name='delete'),
+    path('edit/<int:pk>/', views.CreationUpdateView.as_view(), name='edit'),
+    path('delete/<int:pk>/', views.CreationDeleteView.as_view(), name='delete'),
     path("dashboard/stats/", views.stats, name="stats"),
     path("dashboard/allcreations/", views.allCreations, name="allcreations"),
+    #     path(r'/accountslogin/', LoginView.as_view(), name="custom_login"),
+    #     path(r'signup/', SignupView.as_view(), name="custom_singup"),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
