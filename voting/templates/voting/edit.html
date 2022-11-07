@@ -5,7 +5,14 @@
 
 {% comment %} part of this form is styled using attributes, see forms.py {% endcomment %}
 <div class="mx-9">
-    <h2 class="text-6xl text-bamDarkText font-bold my-8">Wijzig "{{creation.name}}"</h2>
+    <div class="flex justify-between">
+        <div>
+            <h2 class="text-6xl text-bamDarkText font-bold my-8">Wijzig "{{creation.name}}"</h2>
+        </div>
+        <div class="items-center flex">
+            <a href="{% url 'voting:allcreations' %}" class="text-white bg-blue-700 font-medium rounded-lg text-5xl px-5 py-2.5 mr-2 my-8">Terug</a>
+        </div>
+    </div>
     <form method="POST" method="post" accept-charset="utf-8" enctype="multipart/form-data">
         {% csrf_token %}
 
@@ -20,37 +27,18 @@
                 <div class="block mb-2 text-7xl font-medium">
                     {{ field.label_tag }}
                 </div>
-
                 <div>
                     {{ field.errors }}
                 </div>
-
                 <div>
                     {{ field }}
                 </div>
-
                 <div>
                     {{ field.help_text }}
                 </div>
-                
             {% endfor %}
         </div>
         <button type="submit" class="text-white bg-blue-700 font-medium rounded-lg text-5xl px-5 py-2.5 mr-2 my-8">Wijzigen</button>
     </form>
 </div>    
-
-
-
-
-edit creation with id: {{creation.id}}
-
-<form method="POST" method="post" accept-charset="utf-8" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button style="background-color:#F4EB16; color:blue" class="btn btn-outline-info" type="submit">ADD</button>
-</form>
-<br>
-( <a href="{% url 'voting:delete' creation.id %}">delete</a> )
-<hr>
-
 {% endblock %}

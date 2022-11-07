@@ -4,8 +4,21 @@
 {% include "voting/includes/status.html" %}
 
 {% comment %} part of this form is styled using attributes, see forms.py {% endcomment %}
+
 <div class="mx-9">
-    <h2 class="text-6xl text-bamDarkText font-bold my-8">Voeg nieuw bouwwerk toe</h2>
+    <div class="flex justify-between">
+        <div>
+            <h2 class="text-6xl text-bamDarkText font-bold my-8">Voeg nieuw bouwwerk toe</h2>
+        </div>
+        <div class="items-center flex">
+            <a href="{% url 'voting:allcreations' %}" class="text-white bg-blue-700 font-medium rounded-lg text-5xl px-5 py-2.5 mr-2 my-8">Terug</a>
+        </div>
+    </div>
+
+
+
+<div class="mx-9">
+    
     <form method="POST" method="post" accept-charset="utf-8" enctype="multipart/form-data">
         {% csrf_token %}
 
