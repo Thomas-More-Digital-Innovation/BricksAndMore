@@ -1,29 +1,52 @@
 {% extends 'voting/header.html' %}
-
 {% block content %}
 {% include "voting/includes/status.html" %}
+<script></script>
 
-<h2>Creations</h2>
-<h4>highest over all</h4>
-<table>
-    <tr>
-      <th>Creation</th>
-      <th>Average vote</th>
-    </tr>
-    {% for item in avgPerCreationHighest %}
-    <tr>
+<script type = "text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+{% load static %}
+<script src="{% static 'js/charts.js' %}"></script>
+
+<script>
+  const names = [{% for item in highestAvgPerCreation %}"{{item.name}}",{%endfor%}];
+
+  const values = [{% for item in highestAvgPerCreation %}{{item.avg }},{% endfor %}];
+createGraph(names, values, "pie-chart")
+</script>
+
+
+<div class="mx-5">
+  <div>
+    <h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">Creations</h2>
+  </div>
+  <div>
+    <h4>highest over all</h4>
+    <table>
+      <tr>
+        <th>Creation</th>
+        <th>Average vote</th>
+      </tr>
+      {% for item in highestAvgPerCreation %}
+      <tr>
         <td>{{ item }}</td>
         <td>{{ item.avg }}</td>
-    </tr>
-    {% endfor %}
-  </table>
-<h4>lowest over all</h4>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div class="w-5/6">
+      <canvas class="" id="pie-chart"></canvas>
+  </div>
+</div>
+  
+  <h4>lowest over all</h4>
 <table>
     <tr>
       <th>Creation</th>
       <th>Average vote</th>
     </tr>
-    {% for item in avgPerCreationLowest %}
+    {% for item in lowestAvgPerCreation %}
     <tr>
         <td>{{ item }}</td>
         <td>{{ item.avg }}</td>
@@ -181,4 +204,6 @@
   {% endfor %}
 </table>
 <br>
+</div>
+
 {% endblock %}

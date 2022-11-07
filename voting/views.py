@@ -262,6 +262,8 @@ def stats(request):
         "votinglist__user__id", distinct=True)).order_by("-amount")
     mostUsers = subSetOfQuery(mostUsers)
 
+    print(highestAvgPerCreation)
+
     return render(request=request, template_name="voting/stats.html", context={
         "highestAvgPerCreation": highestAvgPerCreation,
         "lowestAvgPerCreation": lowestAvgPerCreation,
