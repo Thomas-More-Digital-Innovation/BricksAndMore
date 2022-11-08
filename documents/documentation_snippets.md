@@ -9,8 +9,7 @@ project description
 ## Running the project
 
 - using docker:
-  - docker-compose build
-  - docker-compose up -d
+  - docker compose -f .\docker-compose.dev.yml up
 
 ## Project structure
 

@@ -18,7 +18,7 @@ createGraph(names, values, "gemiddeld aantal sterren","pie-chart")
 
 <div class="mx-5">
   <div>
-    <h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">Creations</h2>
+    <h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">Algemeen</h2>
   </div>
   <div>
     <h4>highest over all</h4>
@@ -53,7 +53,7 @@ createGraph(names, values, "gemiddeld aantal sterren","pie-chart")
     </tr>
     {% endfor %}
 </table>
-<h3>CREATIVITY</h3>
+<h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">CREATIVITY</h2>
 <h4> highest</h4>
 <table>
     <tr>
@@ -82,7 +82,7 @@ createGraph(names, values, "gemiddeld aantal sterren","pie-chart")
     </tr>
     {% endfor %}
 </table>
-<h3>IMPRESSIVENESS</h3>
+<h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">IMPRESSIVENESS</h2>
 <h4> highest</h4>
 <table>
     <tr>
@@ -110,7 +110,7 @@ createGraph(names, values, "gemiddeld aantal sterren","pie-chart")
     </tr>
     {% endfor %}
 </table>
-<h3>DETAILS</h3>
+<h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">DETAILS</h2>
 <h4>highest</h4>
 <table>
     <tr>
@@ -139,8 +139,8 @@ createGraph(names, values, "gemiddeld aantal sterren","pie-chart")
 </table>
 
 <br>
-<h3>Most vote amounts in all categories</h3>
-(so each category can have three possible votes per user)
+<h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">Hoogste aantal stemmen, categorieën apart geteld</h2>
+{% comment %} (so each category can have three possible votes per user) {% endcomment %}
 <table>
   <tr>
     <th>Creation</th>
@@ -155,8 +155,8 @@ createGraph(names, values, "gemiddeld aantal sterren","pie-chart")
 </table>
 <br>
 
-<h3>Least vote amounts in all categories</h3>
-(so each category can have three possible votes per user)
+<h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">Laagste aantal stemmen, categorieën apart geteld</h2>
+{% comment %} (so each category can have three possible votes per user) {% endcomment %}
 <table>
   <tr>
     <th>Creation</th>
@@ -171,8 +171,8 @@ createGraph(names, values, "gemiddeld aantal sterren","pie-chart")
 </table>
 <br>
 
-<h3>most users voted</h3>
-(how many users voted for each creation)
+<h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">Creaties met meest ontvangen stemmen</h2>
+{% comment %} most votes recieved, regardless of the vote value {% endcomment %}
 <table>
   <tr>
     <th>Creation</th>
@@ -190,7 +190,7 @@ createGraph(names, values, "gemiddeld aantal sterren","pie-chart")
 
 
 <h2>Visitors</h2>
-<h3>Most voting visitors</h3>
+<h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">Meest stemmense bezoekers</h2>
 <table>
   <tr>
     <th>User</th>
