@@ -6,6 +6,12 @@ project description
 - could be streamlined better, code is a bit messy
 - tight deadline
 
+## Running the project
+
+- using docker:
+  - docker-compose build
+  - docker-compose up -d
+
 ## Project structure
 
 ### Login
