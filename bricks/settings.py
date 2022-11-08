@@ -10,9 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-from django.utils.translation import gettext_lazy as _
-from django.urls import reverse_lazy
-from django.templatetags.static import static
 import os
 from pathlib import Path
 
@@ -27,8 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1)2omk4ge_r4wr@_6)1dp^j+1it#!w*&th$tac*+^tq7$&afp='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 
 # Note: F:In production, you need to change ALLOWED_HOSTS to 'mydomain.com'
 ALLOWED_HOSTS = [

@@ -35,11 +35,11 @@
             }
 
             for (const inp of document.getElementsByTagName('input')) {
-                if (inp.type === 'text' && inp.classList.contains('vTimeField')) {
+                if (inp.type === 'text' && inp.classList.contains('vCustomTimeField')) {
                     DateTimeShortcuts.addClock(inp);
                     DateTimeShortcuts.addTimezoneWarning(inp);
                 }
-                else if (inp.type === 'text' && inp.classList.contains('vDateField')) {
+                else if (inp.type === 'text' && inp.classList.contains('vCustomDateField')) {
                     DateTimeShortcuts.addCalendar(inp);
                     DateTimeShortcuts.addTimezoneWarning(inp);
                 }
@@ -90,10 +90,9 @@
             }
             message = interpolate(message, [timezoneOffset]);
 
-            const warning = document.createElement('span');
-            warning.className = warningClass;
+            const warning = document.createElement('div');
+            warning.classList.add('help', warningClass);
             warning.textContent = message;
-            inp.parentNode.appendChild(document.createElement('br'));
             inp.parentNode.appendChild(warning);
         },
         // Add clock widget to a given field
@@ -365,14 +364,14 @@
             // Recalculate the clockbox position
             // is it left-to-right or right-to-left layout ?
             if (window.getComputedStyle(document.body).direction !== 'rtl') {
-                cal_box.style.left = findPosX(cal_link) + 17 + 'px';
+                cal_box.style.left = findPosX(cal_link) - 228 + 'px';
             }
             else {
                 // since style's width is in em, it'd be tough to calculate
                 // px value of it. let's use an estimated px for now
                 cal_box.style.left = findPosX(cal_link) - 180 + 'px';
             }
-            cal_box.style.top = Math.max(0, findPosY(cal_link) - 75) + 'px';
+            cal_box.style.top = Math.max(0, findPosY(cal_link) + 44) + 'px';
 
             cal_box.style.display = 'block';
             document.addEventListener('click', DateTimeShortcuts.dismissCalendarFunc[num]);

@@ -68,6 +68,9 @@ formlistItems = [
 
 psycopg2-binary
 django-unfold
+django-allauth
+gunicorn
+Pillow
 
 ## Make Tailwind update the css on changes
 
