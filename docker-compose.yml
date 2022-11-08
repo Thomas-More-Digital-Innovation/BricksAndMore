@@ -1,12 +1,28 @@
 version: '3.8'
 
 services:
-  web:
-    build: ./
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - ./app/:/usr/src/bricksandmore
-    ports:
-      - 8000:8000
+  app:
+    image: ghcr.io/thomas-more-digital-innovation/bricksandmore:latest
+    command: gunicorn bricks.wsgi:application --bind 0.0.0.0:9000
+    expose:
+      - 9000
     env_file:
-      - ./.env.dev
+      - .env
+    environment:
+      - DEBUG=0
+    volumes:
+      - shared_data:/usr/src
+      - ./bricksandmore.sqlite3:/usr/src/db.sqlite3
+
+  proxy:
+    image: docker.io/nginx:latest
+    ports:
+      - 8080:80
+    depends_on:
+      - app
+    volumes:
+      - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf
+      - shared_data:/app
+
+volumes:
+  shared_data:

@@ -1,8 +1,11 @@
 # pull official base image
-FROM python:3.9.6-alpine
+FROM python:3.9
 
 # set work directory
 WORKDIR /usr/src/
+
+RUN mkdir /usr/src/media
+RUN mkdir /usr/src/staticfiles
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1

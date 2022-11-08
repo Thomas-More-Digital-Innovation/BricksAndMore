@@ -3,3 +3,4 @@ django-unfold
 gunicorn
 django-allauth
 Pillow
+gunicorn
