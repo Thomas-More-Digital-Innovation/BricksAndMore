@@ -15,6 +15,16 @@ from voting.models import *
 
 # Create your views here.
 
+# tests
+
+
+def userIsStaff(user):
+    return user.is_staff
+
+
+def is_helper(user):
+    return user.groups.filter(name='helper').exists()
+
 
 def votingHomepage(request):
     return render(request=request,
@@ -174,15 +184,12 @@ def myVotes(request):
         # https://stackoverflow.com/questions/58645505/how-to-render-a-field-request-without-refreshing-the-page/58645877#58645877
 
 
-def userIsStaff(user):
-    return user.is_staff
-
 #############
 # DASHBOARD #
 #############
 
 
-@ user_passes_test(lambda u: u.is_staff)
+@user_passes_test(is_helper or (lambda u: u.is_staff))
 def dashboard(request):
 
     return render(request=request,
@@ -191,7 +198,7 @@ def dashboard(request):
                            })
 
 
-@ user_passes_test(lambda u: u.is_staff)
+@user_passes_test(is_helper or (lambda u: u.is_staff))
 def stats(request):
     # build a dictionary of the highest voted creations
     # The dictionary will be cut off using slicing. It could be done easier by using negative indexing [-setting.STAT_AMOUNT:], but Django does not support this.
@@ -279,14 +286,14 @@ def stats(request):
         "creations": Creation.objects.all()})
 
 
-@ user_passes_test(lambda u: u.is_staff)
+@user_passes_test(is_helper or (lambda u: u.is_staff))
 def allCreations(request):
     return render(request=request, template_name="voting/allcreations.html", context={"creations": Creation.objects.all().order_by("number")})
 
 # TODO: change to class based view
 
 
-@ user_passes_test(lambda u: u.is_staff)
+@user_passes_test(is_helper or (lambda u: u.is_staff))
 def addCreation(request):
     if request.method == "POST":
         form = CreationForm(request.POST, request.FILES)
