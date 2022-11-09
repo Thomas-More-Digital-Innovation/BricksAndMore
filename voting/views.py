@@ -188,7 +188,6 @@ def myVotes(request):
 # DASHBOARD #
 #############
 
-
 @user_passes_test(is_helper or (lambda u: u.is_staff))
 def dashboard(request):
 
@@ -234,18 +233,18 @@ def stats(request):
 
     # Impressiveness
     # highest
-    highestImpr = Creation.objects.filter(votinglist__category__startswith="impr").annotate(
+    highestImpr = Creation.objects.filter(votinglist__category__startswith="indr").annotate(
         avg=Avg("votinglist__vote")).order_by("-avg")
     highestImpr = subSetOfQuery(highestImpr)
 
     # lowest
-    lowestImpr = Creation.objects.filter(votinglist__category__startswith="impr").annotate(
+    lowestImpr = Creation.objects.filter(votinglist__category__startswith="indr").annotate(
         avg=Avg("votinglist__vote")).order_by("avg")
     lowestImpr = subSetOfQuery(lowestImpr)
 
     # Details
     # highest
-    highestDeta = Creation.objects.filter(votinglist__category__startswith="impr").annotate(
+    highestDeta = Creation.objects.filter(votinglist__category__startswith="indr").annotate(
         avg=Avg("votinglist__vote")).order_by("-avg")
     highestDeta = subSetOfQuery(highestDeta)
 

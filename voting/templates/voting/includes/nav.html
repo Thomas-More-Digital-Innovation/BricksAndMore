@@ -1,9 +1,11 @@
+{% load voting_extras %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'voting/css/output.css' %}">
 <div class="text-center bg-bamBlue text-slate-300 font-semibold py-2 text-5xl">
     <nav class="px-12 mb-2 bg-bamBlue flex content-between justify-between text-bamDarkText font-semibold">
         {% comment %} if staff show dashboard link, else show logo {% endcomment %}
-    {% if request.user.is_staff %}
+    
+    {% if request.user|has_group:"helper" or request.user.is_staff %}
         <div  class="my-auto">
             <a href="{% url 'voting:dashboard' %}">Dashboard</a>
         </div>
