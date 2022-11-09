@@ -9,7 +9,12 @@ project description
 ## Running the project
 
 - using docker:
-  - docker compose -f .\docker-compose.dev.yml up
+  - run the container:
+    - ```docker compose -f .\docker-compose.dev.yml up```
+    or
+    - ```docker compose -f .\docker-compose.dev.yml up --build```
+  - open terminal in that container:
+    - ```docker compose -f docker-compose.dev.yml exec web bash```
 
 ## Project structure
 

@@ -14,10 +14,10 @@
 {% for formListItems in formList %}
 <div class="border-solid border-2 rounded-xl border-black my-3 py-5 mx-5 bg-slate-100">
 
-  <div class="#bg-amber-600 grid grid-cols-2 grid-flow-row-dense">
+  <div class="#bg-amber-600 grid grid-cols-2 grid-flow-row-dense gap-x-2">
     {% comment %} CREATION IMAGE {% endcomment %}
       <div class="col-span-1">
-        <img src="{{ formListItems.creation.image.url }}" alt="..."  sdsdwidth="250" sdsheight="250" class="m-auto max-h-96 max-w-7xl">
+        <img src="{{ formListItems.creation.image.url }}" alt="..."  sdsdwidth="250" sdsheight="250" class="m-auto max-h-96 max-w-2xl">
       </div>
     
       <div class="col-span-1 #bg-pink-400 grid grid-cols-1">

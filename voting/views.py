@@ -23,6 +23,7 @@ def userIsStaff(user):
 
 
 def is_helper(user):
+    print(user, "is_helper")
     return user.groups.filter(name='helper').exists()
 
 
@@ -138,7 +139,7 @@ def myVotes(request):
             updateVotingList.save()
             # print(f'{"updated":_^15}')
 
-        print("submission: ", submission)
+        # print("submission: ", submission)
         return JsonResponse(submission)
 
     elif request.method == "GET":
@@ -267,8 +268,6 @@ def stats(request):
     mostUsers = Creation.objects.annotate(amount=Count(
         "votinglist__user__id", distinct=True)).order_by("-amount")
     mostUsers = subSetOfQuery(mostUsers)
-
-    print(highestAvgPerCreation)
 
     return render(request=request, template_name="voting/stats.html", context={
         "highestAvgPerCreation": highestAvgPerCreation,
