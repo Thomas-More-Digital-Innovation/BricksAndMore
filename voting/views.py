@@ -15,12 +15,16 @@ from voting.models import *
 
 # Create your views here.
 
-# user group checks
+# tests
+
+
 def userIsStaff(user):
     return user.is_staff
 
+
 def is_helper(user):
     return user.groups.filter(name='helper').exists()
+
 
 def votingHomepage(request):
     return render(request=request,
@@ -180,13 +184,10 @@ def myVotes(request):
         # https://stackoverflow.com/questions/58645505/how-to-render-a-field-request-without-refreshing-the-page/58645877#58645877
 
 
-
-
 #############
 # DASHBOARD #
 #############
 
-@login_required
 @user_passes_test(is_helper or (lambda u: u.is_staff))
 def dashboard(request):
 
@@ -195,7 +196,7 @@ def dashboard(request):
                   context={"creations": Creation.objects.all()
                            })
 
-@login_required
+
 @user_passes_test(is_helper or (lambda u: u.is_staff))
 def stats(request):
     # build a dictionary of the highest voted creations
@@ -283,14 +284,14 @@ def stats(request):
         "mostVotes": mostVotes,
         "creations": Creation.objects.all()})
 
-@login_required
+
 @user_passes_test(is_helper or (lambda u: u.is_staff))
 def allCreations(request):
     return render(request=request, template_name="voting/allcreations.html", context={"creations": Creation.objects.all().order_by("number")})
 
 # TODO: change to class based view
 
-@login_required
+
 @user_passes_test(is_helper or (lambda u: u.is_staff))
 def addCreation(request):
     if request.method == "POST":
@@ -326,5 +327,3 @@ class CreationDeleteView(DeleteView):
     model = Creation
     success_url = reverse_lazy('voting:allcreations')
     # template_name = reverse_lazy("voting:creation_delete_check.html")
-
-
