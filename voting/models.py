@@ -29,7 +29,7 @@ class VotingList(models.Model):
     # add many-to-many relationship with Creation
     creation = models.ManyToManyField(Creation)
 
-    CATEGORIES = ["creativity", "details", "impressiveness"]
+    CATEGORIES = ["creativiteit", "details", "indrukwekkend"]
     category = models.CharField(max_length=20)
 
     vote = models.IntegerField(blank=True, null=True)
