@@ -7,9 +7,9 @@ from bricks import settings
 
 
 class Creation(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.CharField(max_length=200)
-    creator = models.CharField(max_length=200)
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=100)
+    creator = models.CharField(max_length=100)
     image = models.ImageField(
         upload_to='creations/', null=True, blank=True)
     number = models.IntegerField(unique=True)

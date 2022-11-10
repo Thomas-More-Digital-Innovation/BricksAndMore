@@ -1,5 +1,16 @@
+function testfunc(queryset) {
+    console.log(queryset);
+}
+
+
 // create a graph using chart.js given the x and y axis values and the id for the canvas
 function createGraph(creationNames, values, label, canvasId) {
+    console.log("creating graph");
+    console.log(creationNames);
+    console.log(values);
+    console.log(label);
+    console.log(canvasId);
+    console.log("end of creating graph");
     var config = {
         type: 'bar',
         data: {
@@ -17,8 +28,12 @@ function createGraph(creationNames, values, label, canvasId) {
         }
     };
 
-    window.onload = function () {
-        var ctx = document.getElementById(canvasId).getContext('2d');
-        window.myPie = new Chart(ctx, config);
-    };
+    var ctx = document.getElementById(canvasId).getContext('2d');
+    window.myPie = new Chart(ctx, config);
+
+    // window.onload = function () {
+    // var ctx = document.getElementById(canvasId).getContext('2d');
+    // window.myPie = new Chart(ctx, config);
+    // };
 }
+

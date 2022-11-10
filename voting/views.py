@@ -189,7 +189,8 @@ def myVotes(request):
 # DASHBOARD #
 #############
 
-@user_passes_test(is_helper or (lambda u: u.is_staff))
+@user_passes_test(is_helper)
+# @user_passes_test((lambda u: u.is_staff))
 def dashboard(request):
 
     return render(request=request,
@@ -198,7 +199,7 @@ def dashboard(request):
                            })
 
 
-@user_passes_test(is_helper or (lambda u: u.is_staff))
+@ user_passes_test(is_helper)
 def stats(request):
     # build a dictionary of the highest voted creations
     # The dictionary will be cut off using slicing. It could be done easier by using negative indexing [-setting.STAT_AMOUNT:], but Django does not support this.
@@ -245,12 +246,12 @@ def stats(request):
 
     # Details
     # highest
-    highestDeta = Creation.objects.filter(votinglist__category__startswith="indr").annotate(
+    highestDeta = Creation.objects.filter(votinglist__category__startswith="deta").annotate(
         avg=Avg("votinglist__vote")).order_by("-avg")
     highestDeta = subSetOfQuery(highestDeta)
 
     # lowest
-    lowestDeta = Creation.objects.filter(votinglist__category__startswith="impr").annotate(
+    lowestDeta = Creation.objects.filter(votinglist__category__startswith="deta").annotate(
         avg=Avg("votinglist__vote")).order_by("avg")
     lowestDeta = subSetOfQuery(lowestDeta)
 
@@ -260,14 +261,16 @@ def stats(request):
     amountOfVotes = subSetOfQuery(amountOfVotes)
 
     # user with most votes
-    mostVotes = User.objects.annotate(amount=Count(
+    userWithMostVotes = User.objects.annotate(amount=Count(
         "votinglist__creation__id", distinct=True)).order_by("-amount")
-    mostVotes = subSetOfQuery(mostVotes)
+    userWithMostVotes = subSetOfQuery(userWithMostVotes)
 
     # Creation with most users voted on it
-    mostUsers = Creation.objects.annotate(amount=Count(
+    creationWithMostVotes = Creation.objects.annotate(amount=Count(
         "votinglist__user__id", distinct=True)).order_by("-amount")
-    mostUsers = subSetOfQuery(mostUsers)
+    creationWithMostVotes = subSetOfQuery(creationWithMostVotes)
+
+    print(f"highestAvgPerCreation: {highestAvgPerCreation}")
 
     return render(request=request, template_name="voting/stats.html", context={
         "highestAvgPerCreation": highestAvgPerCreation,
@@ -279,19 +282,19 @@ def stats(request):
         "highestDeta": highestDeta,
         "lowestDeta": lowestDeta,
         "amountOfVotes": amountOfVotes,
-        "mostUsers": mostUsers,
-        "mostVotes": mostVotes,
+        "creationWithMostVotes": creationWithMostVotes,
+        "userWithMostVotes": userWithMostVotes,
         "creations": Creation.objects.all()})
 
 
-@user_passes_test(is_helper or (lambda u: u.is_staff))
+@ user_passes_test(is_helper)
 def allCreations(request):
     return render(request=request, template_name="voting/allcreations.html", context={"creations": Creation.objects.all().order_by("number")})
 
 # TODO: change to class based view
 
 
-@user_passes_test(is_helper or (lambda u: u.is_staff))
+@ user_passes_test(is_helper)
 def addCreation(request):
     if request.method == "POST":
         form = CreationForm(request.POST, request.FILES)

@@ -1,31 +1,85 @@
 {% extends 'voting/header.html' %}
 {% block content %}
 {% include "voting/includes/status.html" %}
-<script></script>
-
-<script type = "text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-
 {% load static %}
+<script type = "text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <script src="{% static 'js/charts.js' %}"></script>
 
-<script>
-  const names = [{% for item in highestAvgPerCreation %}"{{item.name}}",{%endfor%}];
+<style>
+  table, th, td {
+    border: 1px solid;
+    padding: 4px;
+  }
+</style>
 
-  const values = [{% for item in highestAvgPerCreation %}{{item.avg }},{% endfor %}];
-createGraph(names, values, "gemiddeld aantal sterren","pie-chart")
-</script>
 
-
-<div class="mx-5">
+<div class="mx-5 ">
   <div>
-    <h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">Algemeen</h2>
+    <h2 class="py-2 text-bamDarkText text-7xl font-bold self-center">Statistieken</h2>
+  </div>
+<div>
+
+
+  <h3 class="py-2 text-bamRed text-5xl font-bold self-center">
+    In een notendop
+  </h3>
+  <div class="border border-solid border-black rounded-lg p-2 bg-white">
+    <div class="grid grid-cols-3 gap-4">
+      <div>
+        <h4 class="font-bold text-2xl">Hoogste algemeen:</h4>
+        <div class="font-semibold text-4xl text-gray-500">
+          {{ highestAvgPerCreation|first }}
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-2xl">Meest gestemde</h4>
+        <div class="font-semibold text-4xl text-gray-500">
+          {{ creationWithMostVotes|first }}
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-2xl">Actiefste stemmer</h4>
+        <div class="font-semibold text-4xl text-gray-500">
+          {{ userWithMostVotes|first }}
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-2xl">Creativiteit</h4>
+        <div class="font-semibold text-4xl text-gray-500">
+          {{ highestCrea|first }}
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-2xl">Details</h4>
+        <div class="font-semibold text-4xl text-gray-500">
+          {{ highestDeta|first }}
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-2xl">Indrukwekkend</h4>
+        <div class="font-semibold text-4xl text-gray-500">
+          {{ highestImpr|first }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="py-2 text-bamRed text-5xl font-bold self-center">
+      Algemeen
+    </h3>
   </div>
   <div>
-    <h4>highest over all</h4>
-    <table>
+    <h4 class="py-2 text-bamBlue text-3xl font-bold self-center">Hoogste in totaal</h4>
+    <table class="text-3xl bg-green-50">
       <tr>
-        <th>Creation</th>
-        <th>Average vote</th>
+        <th>Creatie</th>
+        <th>Gemiddelde stem</th>
       </tr>
       {% for item in highestAvgPerCreation %}
       <tr>
@@ -35,16 +89,16 @@ createGraph(names, values, "gemiddeld aantal sterren","pie-chart")
       {% endfor %}
     </table>
   </div>
-  <div class="w-5/6">
-      <canvas class="" id="pie-chart"></canvas>
+  <div>
+      <canvas id="highestAvgPerCreation"></canvas>
   </div>
-</div>
+
   
-  <h4>lowest over all</h4>
-<table>
+<h4 class="py-2 text-bamBlue text-3xl font-bold self-center">Laagste in totaal</h4>
+<table class="text-3xl bg-red-50">
     <tr>
-      <th>Creation</th>
-      <th>Average vote</th>
+      <th>Creatie</th>
+      <th>Gemiddelde stem</th>
     </tr>
     {% for item in lowestAvgPerCreation %}
     <tr>
@@ -53,12 +107,17 @@ createGraph(names, values, "gemiddeld aantal sterren","pie-chart")
     </tr>
     {% endfor %}
 </table>
-<h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">CREATIVITY</h2>
-<h4> highest</h4>
-<table>
+<div>
+  <canvas id="lowestAvgPerCreation"></canvas>
+</div>
+<h3 class="py-2 text-bamRed text-5xl font-bold self-center">
+  Creativiteit
+</h3>
+<h4 class="py-2 text-bamBlue text-3xl font-semibold self-center">Hoogste</h4>
+<table class="text-3xl bg-green-50">
     <tr>
-      <th>Creation</th>
-      <th>Average vote</th>
+      <th>Creatie</th>
+      <th>Gemiddelde stem</th>
     </tr>
     {% for item in highestCrea %}
     <tr>
@@ -67,13 +126,16 @@ createGraph(names, values, "gemiddeld aantal sterren","pie-chart")
     </tr>
     {% endfor %}
 </table>
+<div>
+  <canvas id="highestCrea"></canvas>
+</div>
 
 
-<h4> lowest</h4>
-<table>
+<h4 class="py-2 text-bamBlue text-3xl font-semibold self-center">Laagste</h4>
+<table class="text-3xl bg-red-50">
     <tr>
-      <th>Creation</th>
-      <th>Average vote</th>
+      <th>Creatie</th>
+      <th>Gemiddelde stem</th>
     </tr>
     {% for item in lowestCrea %}
     <tr>
@@ -82,12 +144,17 @@ createGraph(names, values, "gemiddeld aantal sterren","pie-chart")
     </tr>
     {% endfor %}
 </table>
-<h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">IMPRESSIVENESS</h2>
-<h4> highest</h4>
-<table>
+<div>
+  <canvas id="lowestCrea"></canvas>
+</div>
+<h3 class="py-2 text-bamRed text-5xl font-bold self-center">
+  Indrukwekkend
+</h3>
+<h4 class="py-2 text-bamBlue text-3xl font-semibold self-center">Hoogste</h4>
+<table class="text-3xl bg-green-50">
     <tr>
-      <th>Creation</th>
-      <th>Average vote</th>
+      <th>Creatie</th>
+      <th>Gemiddelde stem</th>
     </tr>
     {% for item in highestImpr %}
     <tr>
@@ -96,12 +163,15 @@ createGraph(names, values, "gemiddeld aantal sterren","pie-chart")
     </tr>
     {% endfor %}
 </table>
+<div>
+  <canvas id="highestImpr"></canvas>
+</div>
 
-<h4>lowest</h4>
-<table>
+<h4 class="py-2 text-bamBlue text-3xl font-semibold self-center">Hoogste</h4>
+<table class="text-3xl bg-green-50">
     <tr>
-      <th>Creation</th>
-      <th>Average vote</th>
+      <th>Creatie</th>
+      <th>Gemiddelde stem</th>
     </tr>
     {% for item in lowestImpr %}
     <tr>
@@ -110,12 +180,18 @@ createGraph(names, values, "gemiddeld aantal sterren","pie-chart")
     </tr>
     {% endfor %}
 </table>
-<h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">DETAILS</h2>
-<h4>highest</h4>
-<table>
+<div>
+  <canvas id="lowestImpr"></canvas>
+</div>
+
+<h3 class="py-2 text-bamRed text-4xl font-bold self-center">
+  Details
+</h3>
+<h4 class="py-2 text-bamBlue text-3xl font-semibold self-center">Hoogste</h4>
+<table class="text-3xl bg-green-50">
     <tr>
-      <th>Creation</th>
-      <th>Average vote</th>
+      <th>Creatie</th>
+      <th>Gemiddelde stem</th>
     </tr>
     {% for item in highestDeta %}
     <tr>
@@ -124,86 +200,174 @@ createGraph(names, values, "gemiddeld aantal sterren","pie-chart")
     </tr>
     {% endfor %}
 </table>
-<h4>lowest</h4>
-<table>
+<div>
+  <canvas id="highestDeta"></canvas>
+</div>
+
+<h4 class="py-2 text-bamBlue text-3xl font-semibold self-center">laagste</h4>
+<table class="text-3xl bg-red-50">
     <tr>
-      <th>Creation</th>
-      <th>Average vote</th>
+      <th>Creatie</th>
+      <th>Gemiddelde stem</th>
     </tr>
-    {% for item in highestDeta reversed %}
+    {% for item in lowestDeta %}
     <tr>
         <td>{{ item }}</td>
         <td>{{ item.avg }}</td>
     </tr>
     {% endfor %}
 </table>
-
-<br>
-<h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">Hoogste aantal stemmen, categorieën apart geteld</h2>
-{% comment %} (so each category can have three possible votes per user) {% endcomment %}
-<table>
-  <tr>
-    <th>Creation</th>
-    <th>amount of votes</th>
-  </tr>
-  {% for item in amountOfVotes %}
-  <tr>
-      <td>{{ item }}</td>
-      <td>{{ item.amount }}</td>
-  </tr>
-  {% endfor %}
-</table>
-<br>
-
-<h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">Laagste aantal stemmen, categorieën apart geteld</h2>
-{% comment %} (so each category can have three possible votes per user) {% endcomment %}
-<table>
-  <tr>
-    <th>Creation</th>
-    <th>amount of votes</th>
-  </tr>
-  {% for item in amountOfVotes reversed %}
-  <tr>
-      <td>{{ item }}</td>
-      <td>{{ item.amount }}</td>
-  </tr>
-  {% endfor %}
-</table>
-<br>
-
-<h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">Creaties met meest ontvangen stemmen</h2>
-{% comment %} most votes recieved, regardless of the vote value {% endcomment %}
-<table>
-  <tr>
-    <th>Creation</th>
-    <th>amount of votes</th>
-  </tr>
-  {% for item in mostUsers %}
-  <tr>
-      <td>{{ item }}</td>
-      <td>{{ item.amount }}</td>
-  </tr>
-  {% endfor %}
-</table>
-<br>
-
-
-
-<h2>Visitors</h2>
-<h2 class="text-bamDarkText text-4xl font-bold px-5 self-center">Meest stemmense bezoekers</h2>
-<table>
-  <tr>
-    <th>User</th>
-    <th>amount of creations voted on</th>
-  </tr>
-  {% for item in mostVotes %}
-  <tr>
-      <td>{{ item }}</td>
-      <td>{{ item.amount }}</td>
-  </tr>
-  {% endfor %}
-</table>
-<br>
+<div>
+  <canvas id="lowestDeta"></canvas>
 </div>
 
+<h2 class="py-2 text-bamDarkText text-4xl font-bold self-center"> Aantal stemmen, categorieën apart geteld</h2>
+{% comment %} (so each category can have three possible votes per user) {% endcomment %}
+<div class="grid grid-flow-col columns-2 justify-around">
+  <div class="col-span-1">
+    <h5 class="py-2 text-bamDarkText text-3xl font-semibold flex justify-center">Hoogste</h5>
+    <table class="text-3xl bg-green-50">
+      <tr>
+        <th>Creatie</th>
+        <th>Aantal stemmen</th>
+      </tr>
+      {% for item in amountOfVotes %}
+      <tr>
+          <td>{{ item }}</td>
+          <td>{{ item.amount }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div class="col-span-1">
+    <h5 class="py-2 text-bamDarkText text-3xl font-semibold flex justify-center">Laagste</h5>
+    <table class="text-3xl bg-red-50">
+      <tr>
+        <th>Creatie</th>
+        <th>Aantal stemmen</th>
+      </tr>
+      {% for item in amountOfVotes reversed %}
+      <tr>
+          <td>{{ item }}</td>
+          <td>{{ item.amount }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+
+
+
+
+<div>
+  <canvas id="amountOfVotes"></canvas>
+</div>
+
+<h2 class="py-2 text-bamDarkText text-4xl font-bold self-center">Creaties met meest ontvangen stemmen</h2>
+{% comment %} most votes recieved, regardless of the vote value {% endcomment %}
+<table class="text-3xl">
+  <tr>
+    <th>Creatie</th>
+    <th>Aantal stemmen</th>
+  </tr>
+  {% for item in creationWithMostVotes %}
+  <tr>
+      <td>{{ item }}</td>
+      <td>{{ item.amount }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<div>
+  <canvas id="creationWithMostVotes"></canvas>
+</div>
+<br>
+
+<h2 class="py-2 text-bamDarkText text-4xl font-bold self-center">Bezoekers</h2>
+<h2 class="py-2 text-bamDarkText text-2xl font-semibold self-center">Meest stemmende bezoekers</h2>
+<table class="text-3xl">
+  <tr>
+    <th>Gebruiker</th>
+    <th>Aantal creaties gestemd</th>
+  </tr>
+  {% for item in userWithMostVotes %}
+  <tr>
+      <td>{{ item }}</td>
+      <td>{{ item.amount }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<div>
+  <canvas id="userWithMostVotes"></canvas>
+</div>
+</div>
+
+{% comment %} converting all the querysets from the view into js lists and passing them to the createGraph function {% endcomment %}
+<script>
+  // Convert all the querysets to js lists and pass them to createGraph
+  const highestAvgPerCreationNames = [{% for item in highestAvgPerCreation %}"{{item.name}}",{%endfor%}];
+
+  const highestAvgPerCreationValues = [{% for item in highestAvgPerCreation %}{{item.avg }},{% endfor %}];
+
+  createGraph(highestAvgPerCreationNames, highestAvgPerCreationValues, "gemiddeld aantal sterren","highestAvgPerCreation")
+
+  const lowestAvgPerCreationNames = [{% for item in lowestAvgPerCreation %}"{{item.name}}", {%endfor%}]
+
+  const lowestAvgPerCreationValues = [{% for item in lowestAvgPerCreation %} {{item.avg }}, {%endfor%}];
+
+  createGraph(lowestAvgPerCreationNames, lowestAvgPerCreationValues, "lowestAvgPerCreation", "lowestAvgPerCreation")
+
+  const highestCreaNames = [{% for item in highestCrea %}"{{item.name}}", {%endfor%}]
+
+  const highestCreaValues = [{% for item in  highestCrea %} {{item.avg }}, {%endfor%}];
+
+  createGraph(highestCreaNames, highestCreaValues, "highestCrea", "highestCrea")
+
+  const lowestCreaNames = [{% for item in lowestCrea %}"{{item.name}}", {%endfor%}]
+
+  const lowestCreaValues = [{% for item in lowestCrea %} {{item.avg }}, {%endfor%}];
+
+  createGraph(lowestCreaNames, lowestCreaValues, "lowestCrea", "lowestCrea")
+
+  const highestImprNames = [{% for item in highestImpr %}"{{item.name}}", {%endfor%}]
+
+  const highestImprValues = [{% for item in  highestImpr %} {{item.avg }}, {%endfor%}];
+
+  createGraph(highestImprNames, highestImprValues, "highestImpr", "highestImpr")
+
+  const lowestImprNames = [{% for item in lowestImpr %}"{{item.name}}", {%endfor%}]
+
+  const lowestImprValues = [{% for item in lowestImpr %} {{item.avg }}, {%endfor%}];
+
+  createGraph(lowestImprNames, lowestImprValues, "lowestImpr", "lowestImpr")
+
+  const highestDetaNames = [{% for item in highestDeta %}"{{item.name}}", {%endfor%}]
+
+  const highestDetaValues = [{% for item in  highestDeta %} {{item.avg }}, {%endfor%}];
+
+  createGraph(highestDetaNames, highestDetaValues, "highestDeta", "highestDeta")
+
+  const lowestDetaNames = [{% for item in lowestDeta %}"{{item.name}}", {%endfor%}]
+
+  const lowestDetaValues = [{% for item in lowestDeta %} {{item.avg }}, {%endfor%}];
+
+  createGraph(lowestDetaNames, lowestDetaValues, "lowestDeta", "lowestDeta")
+
+  const amountOfVotesNames = [{% for item in amountOfVotes %}"{{item.name}}", {%endfor%}]
+
+  const amountOfVotesValues = [{% for item in  amountOfVotes %} {{item.amount }}, {%endfor%}];
+
+  createGraph(amountOfVotesNames, amountOfVotesValues, "amountOfVotes", "amountOfVotes")
+
+  const creationWithMostVotesNames = [{% for item in creationWithMostVotes %}"{{item.name}}", {%endfor%}]
+
+  const creationWithMostVotesValues = [{% for item in  creationWithMostVotes %} {{item.amount }}, {%endfor%}];
+
+  createGraph(creationWithMostVotesNames, creationWithMostVotesValues, "creationWithMostVotes", "creationWithMostVotes")
+
+  const userWithMostVotesNames = [{% for item in userWithMostVotes %}"{{item}}", {%endfor%}]
+
+  const userWithMostVotesValues = [{% for item in  userWithMostVotes %} {{item.amount }}, {%endfor%}];
+
+  createGraph(userWithMostVotesNames, userWithMostVotesValues, "userWithMostVotes", "userWithMostVotes")
+</script>
 {% endblock %}

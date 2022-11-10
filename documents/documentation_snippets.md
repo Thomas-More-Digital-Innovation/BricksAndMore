@@ -20,10 +20,17 @@ project description
 
 ### Login
 
+#### login providers
+
 Only social auth is suported. This is done because of time constraints but also because users may use the webapp more if they can just sign in with one button and start voting straight away, instead of having to go through a register process.
 
-Social auth is done using the Django all-auth package. Google, Twitter (under development) and instagram (under development) are supported.
+Social auth is done using the Django all-auth package. Google, and Facebook are supported.
 Google's auth configuration can be found at console.cloud.google.com
+Facebook's auth configuration can be found at developers.facebook.com
+
+#### groups
+
+users can be assigned the 'helper' role. users with this role can access all the dashboard pages. These pages contain the stats page and pages to add, edit and remove creations.
 
 ### Voting forms
 
@@ -84,6 +91,8 @@ Pillow
 
 ## Make Tailwind update the css on changes
 
+Tailwind is added independently because no other Node packages are needed.
+
 <https://tailwindcss.com/blog/standalone-cli>
 
 ## Windows
@@ -100,4 +109,10 @@ Pillow
 
 ## Future plans and optimizations
 
-- the way creations and their votes get sent to the view is a bit cluttered and might be done more effeciently
+Some code is a bit messy because of time and knowledge constraints. Some things that could be improved:
+
+- The way creations and their votes get sent to the view is a bit cluttered and might be done more effeciently
+- If one person has multiple creations, a 'creator' model might be a good idea. Then stats can also be shown per creator or a small creator profile (for example name, country, list of creations, and total displayed bricks on the expo) can be made.
+- a page per creation might be good too. The creations on the stats page can then be clicked to go straight to that page, containing more information about the creation.
+- the way querysets are converted to lists on the stats page could be improved
+- the app is styled for mobile devices but not at all for desktop.

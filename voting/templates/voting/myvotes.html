@@ -14,20 +14,20 @@
 {% for formListItems in formList %}
 <div class="border-solid border-2 rounded-xl border-black my-3 py-5 mx-5 bg-slate-100">
 
-  <div class="#bg-amber-600 grid grid-cols-2 grid-flow-row-dense gap-x-2">
+  <div class="#bg-amber-600 grid grid-cols-2 grid-flow-row-dense ">
     {% comment %} CREATION IMAGE {% endcomment %}
       <div class="col-span-1">
-        <img src="{{ formListItems.creation.image.url }}" alt="..."  sdsdwidth="250" sdsheight="250" class="m-auto max-h-96 max-w-2xl">
+        <img src="{{ formListItems.creation.image.url }}" alt="..."  class="m-auto max-h-96 object-contain px-5">
       </div>
     
-      <div class="col-span-1 #bg-pink-400 grid grid-cols-1">
+      <div class="col-span-1 grid grid-cols-1">
         {% comment %} CREATION DESCRIPTION AND NAME {% endcomment %}
-        <div class="font-bold #bg-blue-600">
+        <div class="font-bold ">
           <div class="text-6xl py-5 text-bamDarkText">{{ formListItems.creation.name }}</div>
         <div class="text-bamText">{{ formListItems.creation.description }}</div>
       </div>
         {% comment %} CREATION NUMBER {% endcomment %}
-          <div class="font-bold text-8xl #bg-green-500 flex items-center justify-center">
+          <div class="font-bold text-9xl #bg-green-500 flex items-center justify-center">
             {{formListItems.creation.number}}
         </div>
       </div>
@@ -79,8 +79,6 @@
         </div>
           {% endfor %}
   </div>
-
-
 <script>
 
   // star submission
