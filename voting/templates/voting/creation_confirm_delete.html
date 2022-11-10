@@ -3,10 +3,30 @@
 {% block content %}
 {% include "voting/includes/status.html" %}
 
-<form method="post">{% csrf_token %}
-    <p>Are you sure you want to delete "{{ object }}"?</p>
-    {{ form }}
-    <input type="submit" value="Confirm">
-</form>
+
+<div class="h-screen grid place-items-center">
+    <div class="grid grid-flow-col columns-1 grid-rows-3 gap-y-12  place-items-center w-1/2">
+        <div class="text-bamDarkText text-5xl font-bold px-5 flex self-center text-center">Ben je zeker dat je "{{ object }}" wil verwijderen?</div>
+        <form method="post">{% csrf_token %}
+            {{ form }}
+            <div class="flex self-center justify-around">
+                <img src="{{ object.image.url }}" alt="..."  width="250"        height="250">
+            </div>
+            <div class="flex self-center py-12 justify-between">
+                <div class="mx-auto">
+                    <input type="submit" value="Confirm" class="text-white bg-red-700 font-medium rounded-lg text-5xl px-5 py-2.5 mr-2 my-8">
+                </div>
+                <a href="{% url 'voting:allcreations' %}" class="text-white bg-blue-700 font-medium rounded-lg text-5xl px-5 py-2.5 mr-2 my-8">Terug</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% comment %} <div class="flex self-center">
+    <div >
+        
+    </div>
+
+</div> {% endcomment %}
 
 {% endblock %}

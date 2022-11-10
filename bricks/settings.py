@@ -37,9 +37,9 @@ DEBUG = int(os.environ.get("DEBUG", default=0))
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", default="").split(" ")
 
 # These settings need to be set when using the 'python manage.py runserver' command to run the development server:
-# ALLOWED_HOSTS = ["127.0.0.1"]
-# DEBUG = True
-# SECRET_KEY = 'django-insecure-1)2omk4ge_r4wr@_6)1dp^j+1it#!w*&th$tac*+^tq7$&afp='
+ALLOWED_HOSTS = ["127.0.0.1"]
+DEBUG = True
+SECRET_KEY = 'django-insecure-1)2omk4ge_r4wr@_6)1dp^j+1it#!w*&th$tac*+^tq7$&afp='
 
 
 # Application definition
@@ -166,9 +166,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", default="http://localhost").split(" ")
+CSRF_TRUSTED_ORIGINS = os.environ.get(
+    "CSRF_TRUSTED_ORIGINS", default="http://localhost").split(" ")
 
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = os.environ.get("ACCOUNT_DEFAULT_HTTP_PROTOCOL", default="http")
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = os.environ.get(
+    "ACCOUNT_DEFAULT_HTTP_PROTOCOL", default="http")
 
 # VOTING SETTINGS
 # These settings are used to configure the voting app

@@ -6,6 +6,13 @@ project description
 - could be streamlined better, code is a bit messy
 - tight deadline
 
+## pushing the code
+
+when push adda a tag:
+
+git tag v1.0.0
+git push --tags
+
 ## Running the project
 
 - using docker:
@@ -20,7 +27,7 @@ project description
 
 ### Login
 
-#### login providers
+#### Login providers
 
 Only social auth is suported. This is done because of time constraints but also because users may use the webapp more if they can just sign in with one button and start voting straight away, instead of having to go through a register process.
 
