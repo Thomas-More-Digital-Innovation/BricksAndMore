@@ -37,9 +37,9 @@ DEBUG = int(os.environ.get("DEBUG", default=0))
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", default="").split(" ")
 
 # These settings need to be set when using the 'python manage.py runserver' command to run the development server:
-ALLOWED_HOSTS = ["127.0.0.1"]
-DEBUG = True
-SECRET_KEY = 'django-insecure-1)2omk4ge_r4wr@_6)1dp^j+1it#!w*&th$tac*+^tq7$&afp='
+# ALLOWED_HOSTS = ["127.0.0.1"]
+# DEBUG = True
+# SECRET_KEY = 'django-insecure-1)2omk4ge_r4wr@_6)1dp^j+1it#!w*&th$tac*+^tq7$&afp='
 
 
 # Application definition
@@ -241,10 +241,3 @@ SOCIALACCOUNT_PROVIDERS = {
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-
-
-TWITTERCLIENTIDONE = "yOKKtczGJLhd7sOL5EyEwEyw0"
-TWITTERSECRETKEYONE = "cQVp4gQcNuWPy2ghsz6LNeJdGJvTrnhpEKBEvHOTgaIGXtQSZS"
-
-TWITTERCLIENTIDTWO = "SXctQ3dNTDBBYnE2UC04cEtPSEY6MTpjaQ"
-TWITTERSECRETKEYONE = "9QVd-Fosgkv_omV2wWOxD2u_LvZ7RL2xfCBftUMiU7hcc63ffD"
