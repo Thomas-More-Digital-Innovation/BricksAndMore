@@ -1,14 +1,16 @@
-# Voting
+# Bricks and More voting Webapp
 
-project description
+## About
 
-- made as a learning experince MVC / Django
-- could be streamlined better, code is a bit messy
-- tight deadline
+This is a webapp for the Bricks and More Lego expo. It is a simple webapp that allows visitors to vote on which creations they like the most. Votes are cst by giving a creation one to five stars in three different categories. The webapp is built using the [Django](https://www.djangoproject.com/) microframework.
+
+Django has been chosen because of the speed at which it can be developed, since the project had to be done within six to eight weeks and becaues it is a mature framework that handles a lot of security issues for you. It is also a framework that is easy to learn and has a lot of documentation.
+
+Because the project had a very tight deadline, it has a lot of possible improvements. These are listed at "## Future plans and optimizations".
 
 ## pushing the code
 
-when push adda a tag:
+when push add a tag:
 
 git tag v1.0.0
 git push --tags
@@ -40,6 +42,12 @@ Facebook's auth configuration can be found at developers.facebook.com
 users can be assigned the 'helper' role. users with this role can access all the dashboard pages. These pages contain the stats page and pages to add, edit and remove creations.
 
 ### Voting forms
+
+The voting should be as easy as possible for the visitors. After letting others test the voting, the refreshing of the page was annoying. This is why the voting is done using ajax. This way the page does not have to be refreshed after voting.
+
+Testing also revealed that buttons should be big and easy to press.
+
+Lastly scrolling all the way to the bottom was annoying. A search function was stickied to the top of the page so users can skip to any creation they want at all times
 
 - The voting forms are rendered by iterating over the creations because all the creations should have a voting form, whether or not there is a votingList, and thus a vote for that specific creation
 
@@ -123,3 +131,4 @@ Some code is a bit messy because of time and knowledge constraints. Some things 
 - a page per creation might be good too. The creations on the stats page can then be clicked to go straight to that page, containing more information about the creation.
 - the way querysets are converted to lists on the stats page could be improved
 - the app is styled for mobile devices but not at all for desktop.
+- The 404 page is unstyled

@@ -41,7 +41,6 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", default="").split(" ")
 # DEBUG = True
 # SECRET_KEY = 'django-insecure-1)2omk4ge_r4wr@_6)1dp^j+1it#!w*&th$tac*+^tq7$&afp='
 
-
 # Application definition
 
 INSTALLED_APPS = [
