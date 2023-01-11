@@ -4,7 +4,7 @@
 
 This is a webapp for the Bricks and More Lego expo. It is a simple webapp that allows visitors to vote on which creations they like the most. Votes are cst by giving a creation one to five stars in three different categories. The webapp is built using the [Django](https://www.djangoproject.com/) microframework.
 
-Django has been chosen because of the speed at which it can be developed, since the project had to be done within six to eight weeks and becaues it is a mature framework that handles a lot of security issues for you. It is also a framework that is easy to learn and has a lot of documentation.
+Django has been chosen because of the speed at which it can be developed, since the project had to be done within six to eight weeks and because it is a mature framework that handles a lot of security issues out of the box. It is also a framework that is easy to learn and has a lot of documentation.
 
 Because the project had a very tight deadline, it has a lot of possible improvements. These are listed at "## Future plans and optimizations".
 
