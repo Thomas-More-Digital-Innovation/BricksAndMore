@@ -122,6 +122,12 @@ Tailwind is added independently because no other Node packages are needed.
 ./tailwindcss-linux -i voting/static/voting/css/input.css -o voting/static/voting/css/output.css --watch
  ```
 
+## Edition 2022
+
+This project was first used during the 2022 expo. Around 60 people used the app. I suspect that most visitors are mostly interested in looking around a bit and not be bothered by an app while they walk around. Even though I tried to make the app as easy to use as possible.
+
+Maybe just voting for a top three at the end of the expo or another way of voting might be used more. Other ways of making the expo more interactive might be explored too but a bit of market research beforehand might not be a bad idea.
+
 ## Future plans and optimizations
 
 Some code is a bit messy because of time and knowledge constraints. Some things that could be improved:
